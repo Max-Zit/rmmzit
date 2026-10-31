@@ -73,6 +73,9 @@ type Server struct {
 	// DevNo2FA skips the second factor (development server only; the
 	// command refuses it without the embedded development database).
 	DevNo2FA bool
+	// DevNoBanner leaves out the console's warning about DevNo2FA (lab
+	// consoles used for screenshots).
+	DevNoBanner bool
 	// DownloadsDir holds the agent installer offered in the console.
 	DownloadsDir string
 	// CommandKey signs every command to agents.

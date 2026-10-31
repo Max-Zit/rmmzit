@@ -269,7 +269,7 @@ func (s *Server) render(w http.ResponseWriter, r *http.Request, status int, name
 		p.Lang = s.lang(r, p.User) // the user's own language first
 	}
 	p.Version = s.Version
-	p.DevNo2FA = s.DevNo2FA
+	p.DevNo2FA = s.DevNo2FA && !s.DevNoBanner
 	p.Asset = assetVersion
 	p.Path = r.URL.RequestURI()
 	if p.User != nil {

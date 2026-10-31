@@ -54,7 +54,7 @@ func productCode() (string, error) {
 		}
 		name, _, _ := sk.GetStringValue("DisplayName")
 		_ = sk.Close()
-		if name == "RMMZit Agent" || name == "ControlZit Agent" { // ControlZit: the name before RMMZit
+		if name == "RMMZit Agent" || name == "ControlZit Agent" { // version 0.12 and earlier
 			return n, nil
 		}
 	}

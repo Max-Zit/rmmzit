@@ -138,3 +138,17 @@ func checkHealth(dataDir string) error {
 	}
 	return nil
 }
+
+// removeLegacyDownloads deletes the agent installers of version 0.12 and
+// earlier from the downloads folder (the console offers the current ones).
+func removeLegacyDownloads(dir string) {
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return
+	}
+	for _, e := range entries {
+		if e.Type().IsRegular() && strings.HasPrefix(e.Name(), "controlzit-agent") {
+			_ = os.Remove(filepath.Join(dir, e.Name())) // #nosec G703 -- our own downloads folder
+		}
+	}
+}

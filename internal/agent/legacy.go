@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-// Before the rename to RMMZit the agent was the ControlZit Agent. An agent
+// Agents of version 0.12 and earlier ran under an older name. An agent
 // installed then keeps its enrollment: when the new version starts as the
 // service, the old data directory is moved to the new place
 // (AdoptLegacyDir). Other commands only find it (DefaultDir): an agent of

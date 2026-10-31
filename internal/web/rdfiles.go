@@ -68,7 +68,7 @@ func (s *Server) handleRDUpload(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		name := winBase(strings.ReplaceAll(part.FileName(), "/", `\`))
-		// Only the helper's staging folders, in a user's Temp (ControlZit:
+		// Only the helper's staging folders, in a user's Temp (the second:
 		// agents from before the rename to RMMZit).
 		low := strings.ToLower(dir)
 		staged := strings.Contains(low, `\appdata\local\temp\rmmzit\`) || strings.Contains(low, `\appdata\local\temp\controlzit\`)

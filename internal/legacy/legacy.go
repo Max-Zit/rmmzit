@@ -1,5 +1,5 @@
 // Package legacy keeps installations from before the rename to RMMZit
-// working: the product was called ControlZit until version 0.12.
+// working: the product had another name until version 0.12.
 package legacy
 
 import (

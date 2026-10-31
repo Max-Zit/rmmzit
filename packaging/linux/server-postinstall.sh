@@ -59,7 +59,7 @@ if command -v systemctl >/dev/null 2>&1; then
     systemctl enable --now rmmzit-helper.path >/dev/null 2>&1 || true
     # An upgrade by hand (dpkg -i, rpm -U) runs the new version right away.
     systemctl try-restart rmmzit-server.service >/dev/null 2>&1 || true
-    # From ControlZit: the old server was stopped above; start the new one.
+    # From version 0.12 and earlier: the old server was stopped above; start the new one.
     if [ -n "$MIGRATED" ]; then systemctl start rmmzit-server.service >/dev/null 2>&1 || true; fi
 fi
 if grep -q 'CHANGE_ME' /etc/rmmzit/server.env; then
