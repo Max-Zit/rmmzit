@@ -13,7 +13,7 @@
 {{define "app"}}{{template "head" .}}
 <body class="app">
 <aside class="side" id="side">
-  <a class="brand" href="/">{{template "logo"}}<span>Control<b>Zit</b></span></a>
+  <a class="brand" href="/">{{template "logo"}}<span>RMM<b>Zit</b></span></a>
   <nav>
     <a href="/" class="{{if eq .Nav "overview"}}on{{end}}">{{template "icon" "overview"}}{{.T "Overview"}}</a>
     <a href="/customers" class="{{if eq .Nav "customers"}}on{{end}}">{{template "icon" "customers"}}{{.T "Customers"}}</a>
@@ -61,7 +61,7 @@
 {{define "guest"}}{{template "head" .}}
 <body class="guest">
 <main class="guest-main">
-  <div class="guest-brand">{{template "logo"}}<span>Control<b>Zit</b></span></div>
+  <div class="guest-brand">{{template "logo"}}<span>RMM<b>Zit</b></span></div>
   <div class="guest-card">
     {{if .Flash}}{{if .FlashErr}}<div class="flash err" role="alert">{{template "icon" "alert"}}<span>{{.Flash}}</span></div>{{else}}<div class="flash ok" role="status">{{template "icon" "check"}}<span>{{.Flash}}</span></div>{{end}}{{end}}
     {{if .Error}}<div class="flash err" role="alert">{{template "icon" "alert"}}<span>{{.Error}}</span></div>{{end}}

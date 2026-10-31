@@ -15,7 +15,7 @@
   <button type="button" class="primary sm" data-print>{{template "icon" "download"}}{{.T "Print or save as PDF"}}</button>
 </div>
 <header class="report-head">
-  <div class="brand">{{template "logo"}}<span>Control<b>Zit</b></span></div>
+  <div class="brand">{{template "logo"}}<span>RMM<b>Zit</b></span></div>
   <h1>{{with $r.Customer}}{{.}}{{else}}{{$.T "All customers"}}{{end}}</h1>
   <p class="muted">{{.T "Report for the last %d days" $r.Days}} · {{.Time $r.From}} – {{.Time $r.To}}</p>
 </header>
