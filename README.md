@@ -10,10 +10,10 @@
 RMMZit keeps an inventory of every computer, watches it and raises alerts, lets technicians work on it remotely (remote desktop, terminal, files, processes, services), runs scripts on one or many devices, installs Windows updates and software on a schedule, and sends each customer a report.
 
 - **Your own server, your own network.** No cloud service; the console never has to be reachable from the internet. Agents connect outbound, so managed computers need no open ports.
-- **Free and open source** under the AGPLv3. [MaxZit](https://github.com/Max-Zit) offers commercial support.
+- **Free and open source** under the AGPLv3. [MaxZit](https://maxzit.com/) offers [commercial support](https://rmmzit.com/support/).
 - **14 languages**: English, German, French, Spanish, Italian, Portuguese, Dutch, Polish, Czech, Serbian, Turkish, Russian, Chinese and Japanese — the console and its built-in user guide.
 
-**Download:** [latest release](https://github.com/Max-Zit/rmmzit/releases/latest) · **Install:** [quick start](#installation) · **Guide:** built into the console under *Documentation*
+**Website:** [rmmzit.com](https://rmmzit.com/) · **Download:** [latest release](https://github.com/Max-Zit/rmmzit/releases/latest) · **Install:** [quick start](#installation) · **Guide:** built into the console under *Documentation*
 
 ---
 
