@@ -62,7 +62,12 @@ qemu-img convert -O vhdx -o subformat=dynamic "$disk" "$base.vhdx"
 vmdk_size=$(stat -c %s "$base-disk1.vmdk")
 capacity=$((gb * 1073741824))
 item() { # id type name quantity-or-extra
-    printf '      <Item>\n        <rasd:ElementName>%s</rasd:ElementName>\n        <rasd:InstanceID>%s</rasd:InstanceID>\n        <rasd:ResourceType>%s</rasd:ResourceType>\n%s      </Item>\n' "$3" "$1" "$2" "$4"
+    # The OVF schema wants the rasd elements in alphabetical order (ESXi
+    # refuses the OVA otherwise: "Unsupported element AllocationUnits").
+    printf '      <Item>\n'
+    printf '        <rasd:ElementName>%s</rasd:ElementName>\n        <rasd:InstanceID>%s</rasd:InstanceID>\n        <rasd:ResourceType>%s</rasd:ResourceType>\n%s' "$3" "$1" "$2" "$4" |
+        grep . | LC_ALL=C sort
+    printf '      </Item>\n'
 }
 {
     cat <<EOF
