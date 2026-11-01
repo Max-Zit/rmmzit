@@ -15,3 +15,4 @@ credentials.txt
 /.pending/
 # internal working notes
 /NOTES.md
+/packaging/appliance/vmdkstream
