@@ -13,18 +13,42 @@ RMMZit keeps an inventory of every computer, watches it and raises alerts, lets 
 - **Free and open source** under the AGPLv3. [MaxZit](https://maxzit.com/) offers [commercial support](https://rmmzit.com/support/).
 - **14 languages**: English, German, French, Spanish, Italian, Portuguese, Dutch, Polish, Czech, Serbian, Turkish, Russian, Chinese and Japanese — the console and its built-in user guide.
 
-**Website:** [rmmzit.com](https://rmmzit.com/) · **Download:** [latest release](https://github.com/Max-Zit/rmmzit/releases/latest) · **Install:** [quick start](#installation) · **Guide:** built into the console under *Documentation*
+**Website:** [rmmzit.com](https://rmmzit.com/) · **Download:** [latest release](https://github.com/Max-Zit/rmmzit/releases/latest) · **Install:** [quick start](#quick-start) · **Step-by-step guides:** [rmmzit.com/guides](https://rmmzit.com/guides/) · **Questions:** [Discussions](https://github.com/Max-Zit/rmmzit/discussions)
+
+[![A Windows computer in the RMMZit console: remote desktop, terminal, files, live load and inventory](.github/readme/2-device.jpg)](.github/readme/2-device.jpg)
+
+| | | |
+|---|---|---|
+| [![Device list](.github/readme/1-devices.jpg)](.github/readme/1-devices.jpg) | [![History of CPU, memory and network](.github/readme/3-history.jpg)](.github/readme/3-history.jpg) | [![Vulnerabilities of installed programs](.github/readme/4-vulnerabilities.jpg)](.github/readme/4-vulnerabilities.jpg) |
+| Devices of all customers and sites | History of CPU, memory and network | Vulnerabilities of installed programs |
+
+## Quick start
+
+The server runs on a small Linux VM (2 vCPU, 2–4 GB RAM, 16 GB disk). The fastest ways:
+
+- **VM image:** import [rmmzit-appliance.ova](https://github.com/Max-Zit/rmmzit/releases/latest/download/rmmzit-appliance.ova) (VMware), [.qcow2](https://github.com/Max-Zit/rmmzit/releases/latest/download/rmmzit-appliance.qcow2) (Proxmox/KVM) or [.vhdx](https://github.com/Max-Zit/rmmzit/releases/latest/download/rmmzit-appliance-vhdx.zip) (Hyper-V) and start it; its screen shows the address and a setup token.
+- **Existing Linux server** (Debian, Ubuntu, AlmaLinux, Rocky Linux):
+  ```
+  curl -fsSL https://github.com/Max-Zit/rmmzit/releases/latest/download/install.sh | sudo sh
+  ```
+- **Docker:** see [Docker](#5-docker).
+
+Then open `https://<address>:8443`, enter the setup token, create the first administrator, add a customer and a site, and install agents with the site's enrollment code — [Installing agents](#installing-agents). The [step-by-step guide](https://rmmzit.com/guides/install-self-hosted-rmm/) walks through it.
 
 ---
 
 ## Contents
 
+- [Quick start](#quick-start)
 - [Features](#features)
 - [How it works](#how-it-works)
 - [Installation](#installation)
 - [Installing agents](#installing-agents)
 - [Updating](#updating)
 - [Security](#security)
+- [Guides](#guides)
+- [Project status and limits](#project-status-and-limits)
+- [Community and support](#community-and-support)
 - [Development](#development) · [License](#license)
 
 ## Features
@@ -156,6 +180,35 @@ The site page offers the downloads and the exact commands. Agents update themsel
 - Root actions of the console go through a separate helper with a fixed set of validated requests.
 
 Report vulnerabilities privately — see [SECURITY.md](SECURITY.md).
+
+## Guides
+
+Step-by-step guides on [rmmzit.com/guides](https://rmmzit.com/guides/), each in all 14 languages:
+
+- [Install a self-hosted RMM and enroll the first computers](https://rmmzit.com/guides/install-self-hosted-rmm/)
+- [Free Windows patch management with a self-hosted RMM](https://rmmzit.com/guides/windows-patch-management/)
+- [Self-hosted remote desktop and terminal for IT support](https://rmmzit.com/guides/self-hosted-remote-desktop/)
+
+The complete reference is the guide built into the console (*Documentation*).
+
+## Project status and limits
+
+RMMZit is a young project: the first release was in October 2026, and new versions come out often. Every release is tested in a lab with Windows and Linux computers before it is published; release candidates are offered on the *Testing* update channel first. Please [report](https://github.com/Max-Zit/rmmzit/issues/new/choose) anything that does not work for you.
+
+Not supported yet:
+- macOS — agents exist for Windows and Linux only.
+- Remote desktop on Linux needs an X11 (Xorg) session; Wayland does not allow it (use the terminal there).
+- The Windows terminal needs agent 0.12 or newer and Windows 10 1809 / Server 2019 or later.
+
+## Community and support
+
+- **Questions and ideas:** [GitHub Discussions](https://github.com/Max-Zit/rmmzit/discussions).
+- **Bugs:** [open an issue](https://github.com/Max-Zit/rmmzit/issues/new/choose) — the console's *Report a bug* link fills in the version for you.
+- **Security problems:** report them privately, see [SECURITY.md](SECURITY.md).
+- **Contributing:** see [CONTRIBUTING.md](CONTRIBUTING.md).
+- **Commercial support** (in English): [plans](https://rmmzit.com/support/).
+
+If RMMZit is useful to you, a ⭐ on GitHub helps other administrators find it.
 
 ## Development
 
