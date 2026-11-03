@@ -1737,5 +1737,6 @@
   "Testing (release candidates, for test consoles)": "Test (sürüm adayları, test konsolları için)",
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Sürüm adayları, bir test konsolunda denenebilmeleri için resmi sürümden önce gelir. Üretim konsollarını resmi sürümlerde tutun.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Bu konsol bir kapsayıcıda çalışıyor. Docker ana makinesinde güncelleyin; yeni sürüm veritabanını değiştirmeden önce konsol onu yedekler:",
-  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Bu sayfanın bildirdiği sürümler. Neyin çalışacağını imaj etiketi belirler: resmi sürümler için latest, sürüm adayları için testing."
+  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Bu sayfanın bildirdiği sürümler. Neyin çalışacağını imaj etiketi belirler: resmi sürümler için latest, sürüm adayları için testing.",
+  "Source code (GNU AGPLv3)": "Kaynak kod (GNU AGPLv3)"
 }

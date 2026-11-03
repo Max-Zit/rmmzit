@@ -1737,5 +1737,6 @@
   "Testing (release candidates, for test consoles)": "テスト (リリース候補、テスト用コンソール向け)",
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "リリース候補は公式リリースの前に提供され、テスト用コンソールで試せます。本番のコンソールは公式リリースのままにしてください。",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "このコンソールはコンテナーで実行されています。Docker ホストで更新してください。新しいバージョンがデータベースを変更する前に、コンソールはデータベースをバックアップします:",
-  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "このページが報告するリリース。実行されるものはイメージのタグで決まります: 正式リリースは latest、リリース候補は testing。"
+  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "このページが報告するリリース。実行されるものはイメージのタグで決まります: 正式リリースは latest、リリース候補は testing。",
+  "Source code (GNU AGPLv3)": "ソースコード (GNU AGPLv3)"
 }

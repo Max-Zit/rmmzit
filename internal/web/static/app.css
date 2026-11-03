@@ -516,3 +516,5 @@ ul.hits { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
 .reglist li a:hover { background: var(--accent-soft); text-decoration: none; }
 .regvals td.wrap { word-break: break-all; white-space: pre-wrap; max-width: 380px; }
 .wrap { overflow-wrap: anywhere; }
+.side-foot .src-link { color: inherit; }
+.side-foot .src-link:hover { color: var(--accent); }

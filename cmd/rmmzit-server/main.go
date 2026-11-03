@@ -22,6 +22,7 @@ import (
 
 	embeddedpostgres "github.com/fergusstrange/embedded-postgres"
 
+	rmmzit "github.com/max-zit/rmmzit"
 	"github.com/max-zit/rmmzit/internal/auth"
 	"github.com/max-zit/rmmzit/internal/backup"
 	"github.com/max-zit/rmmzit/internal/helper"
@@ -74,10 +75,15 @@ func run() error {
 	restorePass := flag.String("restore-passphrase-file", "", "file with the passphrase of an encrypted backup (or set RMMZIT_BACKUP_PASSPHRASE)")
 	healthcheck := flag.Bool("healthcheck", false, "container image: exit 0 when the console answers (used by HEALTHCHECK)")
 	showToken := flag.Bool("setup-token", false, "print the setup token (until the first administrator exists) and exit")
+	showLicenses := flag.Bool("licenses", false, "print the license and the licenses of the built-in libraries and exit")
 	flag.Parse()
 
 	if *showVersion {
 		fmt.Println(legacy.ProgramName("rmmzit-server", "controlzit-server"), version)
+		return nil
+	}
+	if *showLicenses {
+		fmt.Print(rmmzit.Notices())
 		return nil
 	}
 	if *healthcheck {

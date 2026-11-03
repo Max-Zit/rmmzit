@@ -1737,5 +1737,6 @@
   "Testing (release candidates, for test consoles)": "Testiranje (kandidati za izdanje, za test konzole)",
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidati za izdanje stižu pre zvaničnog izdanja da bi mogli da se isprobaju na test konzoli. Produkcijske konzole držite na zvaničnim izdanjima.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Ova konzola radi u kontejneru. Ažurirajte je na Docker hostu; pre nego što nova verzija promeni bazu, konzola pravi njenu rezervnu kopiju:",
-  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Koja izdanja ova strana prijavljuje. Šta radi određuje oznaka image-a: latest za zvanična izdanja, testing za kandidate."
+  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Koja izdanja ova strana prijavljuje. Šta radi određuje oznaka image-a: latest za zvanična izdanja, testing za kandidate.",
+  "Source code (GNU AGPLv3)": "Izvorni kod (GNU AGPLv3)"
 }

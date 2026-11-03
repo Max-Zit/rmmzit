@@ -25,6 +25,12 @@ for arch in amd64 arm64; do printf '{"version":"%s"}\n' "$V" > "dist/rmmzit-agen
 # Licenses of everything linked into the programs (fails on an unknown license).
 go run ./tools/licenses -out THIRD_PARTY_LICENSES.md "dist/rmmzit-server-$V-linux-amd64" "dist/rmmzit-server-$V-windows-amd64.exe" "dist/rmmzit-agent-$V-windows-amd64.exe" "dist/rmmzit-agent-$V-linux-amd64" "dist/rmmzit-agent-$V-linux-arm64" bin/msi/rmmzit-tray.exe
 cp THIRD_PARTY_LICENSES.md "dist/THIRD_PARTY_LICENSES-$V.md"
+# The programs carry this file ("licenses"): it must be the one they were
+# built with, so a changed list is committed first and the build run again.
+if ! git diff --quiet --ignore-cr-at-eol -- THIRD_PARTY_LICENSES.md; then
+  echo "THIRD_PARTY_LICENSES.md changed (new or updated libraries): commit it, then build again" >&2
+  exit 1
+fi
 
 # Linux packages of the server; they carry the agent installers of this
 # version under the names the console offers them by.

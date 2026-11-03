@@ -22,6 +22,7 @@ import (
 	"syscall"
 	"time"
 
+	rmmzit "github.com/max-zit/rmmzit"
 	"github.com/max-zit/rmmzit/internal/agent"
 	"github.com/max-zit/rmmzit/internal/legacy"
 	"github.com/max-zit/rmmzit/internal/rd"
@@ -50,6 +51,7 @@ commands:
   uninstall  stop and remove the service
   status     show the enrollment
   inventory  print the inventory of this machine as JSON
+  licenses   print the license and the licenses of the built-in libraries
   version    print the version`)
 	return errors.New("no command")
 }
@@ -83,6 +85,9 @@ func run(args []string) error {
 	switch cmd {
 	case "version":
 		fmt.Println(legacy.ProgramName("rmmzit-agent", "controlzit-agent"), version)
+		return nil
+	case "licenses":
+		fmt.Print(rmmzit.Notices())
 		return nil
 	case "enroll":
 		var d agent.EnrollData

@@ -1737,5 +1737,6 @@
   "Testing (release candidates, for test consoles)": "Pruebas (versiones candidatas, para consolas de prueba)",
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Las versiones candidatas llegan antes de una versión oficial para poder probarlas en una consola de pruebas. Mantenga las consolas de producción en las versiones oficiales.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Esta consola se ejecuta en un contenedor. Actualícela en el host de Docker; hace una copia de su base de datos antes de que la nueva versión la cambie:",
-  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Qué versiones indica esta página. Lo que se ejecuta lo decide la etiqueta de la imagen: latest para las versiones oficiales, testing para las versiones candidatas."
+  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Qué versiones indica esta página. Lo que se ejecuta lo decide la etiqueta de la imagen: latest para las versiones oficiales, testing para las versiones candidatas.",
+  "Source code (GNU AGPLv3)": "Código fuente (GNU AGPLv3)"
 }

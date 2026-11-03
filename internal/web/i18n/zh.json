@@ -1737,5 +1737,6 @@
   "Testing (release candidates, for test consoles)": "测试（候选版本，用于测试控制台）",
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "候选版本会先于正式版本发布，以便在测试控制台上试用。生产控制台请保持使用正式版本。",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "此控制台在容器中运行。请在 Docker 主机上更新；在新版本更改数据库之前，控制台会先备份数据库：",
-  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "此页面报告哪些版本。实际运行的版本由镜像标签决定：latest 表示正式版本，testing 表示候选版本。"
+  "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "此页面报告哪些版本。实际运行的版本由镜像标签决定：latest 表示正式版本，testing 表示候选版本。",
+  "Source code (GNU AGPLv3)": "源代码（GNU AGPLv3）"
 }
