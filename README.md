@@ -4,6 +4,10 @@
 [![License: AGPL v3](https://img.shields.io/badge/license-AGPLv3-blue)](LICENSE)
 [![Security scan](https://github.com/Max-Zit/rmmzit/actions/workflows/security.yml/badge.svg)](https://github.com/Max-Zit/rmmzit/actions/workflows/security.yml)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Max-Zit/rmmzit/badge)](https://scorecard.dev/viewer/?uri=github.com/Max-Zit/rmmzit)
+[![Downloads](https://img.shields.io/github/downloads/Max-Zit/rmmzit/total)](https://github.com/Max-Zit/rmmzit/releases)
+[![Website](https://img.shields.io/badge/website-rmmzit.com-4f46e5)](https://rmmzit.com/)
+[![Docker image](https://github.com/Max-Zit/rmmzit/actions/workflows/docker.yml/badge.svg)](https://github.com/Max-Zit/rmmzit/pkgs/container/rmmzit)
+[![Go Report Card](https://goreportcard.com/badge/github.com/max-zit/rmmzit)](https://goreportcard.com/report/github.com/max-zit/rmmzit)
 
 **Remote monitoring and management for Windows and Linux computers, from one web console on your own server.** A free, open-source alternative to commercial RMM tools for IT departments and service providers.
 
@@ -44,8 +48,11 @@ Then open `https://<address>:8443`, enter the setup token, create the first admi
 - [How it works](#how-it-works)
 - [Installation](#installation)
 - [Installing agents](#installing-agents)
+- [Supported systems](#supported-systems)
 - [Updating](#updating)
 - [Security](#security)
+- [How it compares](#how-it-compares)
+- [FAQ](#faq)
 - [Guides](#guides)
 - [Project status and limits](#project-status-and-limits)
 - [Community and support](#community-and-support)
@@ -76,7 +83,7 @@ Then open `https://<address>:8443`, enter the setup token, create the first admi
 
 ```
                     ┌──────────────────────────────┐
-   your browser ───►│  RMMZit server           │  console (8443): web interface, API
+   your browser ───►│  RMMZit server               │  console (8443): web interface, API
    (HTTPS 8443)     │  (Linux VM + PostgreSQL)     │  only from your own networks
                     └──────────────▲───────────────┘
                                    │ agents connect outbound (HTTPS 8444)
@@ -166,6 +173,16 @@ sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"                  # Linu
 
 The site page offers the downloads and the exact commands. Agents update themselves to the server's version.
 
+## Supported systems
+
+| Component | Systems |
+|---|---|
+| Server | Debian 12+, Ubuntu 22.04+, AlmaLinux / Rocky Linux 9+ (x86-64), PostgreSQL 13+; or the ready-made appliance; or Docker |
+| Windows agent | Windows 10, 11, Windows Server 2016 and newer (64-bit); the terminal needs Windows 10 1809 / Server 2019 or later |
+| Linux agent | distributions with systemd, x86-64 or ARM64 (also Raspberry Pi); updates through apt or dnf |
+| Remote desktop | Windows; Linux with an X11 (Xorg) session |
+| Browsers | current Chrome, Edge, Firefox, Safari |
+
 ## Updating
 
 *Settings → RMMZit updates* checks GitHub for new releases and installs them (optionally automatically). Only releases signed with the RMMZit release key are installed; the server backs up its database first and rolls back if the new version does not start. The *Testing* update channel offers release candidates for a test console before they become official.
@@ -180,6 +197,47 @@ The site page offers the downloads and the exact commands. Agents update themsel
 - Root actions of the console go through a separate helper with a fixed set of validated requests.
 
 Report vulnerabilities privately — see [SECURITY.md](SECURITY.md).
+
+## How it compares
+
+RMMZit is meant for IT departments and service providers who want an RMM on their own server, without a price per device. A short, honest comparison:
+
+| | RMMZit | NinjaOne, Datto RMM, N-able | Tactical RMM | MeshCentral |
+|---|---|---|---|---|
+| Where it runs | your own server | the vendor's cloud | your own server | your own server |
+| Price | free (AGPLv3), no limit on devices | per device, by subscription | free to self-host | free (Apache 2.0) |
+| Focus | inventory, alerts, remote desktop, scripts, patching, policies, reports in one console | complete commercial RMM and PSA suites | RMM with scripts and patching; remote control through MeshCentral | remote access and control |
+| Maturity | young project (first release October 2026) | established for many years, vendor support | established community project | established for many years |
+
+Where the others are the better choice:
+- **A commercial RMM** if you need macOS agents, a PSA or ticketing system, a large integration catalog or vendor support with SLAs, and prefer not to run a server.
+- **Tactical RMM** if you want a project with a longer history and a large community today.
+- **MeshCentral** if you only need remote access.
+
+Where RMMZit fits: Windows and Linux fleets managed from one self-hosted console, with built-in remote desktop and terminal, Windows patching with update rings, policies per customer and site, vulnerability checks, BitLocker keys and customer reports — and a console in 14 languages.
+
+## FAQ
+
+**Is RMMZit free?**
+Yes. It is free and open source under the GNU AGPLv3, with no limit on devices, customers or technicians. [MaxZit](https://maxzit.com/) offers optional [commercial support](https://rmmzit.com/support/).
+
+**How many devices can one server manage?**
+In a load test, a server with 2 vCPU and 1 GB RAM handled 1,000 agents with about 200 MB of memory and 3 % CPU.
+
+**Do managed computers need open ports or a VPN?**
+No. Agents connect outbound to the server's agent port (8444). For computers outside your network, open only that port to the internet; the console (8443) stays reachable only from your own networks.
+
+**Does it have remote desktop?**
+Yes, built in and in the browser: Windows (including the sign-in and UAC screens) and Linux with X11, several monitors, clipboard and file copy. No separate remote-access product is needed.
+
+**Can it install Windows updates?**
+Yes: missing updates by hand or on a schedule, through policies with update rings, maintenance windows and restarts with a deadline. Programs are installed and updated through winget and optionally Chocolatey.
+
+**Does it support macOS?**
+Not yet. Agents exist for Windows and Linux (x86-64 and ARM64).
+
+**Does it need the cloud or internet access?**
+No. The server runs in your own network. Internet access is needed only for updates and for computers outside your network.
 
 ## Guides
 
