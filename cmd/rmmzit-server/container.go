@@ -126,7 +126,7 @@ func checkHealth(dataDir string) error {
 	if err != nil {
 		return err
 	}
-	hc := &http.Client{Timeout: 5 * time.Second, Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}} // #nosec G402 -- the local console, only checked for an answer
+	hc := &http.Client{Timeout: 5 * time.Second, Transport: &http.Transport{TLSClientConfig: &tls.Config{MinVersion: tls.VersionTLS12, InsecureSkipVerify: true}}} // #nosec G402 -- the local console, only checked for an answer
 	resp, err := hc.Get("https://" + net.JoinHostPort("127.0.0.1", port) + "/login")
 	if err != nil {
 		return err

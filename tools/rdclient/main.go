@@ -49,7 +49,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), *wait+40*time.Second)
 	defer cancel()
 	u := strings.Replace(*console, "https://", "wss://", 1) + "/devices/" + strconv.Itoa(*device) + "/rd/ws"
-	hc := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}} // #nosec G402 -- lab test tool
+	hc := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{MinVersion: tls.VersionTLS12, InsecureSkipVerify: true}}} // #nosec G402 -- lab test tool
 	ws, _, err := websocket.Dial(ctx, u, &websocket.DialOptions{HTTPClient: hc, HTTPHeader: http.Header{
 		"Origin": {*console}, "Cookie": {"__Host-czsession=" + *cookie}}})
 	if err != nil {
@@ -158,7 +158,7 @@ func runTerm(console string, device int, cookie, line string, wait time.Duration
 	ctx, cancel := context.WithTimeout(context.Background(), wait+40*time.Second)
 	defer cancel()
 	u := strings.Replace(console, "https://", "wss://", 1) + "/devices/" + strconv.Itoa(device) + "/terminal/ws?cols=120&rows=30"
-	hc := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}} // #nosec G402 -- lab test tool
+	hc := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{MinVersion: tls.VersionTLS12, InsecureSkipVerify: true}}} // #nosec G402 -- lab test tool
 	ws, _, err := websocket.Dial(ctx, u, &websocket.DialOptions{HTTPClient: hc, HTTPHeader: http.Header{
 		"Origin": {console}, "Cookie": {"__Host-czsession=" + cookie}}})
 	if err != nil {

@@ -11,6 +11,8 @@ import (
 	"sync"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/max-zit/rmmzit/internal/store"
 )
 
 // The user guide in the console (/docs). Every page is a plain HTML
@@ -85,7 +87,7 @@ func (s *Server) handleDocs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	lang := s.lang(r, userFrom(r))
-	d.Body = docHTML(lang, slug)
+	d.Body = withoutForbiddenLinks(docHTML(lang, slug), userFrom(r))
 	s.render(w, r, http.StatusOK, "docs", &Page{Title: title, Nav: "docs", Lang: lang, Data: d})
 }
 
@@ -242,4 +244,40 @@ func snippet(text, lower string, terms []string) template.HTML {
 		b.WriteString(" …")
 	}
 	return template.HTML(b.String()) // #nosec G203 -- every piece is escaped above
+}
+
+// docLink is an internal link of the guide: href="/…", the target's path
+// and the link text.
+var docLink = regexp.MustCompile(`<a href="(/[^"#?]*)[^"]*"[^>]*>(.*?)</a>`)
+
+// mayOpen reports whether the user may open a console page the guide links
+// to: settings, users and the audit log are for administrators, the script
+// and software libraries and the policies for technicians and up
+// (TestDocLinksMatchAccess checks it against the console).
+func mayOpen(u *store.User, path string) bool {
+	under := func(p string) bool { return path == p || strings.HasPrefix(path, p+"/") }
+	switch {
+	case under("/docs"):
+		return true
+	case under("/settings"), under("/users"), under("/audit"):
+		return u.IsAdmin()
+	case under("/scripts"), under("/software"), under("/policies"):
+		return u.CanWrite()
+	}
+	return true
+}
+
+// withoutForbiddenLinks shows the links to pages the user may not open as
+// plain text (the guide still names the place, an administrator opens it).
+func withoutForbiddenLinks(body template.HTML, u *store.User) template.HTML {
+	if u == nil || u.IsAdmin() {
+		return body
+	}
+	return template.HTML(docLink.ReplaceAllStringFunc(string(body), func(a string) string { // #nosec G203 -- our own embedded guide, only links taken out
+		m := docLink.FindStringSubmatch(a)
+		if mayOpen(u, m[1]) {
+			return a
+		}
+		return `<span class="doc-nolink">` + m[2] + `</span>`
+	}))
 }
