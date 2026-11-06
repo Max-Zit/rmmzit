@@ -47,7 +47,7 @@ func (s *Store) ClearMonitorResults(ctx context.Context, keep []int64) error {
 // MonitorResults returns the results of a device (0: all devices).
 func (s *Store) MonitorResults(ctx context.Context, deviceID int64) ([]MonitorResult, error) {
 	rows, err := s.db.Query(ctx, `SELECT device_id, kind, key, ok, count, error, checked_at FROM monitor_state
-		WHERE $1 = 0 OR device_id = $1 ORDER BY device_id, kind, key`, deviceID)
+		WHERE $1::bigint = 0 OR device_id = $1 ORDER BY device_id, kind, key`, deviceID)
 	if err != nil {
 		return nil, err
 	}

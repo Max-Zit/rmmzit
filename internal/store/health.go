@@ -62,7 +62,7 @@ func (s *Store) ClearNetChecks(ctx context.Context, keep []int64) error {
 // NetChecks lists the check results, of one device or (0) all.
 func (s *Store) NetChecks(ctx context.Context, deviceID int64) ([]NetCheckState, error) {
 	rows, err := s.db.Query(ctx, `SELECT device_id, name, kind, target, ok, ms, error, cert_days, checked_at, failing_since
-		FROM net_check_state WHERE $1 = 0 OR device_id = $1 ORDER BY device_id, name`, deviceID)
+		FROM net_check_state WHERE $1::bigint = 0 OR device_id = $1 ORDER BY device_id, name`, deviceID)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ type DiskHealthState struct {
 
 // DiskHealth returns the last reports, of one device or (0) all.
 func (s *Store) DiskHealth(ctx context.Context, deviceID int64) (map[int64]DiskHealthState, error) {
-	rows, err := s.db.Query(ctx, `SELECT device_id, health, collected_at FROM device_disk_health WHERE $1 = 0 OR device_id = $1`, deviceID)
+	rows, err := s.db.Query(ctx, `SELECT device_id, health, collected_at FROM device_disk_health WHERE $1::bigint = 0 OR device_id = $1`, deviceID)
 	if err != nil {
 		return nil, err
 	}

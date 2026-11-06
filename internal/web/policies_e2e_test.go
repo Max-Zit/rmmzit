@@ -207,6 +207,23 @@ func TestPolicyOwners(t *testing.T) {
 	if b := tc.get("/policies").body; !strings.Contains(b, "Files policy") || strings.Contains(b, "Global") {
 		t.Fatal("technician's policy list")
 	}
+
+	// A read-only user of the same customer is refused (403) by every policy
+	// action, and nothing changes.
+	admin.post("/users", "username", "viewer", "password", "viewer password 123", "role", "readonly", "customers", itoa(mine))
+	vc := e.client("192.168.1.41")
+	vc.post("/login", "username", "viewer", "password", "viewer password 123")
+	sec = secretRE.FindStringSubmatch(vc.get("/login/enroll").body)[1]
+	vc.post("/login/enroll", "code", e.code(sec))
+	vc.post("/account/password", "current", "viewer password 123", "password", "viewer password 1234", "password2", "viewer password 1234")
+	for _, p := range []string{"/policies/" + pid, "/policies/" + pid + "/assign", "/policies/" + pid + "/unassign", "/policies/" + pid + "/delete", "/policies/new"} {
+		if r := vc.do(http.MethodPost, p, url.Values{"name": {"x"}, "customer": {itoa(mine)}, "target": {"customer:" + itoa(mine)}}, nil); r.code != http.StatusForbidden {
+			t.Errorf("read-only POST %s: %d", p, r.code)
+		}
+	}
+	if _, err := e.st.Policy(ctx, int64(atoi(pid))); err != nil || len(mustAssignments(t, e, pid)) != 1 {
+		t.Fatalf("a read-only user changed the policy: %v", err)
+	}
 }
 
 func mustAssignments(t *testing.T, e *env, pid string) []store.Assignment {

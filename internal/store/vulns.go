@@ -102,7 +102,7 @@ func (s *Store) ReplaceDeviceVulns(ctx context.Context, deviceID int64, list []D
 func (s *Store) DeviceVulns(ctx context.Context, deviceID int64) ([]DeviceVuln, error) {
 	rows, err := s.db.Query(ctx, `SELECT v.device_id, d.hostname, x.customer_id, v.vuln_id, v.product, v.version, v.severity, v.score, v.summary, v.source, v.fix
 		FROM device_vulns v JOIN devices d ON d.id=v.device_id JOIN sites x ON x.id=d.site_id
-		WHERE $1 = 0 OR v.device_id = $1 ORDER BY v.score DESC, v.vuln_id DESC`, deviceID)
+		WHERE $1::bigint = 0 OR v.device_id = $1 ORDER BY v.score DESC, v.vuln_id DESC`, deviceID)
 	if err != nil {
 		return nil, err
 	}

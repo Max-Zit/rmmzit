@@ -226,7 +226,7 @@ func (s *Store) Alerts(ctx context.Context, u *User, f AlertFilter) ([]Alert, er
 		a.opened_at, a.last_seen, a.resolved_at, a.acked_by, a.acked_at
 		FROM alerts a JOIN devices d ON d.id=a.device_id JOIN sites x ON x.id=d.site_id JOIN customers c ON c.id=x.customer_id
 		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2))
-		  AND ($3 = 0 OR a.device_id=$3) AND (NOT $4 OR a.resolved_at IS NULL)
+		  AND ($3::bigint = 0 OR a.device_id=$3) AND (NOT $4 OR a.resolved_at IS NULL)
 		ORDER BY (a.resolved_at IS NULL) DESC, CASE a.severity WHEN 'critical' THEN 0 ELSE 1 END, a.opened_at DESC LIMIT $5`,
 		u.IsAdmin() || u.AllCustomers, u.ID, f.DeviceID, f.Open, f.Limit)
 	if err != nil {

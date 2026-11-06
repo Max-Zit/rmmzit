@@ -76,6 +76,12 @@ type policyData struct {
 }
 
 func (s *Server) policyFor(w http.ResponseWriter, r *http.Request) *store.Policy {
+	// Read-only users manage no policy: Forbidden, as on the policy pages,
+	// before anything is looked up.
+	if !userFrom(r).CanWrite() {
+		s.forbidden(w, r)
+		return nil
+	}
 	id, ok := pathID(r, "pid")
 	if !ok {
 		s.notFound(w, r)

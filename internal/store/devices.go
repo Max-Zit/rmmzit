@@ -132,7 +132,7 @@ func (s *Store) Devices(ctx context.Context, u *User, f DeviceFilter) ([]*Device
 	q := "%" + strings.NewReplacer(`\`, `\\`, "%", `\%`, "_", `\_`).Replace(f.Query) + "%"
 	rows, err := s.db.Query(ctx, `SELECT `+deviceCols+deviceFrom+`
 		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2))
-		  AND ($3 = 0 OR d.site_id=$3) AND ($4 = 0 OR x.customer_id=$4)
+		  AND ($3::bigint = 0 OR d.site_id=$3) AND ($4::bigint = 0 OR x.customer_id=$4)
 		  AND ($5 = '%%' OR d.hostname ILIKE $5 OR d.last_user ILIKE $5 OR d.os ILIKE $5 OR c.name ILIKE $5)
 		ORDER BY lower(c.name), lower(x.name), lower(d.hostname) LIMIT $6`,
 		u.IsAdmin() || u.AllCustomers, u.ID, f.SiteID, f.CustomerID, q, f.Limit)

@@ -170,7 +170,7 @@ func scanJob(row interface{ Scan(...any) error }) (*ScriptJob, error) {
 // Jobs lists the latest jobs; createdBy limits them to one user ("" all).
 func (s *Store) Jobs(ctx context.Context, createdBy string, scriptID int64, limit int) ([]ScriptJob, error) {
 	rows, err := s.db.Query(ctx, `SELECT `+jobCols+` FROM script_jobs j LEFT JOIN script_job_devices d ON d.job_id=j.id
-		WHERE ($1 = '' OR j.created_by=$1) AND ($2 = 0 OR j.script_id=$2)
+		WHERE ($1 = '' OR j.created_by=$1) AND ($2::bigint = 0 OR j.script_id=$2)
 		GROUP BY j.id ORDER BY j.id DESC LIMIT $3`, createdBy, scriptID, limit)
 	if err != nil {
 		return nil, err
@@ -303,7 +303,7 @@ type ScriptSchedule struct {
 // Schedules lists schedules (scriptID 0: all).
 func (s *Store) Schedules(ctx context.Context, scriptID int64) ([]ScriptSchedule, error) {
 	rows, err := s.db.Query(ctx, `SELECT x.id, x.script_id, s.name, x.target, x.days, x.minute, x.enabled, x.created_by, x.last_fired
-		FROM script_schedules x JOIN scripts s ON s.id=x.script_id WHERE ($1 = 0 OR x.script_id=$1) ORDER BY x.id`, scriptID)
+		FROM script_schedules x JOIN scripts s ON s.id=x.script_id WHERE ($1::bigint = 0 OR x.script_id=$1) ORDER BY x.id`, scriptID)
 	if err != nil {
 		return nil, err
 	}
