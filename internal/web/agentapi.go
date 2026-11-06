@@ -332,14 +332,69 @@ func (s *Server) handleConnect(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) agentMessage(ctx context.Context, c *agentConn, d *store.Device, ip string, env proto.Envelope) error {
+// agentMsg is one decoded agent message: Type and the field of that type.
+type agentMsg struct {
+	Type      string
+	Hello     *proto.Hello
+	Heartbeat *proto.Heartbeat
+	Result    *proto.Result
+	Patch     *proto.PatchReport
+	Inventory *proto.Inventory
+}
+
+// Limits of what one agent message may hold (the rest is dropped).
+const (
+	maxAgentDisks    = 64
+	maxStoppedAuto   = 500
+	maxAgentSoftware = 5000
+)
+
+// decodeAgentMessage decodes the data of an agent message and applies the
+// limits; it touches nothing (fuzzed in FuzzDecodeAgentMessage).
+func decodeAgentMessage(env proto.Envelope) (agentMsg, error) {
+	m := agentMsg{Type: env.Type}
+	var err error
 	switch env.Type {
 	case proto.TypeHello:
-		var h proto.Hello
-		if err := json.Unmarshal(env.Data, &h); err != nil {
-			return err
+		m.Hello = new(proto.Hello)
+		err = json.Unmarshal(env.Data, m.Hello)
+	case proto.TypeHeartbeat:
+		m.Heartbeat = new(proto.Heartbeat)
+		if err = json.Unmarshal(env.Data, m.Heartbeat); err == nil && m.Heartbeat.Metrics != nil {
+			mt := m.Heartbeat.Metrics
+			if len(mt.Disks) > maxAgentDisks {
+				mt.Disks = mt.Disks[:maxAgentDisks]
+			}
+			if len(mt.StoppedAuto) > maxStoppedAuto {
+				mt.StoppedAuto = mt.StoppedAuto[:maxStoppedAuto]
+			}
 		}
-		if err := s.store.AgentSeen(ctx, d.ID, &h, ip); err != nil {
+	case proto.TypeResult:
+		m.Result = new(proto.Result)
+		err = json.Unmarshal(env.Data, m.Result)
+	case proto.TypePatchReport:
+		m.Patch = new(proto.PatchReport)
+		err = json.Unmarshal(env.Data, m.Patch)
+	case proto.TypeInventory:
+		m.Inventory = new(proto.Inventory)
+		if err = json.Unmarshal(env.Data, m.Inventory); err == nil && len(m.Inventory.Software) > maxAgentSoftware {
+			m.Inventory.Software = m.Inventory.Software[:maxAgentSoftware]
+		}
+	default:
+		return m, errors.New("unknown message type " + strconv.Quote(env.Type))
+	}
+	return m, err
+}
+
+func (s *Server) agentMessage(ctx context.Context, c *agentConn, d *store.Device, ip string, env proto.Envelope) error {
+	m, err := decodeAgentMessage(env)
+	if err != nil {
+		return err
+	}
+	switch {
+	case m.Hello != nil:
+		h := m.Hello
+		if err := s.store.AgentSeen(ctx, d.ID, h, ip); err != nil {
 			return err
 		}
 		if err := send(ctx, c.ws, proto.TypeWelcome, proto.Welcome{DeviceID: d.ID, HeartbeatSeconds: heartbeatSeconds, InventoryHours: inventoryHours, CommandKey: s.commandPub()}); err != nil {
@@ -354,51 +409,27 @@ func (s *Server) agentMessage(ctx context.Context, c *agentConn, d *store.Device
 			s.dispatchTasks(context.Background(), ids)
 		}()
 		return nil
-	case proto.TypeHeartbeat:
-		var hb proto.Heartbeat
-		if err := json.Unmarshal(env.Data, &hb); err != nil {
-			return err
-		}
-		if err := s.store.AgentHeartbeat(ctx, d.ID, hb); err != nil {
+	case m.Heartbeat != nil:
+		hb := m.Heartbeat
+		if err := s.store.AgentHeartbeat(ctx, d.ID, *hb); err != nil {
 			return err
 		}
 		if hb.Metrics != nil {
-			if len(hb.Metrics.Disks) > 64 {
-				hb.Metrics.Disks = hb.Metrics.Disks[:64]
-			}
-			if len(hb.Metrics.StoppedAuto) > 500 {
-				hb.Metrics.StoppedAuto = hb.Metrics.StoppedAuto[:500]
-			}
 			return s.store.SaveMetrics(ctx, d.ID, hb.Metrics)
 		}
 		return nil
-	case proto.TypeResult:
-		var res proto.Result
-		if err := json.Unmarshal(env.Data, &res); err != nil {
-			return err
-		}
-		c.deliver(res)
+	case m.Result != nil:
+		c.deliver(*m.Result)
 		return nil
-	case proto.TypePatchReport:
-		var rep proto.PatchReport
-		if err := json.Unmarshal(env.Data, &rep); err != nil {
-			return err
-		}
-		return s.savePatchReport(ctx, d, &rep)
-	case proto.TypeInventory:
-		var inv proto.Inventory
-		if err := json.Unmarshal(env.Data, &inv); err != nil {
-			return err
-		}
-		if len(inv.Software) > 5000 {
-			inv.Software = inv.Software[:5000]
-		}
+	case m.Patch != nil:
+		return s.savePatchReport(ctx, d, m.Patch)
+	case m.Inventory != nil:
 		if err := s.store.AgentSeen(ctx, d.ID, nil, ip); err != nil {
 			return err
 		}
-		return s.store.SaveInventory(ctx, d.ID, &inv)
+		return s.store.SaveInventory(ctx, d.ID, m.Inventory)
 	}
-	return errors.New("unknown message type " + strconv.Quote(env.Type))
+	return nil
 }
 
 func (s *Server) commandPub() []byte {

@@ -65,7 +65,10 @@ type RegNewKey struct {
 // CleanRegPath checks and normalises a registry path: a known root, no
 // empty parts, at most 255 characters per part and 32 parts.
 func CleanRegPath(p string) (string, error) {
-	p = strings.Trim(strings.TrimSpace(strings.ReplaceAll(p, "/", `\`)), `\`)
+	// Spaces around the path and around the backslashes at its ends go
+	// (so "HKLM\a \" and "HKLM\a" are the same key, and cleaning twice
+	// changes nothing).
+	p = strings.TrimSpace(strings.Trim(strings.TrimSpace(strings.ReplaceAll(p, "/", `\`)), `\`))
 	parts := strings.Split(p, `\`)
 	root := strings.ToUpper(parts[0])
 	switch root {

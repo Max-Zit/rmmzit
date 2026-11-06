@@ -375,22 +375,34 @@ func (c *sftpClient) list(dir string) ([]string, error) {
 		if rt != fxpName {
 			return nil, errors.New("SFTP readdir: unexpected answer")
 		}
-		rd := bytes.NewReader(r)
-		var count uint32
-		if binary.Read(rd, binary.BigEndian, &count) != nil {
+		more, err := parseNames(r)
+		if err != nil {
+			return nil, err
+		}
+		names = append(names, more...)
+	}
+}
+
+// parseNames reads the names of an SSH_FXP_NAME answer (from the SFTP
+// server, so fuzzed: FuzzParseNames), without "." and "..".
+func parseNames(r []byte) ([]string, error) {
+	rd := bytes.NewReader(r)
+	var count uint32
+	if binary.Read(rd, binary.BigEndian, &count) != nil {
+		return nil, errors.New("SFTP readdir: bad answer")
+	}
+	var names []string
+	for i := uint32(0); i < count; i++ {
+		name, err1 := readString(rd)
+		_, err2 := readString(rd) // long name
+		if err1 != nil || err2 != nil || skipAttrs(rd) != nil {
 			return nil, errors.New("SFTP readdir: bad answer")
 		}
-		for i := uint32(0); i < count; i++ {
-			name, err1 := readString(rd)
-			_, err2 := readString(rd) // long name
-			if err1 != nil || err2 != nil || skipAttrs(rd) != nil {
-				return nil, errors.New("SFTP readdir: bad answer")
-			}
-			if name != "." && name != ".." {
-				names = append(names, name)
-			}
+		if name != "." && name != ".." {
+			names = append(names, name)
 		}
 	}
+	return names, nil
 }
 
 func (c *sftpClient) remove(p string) error {

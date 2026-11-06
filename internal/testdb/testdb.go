@@ -1,5 +1,7 @@
 // Package testdb runs a private PostgreSQL for tests: one server per test
-// binary, one fresh database per test.
+// binary, one fresh database per test. The server starts with the first
+// test that asks for a database, so tests and fuzz workers that need none
+// do not start (or download) it.
 package testdb
 
 import (
@@ -9,6 +11,7 @@ import (
 	"net"
 	"os"
 	"path/filepath"
+	"sync"
 	"sync/atomic"
 	"testing"
 
@@ -17,38 +20,65 @@ import (
 )
 
 var (
-	port uint32
-	seq  atomic.Int64
+	mu       sync.Mutex
+	started  bool
+	startErr error
+	pg       *embeddedpostgres.EmbeddedPostgres
+	dir      string
+	port     uint32
+	seq      atomic.Int64
 )
 
-// Main starts PostgreSQL, runs the tests and stops it. Call it from TestMain.
+// Main runs the tests and stops PostgreSQL if a test started it. Call it
+// from TestMain.
 func Main(m *testing.M) int {
-	dir, err := os.MkdirTemp("", "czpg")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return 1
+	code := m.Run()
+	mu.Lock()
+	defer mu.Unlock()
+	if pg != nil {
+		_ = pg.Stop()
 	}
-	defer os.RemoveAll(dir)
-	l, err := net.Listen("tcp", "127.0.0.1:0")
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		return 1
+	if dir != "" {
+		_ = os.RemoveAll(dir)
 	}
-	port = uint32(l.Addr().(*net.TCPAddr).Port) // #nosec G115 -- a TCP port fits
-	_ = l.Close()
-	pg := embeddedpostgres.NewDatabase(embeddedpostgres.DefaultConfig().Port(port).
-		RuntimePath(filepath.Join(dir, "rt")).DataPath(filepath.Join(dir, "data")).Logger(io.Discard))
-	if err := pg.Start(); err != nil {
-		fmt.Fprintln(os.Stderr, "start postgres:", err)
-		return 1
+	return code
+}
+
+func start() error {
+	mu.Lock()
+	defer mu.Unlock()
+	if started {
+		return startErr
 	}
-	defer pg.Stop()
-	return m.Run()
+	started = true
+	startErr = func() error {
+		var err error
+		if dir, err = os.MkdirTemp("", "czpg"); err != nil {
+			return err
+		}
+		l, err := net.Listen("tcp", "127.0.0.1:0")
+		if err != nil {
+			return err
+		}
+		port = uint32(l.Addr().(*net.TCPAddr).Port) // #nosec G115 -- a TCP port fits
+		_ = l.Close()
+		db := embeddedpostgres.NewDatabase(embeddedpostgres.DefaultConfig().Port(port).
+			RuntimePath(filepath.Join(dir, "rt")).DataPath(filepath.Join(dir, "data")).Logger(io.Discard))
+		if err := db.Start(); err != nil {
+			return fmt.Errorf("start postgres: %w", err)
+		}
+		pg = db
+		return nil
+	}()
+	return startErr
 }
 
 // URL creates an empty database for the test and returns its URL.
 func URL(t testing.TB) string {
 	t.Helper()
+	if err := start(); err != nil {
+		t.Fatal(err)
+	}
 	ctx := context.Background()
 	admin := fmt.Sprintf("postgres://postgres:postgres@127.0.0.1:%d/postgres?sslmode=disable", port)
 	c, err := pgx.Connect(ctx, admin)

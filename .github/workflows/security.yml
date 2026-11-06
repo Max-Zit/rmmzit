@@ -1,4 +1,6 @@
-# Security checks on every push and pull request, and weekly (new CVEs).
+# All checks in one workflow: on every push and pull request, and weekly
+# (new CVEs). A newer push to the same branch cancels the older run, so a
+# quick series of pushes gives one result (and at most one failure mail).
 name: security
 on:
   push:
@@ -7,8 +9,12 @@ on:
     branches: [main]
   schedule:
     - cron: "17 4 * * 1"
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   go:
     runs-on: ubuntu-latest
@@ -19,6 +25,8 @@ jobs:
       - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: go.mod
+      - name: gofmt
+        run: test -z "$(gofmt -l cmd internal tools)" || (gofmt -l cmd internal tools; exit 1)
       - name: build (Linux and Windows)
         run: |
           go build ./...
@@ -47,3 +55,36 @@ jobs:
           gitleaks git --redact --no-banner .
       - name: tests
         run: go test -count=1 ./...
+
+  race:
+    name: Race detector (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Fetch the test PostgreSQL once (parallel test binaries would all download it)
+        run: go test -race -count=1 -run '^TestDirectoryUsers$' ./internal/store
+      - name: Tests with -race
+        run: go test -race -count=1 -timeout 60m ./...
+
+  fuzz:
+    name: Fuzz parsers of untrusted input (short)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Fuzz each target for 20 s
+        run: |
+          set -e
+          # Every Fuzz* function in the tests, so new targets run without
+          # touching this file.
+          grep -rHo --include='*_test.go' '^func Fuzz[A-Za-z0-9_]*' internal cmd tools | sed 's/:func /:/' | sort -u |
+          while IFS=: read -r file name; do
+            echo "::group::$name ($(dirname "$file"))"
+            go test "./$(dirname "$file")" -run '^$' -fuzz "^$name\$" -fuzztime 20s
+            echo "::endgroup::"
+          done
