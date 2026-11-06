@@ -62,6 +62,10 @@ contents:
     dst: /usr/share/rmmzit/appliance/sudoers-rmmzit-setup
   - src: ./packaging/appliance/sshd-rmmzit.conf
     dst: /usr/share/rmmzit/appliance/sshd-rmmzit.conf
+  - src: ./packaging/appliance/sysctl-rmmzit.conf
+    dst: /usr/share/rmmzit/appliance/sysctl-rmmzit.conf
+  - src: ./packaging/appliance/modprobe-rmmzit.conf
+    dst: /usr/share/rmmzit/appliance/modprobe-rmmzit.conf
   - src: ./packaging/linux/server.env
     dst: /etc/rmmzit/server.env
     type: config|noreplace

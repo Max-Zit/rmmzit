@@ -130,6 +130,8 @@ The server packages (deb, rpm), the agent installers and the signed manifest are
 
 The appliance uses DHCP. For a fixed address, the server name or the time zone, sign in on the VM's screen as `rzadmin` (first password `rmmzit`, must be changed) — a setup menu opens.
 
+The appliance is hardened (SSH without root sign-in and forwarding, strong ciphers only, kernel hardening, unused network protocols off, automatic Debian security updates), and every release image is checked before it is published: Trivy over its packages, a Lynis audit, testssl.sh and Nuclei — see [SECURITY.md](SECURITY.md#how-rmmzit-is-tested).
+
 ### 2. Appliance ISO
 
 Boot a VM or server from `rmmzit-appliance.iso`: after 5 seconds it **erases the first disk** and installs Debian, PostgreSQL and RMMZit (10–20 minutes, needs internet access). Then continue as with the VM image.

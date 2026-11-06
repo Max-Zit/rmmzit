@@ -24,6 +24,7 @@
   <li>Ouvrez <code>https://&lt;adresse&gt;:8443</code>. Le navigateur avertit une fois au sujet du certificat auto-signé (remplacez-le plus tard dans <a href="/settings/certificate">Paramètres → Certificat</a>). Saisissez le jeton et créez le premier administrateur.</li>
 </ol>
 <p>L'appliance obtient son adresse par DHCP. Pour une adresse fixe, le nom du serveur ou le fuseau horaire, connectez-vous sur l'écran de la VM en tant que <code>rzadmin</code> (premier mot de passe <code>rmmzit</code>, à changer) : un menu de configuration s'ouvre. Le fuseau horaire et le réseau peuvent aussi être modifiés plus tard dans la console.</p>
+<p>L'appliance est durcie : SSH n'accepte ni connexion en root ni redirection (pas de tunnel à travers l'appliance) et n'utilise que des chiffrements forts, les protocoles réseau inutiles sont désactivés dans le noyau, et les mises à jour de sécurité Debian s'installent automatiquement.</p>
 
 <h2 id="iso">2. ISO de l'appliance</h2>
 <ol>

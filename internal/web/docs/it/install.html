@@ -24,6 +24,7 @@
   <li>Apri <code>https://&lt;indirizzo&gt;:8443</code>. Il browser avvisa una volta del certificato autofirmato (sostituiscilo poi in <a href="/settings/certificate">Impostazioni → Certificato</a>). Inserisci il token e crea il primo amministratore.</li>
 </ol>
 <p>L'appliance ottiene l'indirizzo tramite DHCP. Per un indirizzo fisso, il nome del server o il fuso orario, accedi sullo schermo della VM come <code>rzadmin</code> (prima password <code>rmmzit</code>, da cambiare): si apre un menu di configurazione. Fuso orario e rete si possono cambiare anche in seguito dalla console.</p>
+<p>L'appliance è protetta: SSH non consente l'accesso come root né l'inoltro (nessun tunnel attraverso l'appliance) e usa solo cifrari robusti, i protocolli di rete non necessari sono disattivati nel kernel e gli aggiornamenti di sicurezza di Debian si installano automaticamente.</p>
 
 <h2 id="iso">2. ISO dell'appliance</h2>
 <ol>

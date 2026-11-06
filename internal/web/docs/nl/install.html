@@ -24,6 +24,7 @@
   <li>Open <code>https://&lt;adres&gt;:8443</code>. De browser waarschuwt eenmaal voor het zelfondertekende certificaat (vervang het later onder <a href="/settings/certificate">Instellingen → Certificaat</a>). Voer het token in en maak de eerste beheerder aan.</li>
 </ol>
 <p>De appliance krijgt zijn adres via DHCP. Voor een vast adres, de servernaam of de tijdzone meldt u zich op het scherm van de VM aan als <code>rzadmin</code> (eerste wachtwoord <code>rmmzit</code>, moet worden gewijzigd): er opent een installatiemenu. Tijdzone en netwerk kunnen later ook in de console worden gewijzigd.</p>
+<p>De appliance is gehard: SSH staat geen aanmelding als root en geen forwarding toe (geen tunnels door de appliance) en gebruikt alleen sterke versleuteling, netwerkprotocollen die niet nodig zijn staan uit in de kernel, en beveiligingsupdates van Debian worden automatisch geïnstalleerd.</p>
 
 <h2 id="iso">2. Appliance-ISO</h2>
 <ol>

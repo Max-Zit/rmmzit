@@ -24,6 +24,7 @@
   <li>Otvorite <code>https://&lt;adresa&gt;:8443</code>. Pregledač jednom upozori na samopotpisani sertifikat (kasnije ga zamenite u <a href="/settings/certificate">Podešavanja → Sertifikat</a>). Unesite token i napravite prvog administratora.</li>
 </ol>
 <p>Uređaj dobija adresu preko DHCP-a. Za fiksnu adresu, ime servera ili vremensku zonu prijavite se na samom ekranu VM-a kao <code>rzadmin</code> (prva lozinka <code>rmmzit</code>, mora se promeniti): otvara se meni za podešavanje. Vremenska zona i mreža mogu se kasnije menjati i u konzoli.</p>
+<p>Appliance je ojačan: SSH ne dozvoljava prijavu kao root ni prosleđivanje (nema tunela kroz appliance) i koristi samo jake šifre, mrežni protokoli koji mu ne trebaju isključeni su u kernelu, a bezbednosna ažuriranja Debiana instaliraju se automatski.</p>
 
 <h2 id="iso">2. Instalacioni ISO</h2>
 <ol>

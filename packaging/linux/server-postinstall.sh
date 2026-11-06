@@ -75,6 +75,13 @@ if [ -f /var/lib/rmmzit/.appliance ]; then
     install -m 0644 $a/rmmzit-appliance-boot.service /etc/systemd/system/rmmzit-appliance-boot.service
     install -m 0644 $a/rmmzit-menu.sh /etc/profile.d/rmmzit-menu.sh
     install -m 0440 $a/sudoers-rmmzit-setup /etc/sudoers.d/rmmzit-setup
+    # Kernel and module hardening (Lynis), also for appliances installed
+    # before it came.
+    install -m 0644 $a/sysctl-rmmzit.conf /etc/sysctl.d/60-rmmzit.conf
+    install -m 0644 $a/modprobe-rmmzit.conf /etc/modprobe.d/60-rmmzit.conf
+    sysctl -q -p /etc/sysctl.d/60-rmmzit.conf 2>/dev/null || true
+    # PostgreSQL settings are not for everyone to read (Lynis DBS-1828).
+    chmod o-rwx /etc/postgresql/*/main/*.conf 2>/dev/null || true
     systemctl daemon-reload 2>/dev/null || true
     systemctl enable rmmzit-appliance-boot.service >/dev/null 2>&1 || true
     if [ -d /etc/ssh/sshd_config.d ]; then

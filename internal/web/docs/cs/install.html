@@ -24,6 +24,7 @@
   <li>Otevřete <code>https://&lt;adresa&gt;:8443</code>. Prohlížeč jednou varuje před certifikátem podepsaným sám sebou (později jej nahraďte v <a href="/settings/certificate">Nastavení → Certifikát</a>). Zadejte token a vytvořte prvního správce.</li>
 </ol>
 <p>Appliance získá adresu přes DHCP. Pro pevnou adresu, název serveru nebo časové pásmo se přihlaste na obrazovce VM jako <code>rzadmin</code> (první heslo <code>rmmzit</code>, je nutné jej změnit): otevře se nabídka nastavení. Časové pásmo a síť lze později změnit i v konzoli.</p>
+<p>Appliance je zabezpečený: SSH nepovoluje přihlášení jako root ani přesměrování (žádné tunely přes appliance) a používá jen silné šifry, nepotřebné síťové protokoly jsou v jádře vypnuté a bezpečnostní aktualizace Debianu se instalují automaticky.</p>
 
 <h2 id="iso">2. ISO appliance</h2>
 <ol>

@@ -24,6 +24,7 @@
   <li>Otwórz <code>https://&lt;adres&gt;:8443</code>. Przeglądarka raz ostrzeże o certyfikacie z podpisem własnym (zastąp go później w <a href="/settings/certificate">Ustawienia → Certyfikat</a>). Wpisz token i utwórz pierwszego administratora.</li>
 </ol>
 <p>Urządzenie pobiera adres przez DHCP. Aby ustawić stały adres, nazwę serwera lub strefę czasową, zaloguj się na ekranie VM jako <code>rzadmin</code> (pierwsze hasło <code>rmmzit</code>, które trzeba zmienić): otworzy się menu konfiguracji. Strefę czasową i sieć można też później zmienić w konsoli.</p>
+<p>Appliance jest utwardzony: SSH nie pozwala logować się jako root ani przekierowywać połączeń (żadnych tuneli przez appliance) i używa tylko silnych szyfrów, niepotrzebne protokoły sieciowe są wyłączone w jądrze, a aktualizacje bezpieczeństwa Debiana instalują się automatycznie.</p>
 
 <h2 id="iso">2. ISO urządzenia</h2>
 <ol>
