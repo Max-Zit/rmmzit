@@ -8,13 +8,13 @@
 # the server (a static program), CA certificates and time zones - no shell
 # or system tools - and runs as the unprivileged user 10001. The base images
 # are pinned by digest; Dependabot proposes new digests.
-FROM debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3 AS package
+FROM debian:trixie-slim@sha256:a72b4433de1cf7d6bae0c4cee74d0547f58601a643b3375f070c51600d63b6b2 AS package
 ARG VERSION
 COPY rmmzit-server_${VERSION}_amd64.deb /tmp/server.deb
 RUN dpkg-deb -x /tmp/server.deb /pkg \
  && install -d -m 0700 -o 10001 -g 10001 /pkg/var/lib/rmmzit
 
-FROM gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab
+FROM gcr.io/distroless/static-debian13:nonroot@sha256:25ac8f0c3b2334a9eb05452266bd4697864a8c8ef0ef71e5e6480d7f92868329
 ARG VERSION
 LABEL org.opencontainers.image.title="RMMZit" \
       org.opencontainers.image.description="RMMZit server: self-hosted remote monitoring and management for Windows and Linux computers" \
