@@ -64,10 +64,10 @@ Then open `https://<address>:8443`, enter the setup token, create the first admi
 |---|---|
 | **Inventory** | hardware, operating system, disks, network, Defender, firewall and BitLocker state, installed software |
 | **Monitoring and alerts** | CPU, memory, disk space, offline devices, stopped services, Defender and firewall off, pending restarts, disk health (SMART, RAID), network checks (ping, TCP, web and certificates) from the devices, Windows event log and process monitors; history (24 hours to 90 days) with a disk-full forecast; alerts by email, Slack, Microsoft Teams or signed webhooks |
-| **Remote desktop** | in the browser, Windows and Linux (X11): sign-in and UAC screens, several monitors, text clipboard both ways, file copy with Ctrl+C / Ctrl+V, an optional notice on the remote screen |
+| **Remote desktop** | in the browser, with an optional notice on the remote screen. Windows: sign-in and UAC screens, choice of monitor, text clipboard both ways (can be switched off), file copy with Ctrl+C / Ctrl+V. Linux (X11): screen, keyboard and mouse |
 | **Terminal and files** | a terminal in the browser (PowerShell as SYSTEM on Windows, a root shell on Linux); a file manager with upload, download and ZIP; processes and services; registry editor and scheduled tasks on Windows; restart and shutdown |
 | **Scripts** | PowerShell, cmd, bash and sh on one device, many at once or on a schedule, from a script library; results per device |
-| **Updates and software** | missing Windows updates and Linux packages (apt, dnf), installed by hand or on a schedule; programs through winget and optionally Chocolatey; your own MSI/EXE library deployed silently to many devices; every installed program listed and silently uninstalled; Windows event logs |
+| **Updates and software** | missing Windows updates and Linux packages (apt, dnf), installed by hand or on a schedule, with one overview of missing updates and pending restarts for all devices; programs through winget and optionally Chocolatey; your own MSI/EXE library deployed silently to many devices; every installed program listed (and silently uninstalled on Windows); Windows event logs |
 | **Reports** | per customer: devices, updates, alerts and technician work; printable or emailed every week or month |
 | **Policies** | Windows Update, required software (installed automatically when missing), blocked programs, program updates with update rings, restarts with a deadline, maintenance windows, network checks, alert rules, event log and process monitors, automations and BitLocker per customer, site or device; every new customer gets a *Default* policy; the most specific assignment wins |
 | **Activity** | every action on a device is a task: running, waiting (offline devices) and history, with cancel and stop |
@@ -75,9 +75,9 @@ Then open `https://<address>:8443`, enter the setup token, create the first admi
 | **Vulnerabilities** | installed programs checked against NVD (common Windows programs) and OSV (Debian, Ubuntu packages); per device and fleet-wide, alerts for critical ones |
 | **Custom fields** | your own fields for devices and customers (asset number, warranty, contract), also through the API |
 | **API** | REST API with personal tokens (role no higher than the user's), documented in the console |
-| **Users** | roles (administrator, technician, read-only) and per-customer access; two-factor sign-in; Active Directory / LDAP and single sign-on (OpenID Connect, SAML) |
+| **Users** | roles (administrator, technician, read-only) and per-customer access; two-factor sign-in with single-use recovery codes; Active Directory / LDAP and single sign-on (OpenID Connect, SAML) |
 | **Server** | Let's Encrypt or your own certificate, signed self-update (official or testing channel), daily console backup (optionally encrypted, copied over SFTP) with restore, network and time zone from the console, diagnostics without secrets, tamper-evident audit log |
-| **Deployment** | MSI with an enrollment code; a ready Group Policy startup script and Microsoft Intune Win32 app settings on every site page |
+| **Deployment** | MSI with an enrollment code; a ready Group Policy startup script and Microsoft Intune Win32 app settings on every site page; deleting a device in the console uninstalls its agent |
 
 ## How it works
 
@@ -230,7 +230,7 @@ In a load test, a server with 2 vCPU and 1 GB RAM handled 1,000 agents with abou
 No. Agents connect outbound to the server's agent port (8444). For computers outside your network, open only that port to the internet; the console (8443) stays reachable only from your own networks.
 
 **Does it have remote desktop?**
-Yes, built in and in the browser: Windows (including the sign-in and UAC screens) and Linux with X11, several monitors, clipboard and file copy. No separate remote-access product is needed.
+Yes, built in and in the browser. On Windows it includes the sign-in and UAC screens, choice of monitor, clipboard and file copy. On Linux with X11 you get the screen, keyboard and mouse; clipboard, file copy and choosing a monitor are Windows only. No separate remote-access product is needed.
 
 **Can it install Windows updates?**
 Yes: missing updates by hand or on a schedule, through policies with update rings, maintenance windows and restarts with a deadline. Programs are installed and updated through winget and optionally Chocolatey.
