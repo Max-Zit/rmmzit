@@ -11,7 +11,7 @@ require (
 	github.com/crewjam/saml v0.5.1
 	github.com/fergusstrange/embedded-postgres v1.34.0
 	github.com/go-ldap/ldap/v3 v3.4.15
-	github.com/jackc/pgx/v5 v5.11.0
+	github.com/jackc/pgx/v5 v5.12.0
 	github.com/jchv/go-webview2 v0.0.0-20260205173254-56598839c808
 	github.com/jezek/xgb v1.3.1
 	golang.org/x/crypto v0.58.0
@@ -28,7 +28,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
-	github.com/jackc/puddle/v2 v2.2.2 // indirect
+	github.com/jackc/puddle/v2 v2.2.3 // indirect
 	github.com/jchv/go-winloader v0.0.0-20250406163304-c1995be93bd1 // indirect
 	github.com/jonboulle/clockwork v0.5.0 // indirect
 	github.com/lib/pq v1.10.9 // indirect
