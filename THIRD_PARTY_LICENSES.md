@@ -5,7 +5,7 @@ Its programs contain the following components under their own licenses, all comp
 
 | Component | Version | License |
 |---|---|---|
-| Go standard library and runtime | go1.27.3 | BSD-3-Clause |
+| Go standard library and runtime | go1.27.4 | BSD-3-Clause |
 | github.com/Azure/go-ntlmssp | v0.1.1 | MIT |
 | github.com/beevik/etree | v1.8.1 | BSD-2-Clause |
 | github.com/coder/websocket | v1.8.15 | ISC |
