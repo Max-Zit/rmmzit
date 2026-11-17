@@ -16,6 +16,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"time"
@@ -111,10 +112,17 @@ func (c *Config) Save(dir string) error {
 	return os.Rename(tmp, filepath.Join(dir, configFile))
 }
 
+// serverHostRE is a DNS name or a bracketed IPv6 address, with an optional port.
+var serverHostRE = regexp.MustCompile(`^(\[[0-9A-Fa-f:.]+\]|[A-Za-z0-9]([A-Za-z0-9.-]*[A-Za-z0-9])?)(:[0-9]{1,5})?$`)
+
 // CheckServerURL validates the agent endpoint address.
 func CheckServerURL(s string) (string, error) {
 	u, err := url.Parse(strings.TrimRight(strings.TrimSpace(s), "/"))
-	if err != nil || u.Scheme != "https" || u.Host == "" || (u.Path != "" && u.Path != "/") || u.User != nil || u.RawQuery != "" {
+	// The host is a plain DNS name or IP address (IPv6 in brackets) with an
+	// optional port: no escapes or other characters, which url.Parse would
+	// decode into an address that reads differently the next time (found by
+	// FuzzParseEnrollCode). Internationalized names go in their xn-- form.
+	if err != nil || u.Scheme != "https" || !serverHostRE.MatchString(u.Host) || (u.Path != "" && u.Path != "/") || u.User != nil || u.RawQuery != "" || u.Fragment != "" {
 		return "", errors.New("the server address must look like https://rmm.example.com:8444")
 	}
 	return "https://" + u.Host, nil

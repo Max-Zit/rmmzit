@@ -13,12 +13,15 @@ func TestCheckServerURL(t *testing.T) {
 		"https://rmm.example.com:8444":  "https://rmm.example.com:8444",
 		"https://rmm.example.com:8444/": "https://rmm.example.com:8444",
 		" https://10.0.0.5:8444 ":       "https://10.0.0.5:8444",
+		"https://[fd00::5]:8444":        "https://[fd00::5]:8444",
+		"https://xn--bcher-kva.example": "https://xn--bcher-kva.example",
 	} {
 		if got, err := CheckServerURL(in); err != nil || got != want {
 			t.Errorf("%q: %q %v", in, got, err)
 		}
 	}
-	for _, bad := range []string{"http://rmm:8444", "rmm:8444", "https://user@rmm:8444", "https://rmm:8444/x", "https://rmm:8444?a=1"} {
+	for _, bad := range []string{"http://rmm:8444", "rmm:8444", "https://user@rmm:8444", "https://rmm:8444/x", "https://rmm:8444?a=1",
+		"https://rmm%2Fx:8444", "https://rm%41m:8444", "https://bücher.example", "https://rmm\x00:8444", "https://-rmm:8444", "https://rmm:8444#x", "https://:8444"} {
 		if _, err := CheckServerURL(bad); err == nil {
 			t.Errorf("%q accepted", bad)
 		}
