@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "Skrýt na 5 dní",
   "Pull the new image on the Docker host.": "Stáhněte nový image na hostiteli Docker.",
   "RMMZit %s is available (installed: %s).": "Je k dispozici RMMZit %s (nainstalováno: %s).",
-  "Release notes": "Poznámky k verzi"
+  "Release notes": "Poznámky k verzi",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "Žádné online zařízení s agentem 0.14 nebo novějším na stejném místě nemůže odeslat probouzecí paket.",
+  "Send a Wake-on-LAN packet through an online device of the same site": "Odeslat paket Wake-on-LAN přes online zařízení na stejném místě",
+  "The devices of the site could not send the wake-up packet.": "Zařízení místa nemohla odeslat probouzecí paket.",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "Inventář tohoto zařízení nemá adresu síťové karty (MAC), kterou by se dalo probudit.",
+  "Wake up": "Probudit",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "Probouzecí paket odeslán přes %s. Počítač bude online za minutu nebo dvě, pokud je Wake-on-LAN zapnuté v BIOSu a síťové kartě."
 }

@@ -420,6 +420,7 @@ func (s *Server) Handler() http.Handler {
 	admin("POST /scripts/{sid}/schedules", s.handleScheduleAdd)
 	admin("POST /schedules/{id}", s.handleScheduleChange)
 	app("POST /devices/{id}/refresh", s.handleDeviceRefresh)
+	app("POST /devices/{id}/wake", s.handleDeviceWake)
 	app("POST /devices/{id}/delete", s.handleDeviceDelete)
 	app("GET /account", s.handleAccount)
 	app("POST /account/password", s.handleAccountPassword)

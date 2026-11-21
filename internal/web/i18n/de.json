@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "5 Tage ausblenden",
   "Pull the new image on the Docker host.": "Laden Sie das neue Image auf dem Docker-Host.",
   "RMMZit %s is available (installed: %s).": "RMMZit %s ist verfügbar (installiert: %s).",
-  "Release notes": "Versionshinweise"
+  "Release notes": "Versionshinweise",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "Kein Online-Gerät mit Agent 0.14 oder neuer am selben Standort kann das Weckpaket senden.",
+  "Send a Wake-on-LAN packet through an online device of the same site": "Ein Wake-on-LAN-Paket über ein Online-Gerät desselben Standorts senden",
+  "The devices of the site could not send the wake-up packet.": "Die Geräte des Standorts konnten das Weckpaket nicht senden.",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "Das Inventar dieses Geräts enthält keine Netzwerkkartenadresse (MAC), mit der es geweckt werden kann.",
+  "Wake up": "Aufwecken",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "Weckpaket über %s gesendet. Der Computer ist in ein bis zwei Minuten online, wenn Wake-on-LAN in BIOS und Netzwerkkarte eingeschaltet ist."
 }

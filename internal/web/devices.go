@@ -52,6 +52,8 @@ type deviceData struct {
 	Fields    []store.CustomField
 	// WatchScreen: a read-only user may watch the screen (setting).
 	WatchScreen bool
+	// CanWake: offline, with a network card address, and the user may act.
+	CanWake bool
 }
 
 func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
@@ -74,6 +76,7 @@ func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
 	}
 	dd.Fields, _ = s.store.FieldValues(r.Context(), "device", d.ID)
 	dd.WatchScreen = !userFrom(r).CanWrite() && s.Remote(r.Context()).ReadOnlyView
+	dd.CanWake = !dd.Online && userFrom(r).CanWrite() && len(wakeMACs(d)) > 0
 	if d.Inventory != nil {
 		q := strings.ToLower(strings.TrimSpace(r.FormValue("sw")))
 		dd.SwQuery = q

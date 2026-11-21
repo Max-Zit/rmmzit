@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "Sakrij na 5 dana",
   "Pull the new image on the Docker host.": "Preuzmite novi image na Docker hostu.",
   "RMMZit %s is available (installed: %s).": "Dostupan je RMMZit %s (instalirano: %s).",
-  "Release notes": "Beleške o izdanju"
+  "Release notes": "Beleške o izdanju",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "Nijedan uređaj na mreži sa agentom 0.14 ili novijim na istoj lokaciji ne može da pošalje paket za buđenje.",
+  "Send a Wake-on-LAN packet through an online device of the same site": "Pošalji Wake-on-LAN paket preko uređaja na mreži na istoj lokaciji",
+  "The devices of the site could not send the wake-up packet.": "Uređaji lokacije nisu mogli da pošalju paket za buđenje.",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "Inventar ovog uređaja nema adresu mrežne kartice (MAC) kojom bi se probudio.",
+  "Wake up": "Probudi",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "Paket za buđenje poslat preko %s. Računar će biti na mreži za minut ili dva ako je Wake-on-LAN uključen u BIOS-u i mrežnoj kartici."
 }

@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "5 日間表示しない",
   "Pull the new image on the Docker host.": "Docker ホストで新しいイメージを取得してください。",
   "RMMZit %s is available (installed: %s).": "RMMZit %s が利用可能です (インストール済み: %s)。",
-  "Release notes": "リリースノート"
+  "Release notes": "リリースノート",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "同じサイトに、エージェント 0.14 以降でオンラインのデバイスがないため、起動パケットを送信できません。",
+  "Send a Wake-on-LAN packet through an online device of the same site": "同じサイトのオンラインのデバイスから Wake-on-LAN パケットを送信する",
+  "The devices of the site could not send the wake-up packet.": "サイトのデバイスから起動パケットを送信できませんでした。",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "このデバイスのインベントリには、起動に使うネットワークカードのアドレス (MAC) がありません。",
+  "Wake up": "起動",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "%s から起動パケットを送信しました。BIOS とネットワークカードで Wake-on-LAN がオンなら、1〜2 分でオンラインになります。"
 }

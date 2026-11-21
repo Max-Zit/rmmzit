@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "5 dagen verbergen",
   "Pull the new image on the Docker host.": "Haal de nieuwe image op de Docker-host op.",
   "RMMZit %s is available (installed: %s).": "RMMZit %s is beschikbaar (geïnstalleerd: %s).",
-  "Release notes": "Versie-informatie"
+  "Release notes": "Versie-informatie",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "Geen online apparaat met agent 0.14 of nieuwer op dezelfde locatie kan het wekpakket versturen.",
+  "Send a Wake-on-LAN packet through an online device of the same site": "Een Wake-on-LAN-pakket versturen via een online apparaat op dezelfde locatie",
+  "The devices of the site could not send the wake-up packet.": "De apparaten van de locatie konden het wekpakket niet versturen.",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "De inventaris van dit apparaat heeft geen netwerkkaartadres (MAC) om het mee te wekken.",
+  "Wake up": "Wekken",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "Wekpakket verstuurd via %s. De computer komt binnen een à twee minuten online als Wake-on-LAN in het BIOS en de netwerkkaart is ingeschakeld."
 }

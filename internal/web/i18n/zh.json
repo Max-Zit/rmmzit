@@ -1750,5 +1750,11 @@
   "Hide for 5 days": "隐藏 5 天",
   "Pull the new image on the Docker host.": "请在 Docker 主机上拉取新镜像。",
   "RMMZit %s is available (installed: %s).": "RMMZit %s 已可用（已安装：%s）。",
-  "Release notes": "发行说明"
+  "Release notes": "发行说明",
+  "No online device with agent 0.14 or newer in the same site can send the wake-up packet.": "同一站点中没有装有 0.14 或更新代理的在线设备可以发送唤醒数据包。",
+  "Send a Wake-on-LAN packet through an online device of the same site": "通过同一站点的在线设备发送网络唤醒数据包",
+  "The devices of the site could not send the wake-up packet.": "该站点的设备无法发送唤醒数据包。",
+  "The inventory of this device has no network card address (MAC) to wake it with.": "此设备的清单中没有可用于唤醒的网卡地址 (MAC)。",
+  "Wake up": "唤醒",
+  "Wake-up packet sent through %s. The computer comes online in a minute or two if Wake-on-LAN is switched on in its BIOS and network card.": "已通过 %s 发送唤醒数据包。如果 BIOS 和网卡已开启网络唤醒，电脑会在一两分钟内上线。"
 }

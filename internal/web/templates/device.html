@@ -16,6 +16,7 @@
     <a class="tile-btn" href="/devices/{{$d.ID}}/terminal" data-rdwin="{{$d.ID}}" data-winname="czterm"{{if not .Data.Online}} aria-disabled="true"{{end}}><span class="tb-ic">{{template "icon" "terminal"}}</span><span><b>{{.T "Terminal"}}</b><small>{{if $d.IsWindows}}{{.T "PowerShell as SYSTEM in the browser"}}{{else}}{{.T "Root shell in the browser"}}{{end}}</small></span></a>
     <a class="tile-btn" href="/devices/{{$d.ID}}/files"{{if not .Data.Online}} aria-disabled="true"{{end}}><span class="tb-ic">{{template "icon" "folder"}}</span><span><b>{{.T "Files"}}</b><small>{{.T "Without connecting to the screen"}}</small></span></a>
     <div class="power-btns">
+      {{if .Data.CanWake}}<form method="post" action="/devices/{{$d.ID}}/wake"><button class="primary" title="{{.T "Send a Wake-on-LAN packet through an online device of the same site"}}">{{template "icon" "power"}}{{.T "Wake up"}}</button></form>{{end}}
       {{template "powerpop" (powerPop . "restart")}}
       {{template "powerpop" (powerPop . "shutdown")}}
     </div>
