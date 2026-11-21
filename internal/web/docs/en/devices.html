@@ -27,6 +27,9 @@
   <tr><td>Activity</td><td>What the console is doing on the device: running and waiting tasks, which can be stopped or cancelled, and the history, see <a href="/docs/devices#activity">Activity</a>.</td></tr>
 </table>
 
+<h2 id="tags">Tags and groups</h2>
+<p><b>Tags</b> are short names on devices, for example <i>Servers</i> or <i>Reception</i>. Technicians add them on the device page or, for many devices at once, with <b>Add a tag</b> in the device list; the list shows them and filters by them. Scripts can run on the devices of a tag, and administrators can assign a policy to a tag (see <a href="/docs/policies#assign">Policies</a>). Administrators rename and delete tags under <a href="/settings/tags">Settings → Tags</a>.</p>
+<p>A <b>group</b> is a saved search: search or filter the device list, then <b>Save this search as a group</b>. The group's button above the list shows the devices that match now, so devices that get the tag or the state later appear by themselves. Its creator or an administrator deletes it.</p>
 <h2 id="activity">Activity</h2>
 <p>Every action of the console on a device is a task: scripts, library jobs, Windows Update searches and installations, installing and uninstalling programs (winget, Chocolatey, the software library), agent updates, restart and shutdown, also the automatic ones of the server. The <b>Activity</b> tab of a device shows what is <b>running</b>, what is <b>waiting</b> and the <b>history</b> with the result and who started it; the number in the tab counts the running and waiting tasks. A task's name links to its details, for example the output of a script.</p>
 <p>The tasks of a device run one after the other. If the device is offline, a task waits until it connects, up to 24 hours. You can leave the page at any time: a quick task shows its result at once, a longer one keeps running and the Activity tab updates by itself. <b>Cancel</b> removes a waiting task; <b>Stop</b> ends a running one: the agent stops the script or installer it runs for it, including the processes they started. Windows itself may still finish the update it is installing at that moment.</p>
@@ -37,5 +40,6 @@
 <h2 id="power">Restart and shutdown</h2>
 <p>The power buttons on the device page restart or shut down the computer, now or after a delay, with an optional message to the signed-in user; a scheduled restart can be cancelled. Users signed in there lose unsaved work.</p>
 
+<p><b>Wake up</b> appears on an offline device whose inventory has a network card address: an online device of the same site (agent 0.14 or newer) sends the Wake-on-LAN packet in its network. Wake-on-LAN must be switched on in the computer's BIOS/UEFI and network card, and it works within one network.</p>
 <h2 id="remove">Removing a device</h2>
 <p><b>Remove device</b> deletes it from the console. An online agent uninstalls itself; see <a href="/docs/agents#remove">Removing an agent</a>.</p>

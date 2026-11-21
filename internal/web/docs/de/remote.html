@@ -10,6 +10,9 @@
   <li><b>Anmelde- und UAC-Bildschirme</b> werden angezeigt und sind bedienbar, sodass Sie sich anmelden und Administratorabfragen bestätigen können.</li>
 </ul>
 
+<h3 id="view-only">Nur ansehen</h3>
+<p><b>Nur ansehen</b> neben <b>Fernsteuerung</b> zeigt den Bildschirm, ohne die Steuerung zu übernehmen: Maus, Tastatur, Zwischenablage und Dateien bleiben bei der Person am Computer, und der Hinweis sagt ihr, dass Sie zusehen. Server und Agent lehnen in einer solchen Sitzung jede Eingabe ab. Benutzer mit Lesezugriff können so die Bildschirme ihrer Geräte ansehen, wenn ein Administrator das unter <a href="/settings/remote">Einstellungen → Fernsteuerung</a> erlaubt (standardmäßig aus).</p>
+<p>Solange Sie verbunden sind, bleiben der Computer und sein Bildschirm wach, und ein schlafender Monitor wird beim Start der Sitzung geweckt. <b>Strg+Alt+Entf senden</b> schickt der Agentendienst, daher funktioniert es auch auf dem Anmeldebildschirm von Servern. Eine ruhige Sitzung bleibt offen: Die Konsole hält die Verbindung am Leben, auch wenn sich der Bildschirm nicht ändert.</p>
 <h3 id="clipboard">Zwischenablage und Dateien</h3>
 <p>Auf Windows-Computern geht kopierter Text in beide Richtungen mit <kbd>Strg</kbd>+<kbd>C</kbd> und <kbd>Strg</kbd>+<kbd>V</kbd>. In Ihrem Explorer kopierte <b>Dateien</b> werden auf dem entfernten Computer mit <kbd>Strg</kbd>+<kbd>V</kbd> eingefügt. Auf dem entfernten Computer kopierte Dateien werden zum Download angeboten (<b>Kopierte Dateien herunterladen</b>), weil ein Browser keine Dateien in Ihre Zwischenablage legen kann. Der Austausch über die Zwischenablage lässt sich unter <a href="/settings/remote">Einstellungen → Fernsteuerung</a> ausschalten.</p>
 

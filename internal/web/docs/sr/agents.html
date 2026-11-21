@@ -10,6 +10,7 @@
 <h2 id="codes">Kodovi za prijavu</h2>
 <p>Agenti se priključuju <b>lokaciji</b> klijenta pomoću koda za prijavu. Otvorite lokaciju u <a href="/customers">Klijenti</a> i kliknite <b>Napravi kod za prijavu</b>. Birate koliko dugo važi (1–365 dana) i koliko ga računara sme iskoristiti. Kod (<code>RZ1-…</code>) sadrži adresu servera i otisak sertifikata servera, pa instalaciji ne treba ništa drugo. Prikazuje se samo jednom; opozovite ga kad više nije potreban.</p>
 
+<p>Adresa servera u kodu je <b>javna adresa za agente</b> iz <a href="/settings/network">Podešavanja → Mreža i pristup</a>, kada je upisana. Posle promene te adrese napravite nov kod: ranije napravljeni kodovi i dalje nose staru adresu. Sam MSI je isti za svaku konzolu; adresa uvek dolazi sa kodom.</p>
 <h2 id="windows">Windows</h2>
 <p>Preuzmite MSI na stranici lokacije (<b>Preuzmi agenta (MSI, 64-bit)</b>) i ili ga pokrenite dvoklikom i nalepite kod, ili ga instalirajte tiho, na primer preko Group Policy-ja, Intune-a ili skripte:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

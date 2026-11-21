@@ -10,6 +10,7 @@
 <h2 id="codes">Codici di registrazione</h2>
 <p>Gli agent entrano in una <b>sede</b> di un cliente con un codice di registrazione. Apri la sede in <a href="/customers">Clienti</a> e fai clic su <b>Crea codice di registrazione</b>. Scegli quanto dura (1–365 giorni) e quanti computer possono usarlo. Il codice (<code>RZ1-…</code>) contiene l'indirizzo del server e l'impronta del suo certificato, quindi l'installer non ha bisogno d'altro. Viene mostrato una sola volta; revocalo quando non serve più.</p>
 
+<p>L'indirizzo del server nel codice è l'<b>indirizzo pubblico per gli agenti</b> di <a href="/settings/network">Impostazioni → Rete e accesso</a>, se impostato. Dopo aver cambiato questo indirizzo, crei un nuovo codice: i codici creati prima contengono ancora l'indirizzo vecchio. L'MSI è lo stesso per ogni console; l'indirizzo arriva sempre con il codice.</p>
 <h2 id="windows">Windows</h2>
 <p>Scarica l'MSI dalla pagina della sede (<b>Scarica l'agent (MSI, 64 bit)</b>) e fai doppio clic e incolla il codice, oppure installalo in modo silenzioso, ad esempio con Criteri di gruppo, Intune o uno script:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

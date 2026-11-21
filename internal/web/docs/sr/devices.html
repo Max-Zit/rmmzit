@@ -27,6 +27,9 @@
   <tr><td>Aktivnosti</td><td>Šta konzola radi na uređaju: zadaci u toku i na čekanju, koji mogu da se zaustave ili otkažu, i istorija, vidi <a href="/docs/devices#activity">Aktivnosti</a>.</td></tr>
 </table>
 
+<h2 id="tags">Tagovi i grupe</h2>
+<p><b>Tagovi</b> su kratka imena na uređajima, na primer <i>Serveri</i> ili <i>Recepcija</i>. Tehničari ih dodaju na stranici uređaja ili, za više uređaja odjednom, sa <b>Dodaj tag</b> u listi uređaja; lista ih prikazuje i filtrira po njima. Skripte mogu da se pokrenu na uređajima sa tagom, a administratori mogu tagu da dodele polisu (vidi <a href="/docs/policies#assign">Polise</a>). Administratori preimenuju i brišu tagove u <a href="/settings/tags">Podešavanja → Tagovi</a>.</p>
+<p><b>Grupa</b> je sačuvana pretraga: pretražite ili filtrirajte listu uređaja, pa izaberite <b>Sačuvaj ovu pretragu kao grupu</b>. Dugme grupe iznad liste prikazuje uređaje koji sada odgovaraju; uređaji koji tag ili stanje dobiju kasnije pojavljuju se sami. Briše je njen autor ili administrator.</p>
 <h2 id="activity">Aktivnosti</h2>
 <p>Svaka akcija konzole na uređaju je zadatak: skripte, poslovi iz biblioteke, pretraga i instalacija Windows ažuriranja, instalacija i deinstalacija programa (winget, Chocolatey, biblioteka softvera), ažuriranje agenta, restart i gašenje, kao i automatske akcije servera. Kartica <b>Aktivnosti</b> uređaja prikazuje šta je <b>u toku</b>, šta <b>čeka</b> i <b>istoriju</b> sa rezultatom i onim ko je pokrenuo; broj na kartici broji zadatke u toku i na čekanju. Naziv zadatka vodi na detalje, na primer na izlaz skripte.</p>
 <p>Zadaci jednog uređaja izvršavaju se jedan za drugim. Ako uređaj nije na mreži, zadatak čeka da se poveže, do 24 sata. Stranicu možete napustiti bilo kada: brz zadatak odmah prikaže rezultat, a duži nastavlja da radi i kartica Aktivnosti se sama osvežava. <b>Otkaži</b> uklanja zadatak na čekanju; <b>Zaustavi</b> prekida zadatak u toku: agent zaustavlja skriptu ili instaler koji za njega pokreće, zajedno sa procesima koje su oni pokrenuli. Windows ipak može da završi ažuriranje koje u tom trenutku instalira.</p>
@@ -37,5 +40,6 @@
 <h2 id="power">Restart i gašenje</h2>
 <p>Dugmad za napajanje na stranici uređaja restartuju ili gase računar, odmah ili posle odlaganja, uz poruku prijavljenom korisniku po želji; zakazani restart se može otkazati. Korisnici prijavljeni na računaru gube nesačuvan rad.</p>
 
+<p><b>Probudi</b> se pojavljuje na uređaju van mreže čiji inventar ima adresu mrežne kartice: uređaj na mreži na istoj lokaciji (agent 0.14 ili noviji) šalje Wake-on-LAN paket u svojoj mreži. Wake-on-LAN mora biti uključen u BIOS-u/UEFI-ju i mrežnoj kartici računara i radi unutar jedne mreže.</p>
 <h2 id="remove">Uklanjanje uređaja</h2>
 <p><b>Ukloni uređaj</b> ga briše iz konzole. Agent na mreži se sam deinstalira; vidi <a href="/docs/agents#remove">Uklanjanje agenta</a>.</p>

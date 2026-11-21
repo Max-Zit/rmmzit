@@ -34,6 +34,7 @@
 <p><b>Kanál aktualizací</b>: <i>Oficiální verze</i> (výchozí) nebo <i>Testování</i>, který nabízí kandidáty na vydání dříve, než se stanou oficiálními, pro testovací konzoli. Produkční konzole nechte na oficiálních verzích.</p>
 <div class="callout"><p>Aktualizace, časové pásmo a síť potřebují <b>root pomocníka</b>, který je součástí balíčků pro Linux a appliance. Bez něj (např. samostatný program) aktualizujte pomocí <code>install.sh</code> nebo balíčku vydání.</p></div>
 
+<p>Když vyjde nová verze, správci vidí upozornění nahoře na každé stránce: <b>Instalovat</b> otevře tuto stránku (potvrzení zůstává zde), <b>Poznámky k verzi</b> ukážou novinky. <b>×</b> skryje upozornění pro vás na pět dní, v každém prohlížeči; ještě novější verze ho ukáže hned znovu. Konzole v kontejneru místo Instalovat ukazují příkazy ke stažení nového image.</p>
 <h2 id="agent-updates">Aktualizace agentů</h2>
 <p>Viz <a href="/docs/agents#updates">Instalace agentů → Aktualizace agentů</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Vlastní pole</h2>
 <p>V <a href="/settings/fields">Nastavení → Vlastní pole</a> správci přidávají vlastní pole pro zařízení a zákazníky — text, číslo nebo datum — například inventární číslo, konec záruky nebo smlouvu. Technici je vyplňují na stránkách zařízení a zákazníků; API vrací pole s každým zařízením a nastavuje je přes <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Štítky</h2>
+<p>V <a href="/settings/tags">Nastavení → Štítky</a> správci přejmenovávají a mažou štítky zařízení. Smazání odebere štítek ze všech zařízení a zruší zásadu, která mu byla přiřazena.</p>
 <h2 id="backup">Záloha konzole</h2>
 <p><a href="/settings/backup">Nastavení → Záloha konzole</a> zálohuje konzoli každý den ve zvolenou hodinu, nebo hned tlačítkem <b>Zálohovat nyní</b>. Záloha obsahuje databázi, tajný klíč uložených hesel, certifikáty a klíče, kterým agenti důvěřují, a knihovnu softwaru. Nejnovější zálohy (kolik zvolíte) zůstávají ve složce <code>backups</code> datového adresáře a lze je stáhnout ze stránky.</p>
 <p>S <b>heslem</b> jsou soubory šifrované (AES-256-GCM); heslo uchovávejte jinde, protože bez něj zálohu nelze obnovit. Kopie každé zálohy může jít do <b>složky SFTP</b> na jiném serveru (heslo nebo soukromý klíč). První test spojení ukáže klíč hostitele serveru, kterému máte důvěřovat; kopie jdou jen na server s tímto klíčem. Když záloha nebo její kopie selže, příjemci e-mailů s upozorněními dostanou e-mail.</p>

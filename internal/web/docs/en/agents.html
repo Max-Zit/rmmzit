@@ -10,6 +10,7 @@
 <h2 id="codes">Enrollment codes</h2>
 <p>Agents join a <b>site</b> of a customer with an enrollment code. Open the site under <a href="/customers">Customers</a> and click <b>Create enrollment code</b>. You choose how long it is valid (1–365 days) and how many computers may use it. The code (<code>RZ1-…</code>) contains the server address and the fingerprint of the server certificate, so the installer needs nothing else. It is shown only once; revoke it when it is no longer needed.</p>
 
+<p>The server address in the code is the <b>public agent address</b> under <a href="/settings/network">Settings → Network and access</a> when one is set. After changing that address, create a new code: codes made before still carry the old address. The MSI itself is the same for every console; the address always comes with the code.</p>
 <h2 id="windows">Windows</h2>
 <p>Download the MSI on the site page (<b>Download the agent (MSI, 64-bit)</b>) and either double-click it and paste the code, or install it silently, for example with Group Policy, Intune or a script:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

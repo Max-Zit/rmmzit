@@ -10,6 +10,7 @@
 <h2 id="codes">Kayıt kodları</h2>
 <p>Ajanlar bir müşterinin <b>konumuna</b> bir kayıt koduyla katılır. Konumu <a href="/customers">Müşteriler</a> altında açın ve <b>Kayıt kodu oluştur</b>'a tıklayın. Ne kadar süre geçerli olacağını (1–365 gün) ve kaç bilgisayarın kullanabileceğini seçersiniz. Kod (<code>RZ1-…</code>) sunucu adresini ve sertifika parmak izini içerir, bu yüzden yükleyicinin başka bir şeye ihtiyacı yoktur. Yalnızca bir kez gösterilir; artık gerekmediğinde iptal edin.</p>
 
+<p>Koddaki sunucu adresi, ayarlanmışsa <a href="/settings/network">Ayarlar → Ağ ve erişim</a> altındaki <b>genel ajan adresidir</b>. Bu adresi değiştirdikten sonra yeni bir kod oluşturun: daha önce oluşturulan kodlar hâlâ eski adresi taşır. MSI'nin kendisi her konsol için aynıdır; adres her zaman kodla gelir.</p>
 <h2 id="windows">Windows</h2>
 <p>MSI'yı konum sayfasından indirin (<b>Ajanı indir (MSI, 64 bit)</b>) ve çift tıklayıp kodu yapıştırın ya da örneğin Grup İlkesi, Intune veya bir betikle sessiz kurun:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

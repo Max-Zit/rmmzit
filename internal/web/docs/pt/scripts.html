@@ -10,9 +10,11 @@
 <h2 id="jobs">Tarefas</h2>
 <p>Executar um script da biblioteca em vários dispositivos cria uma <b>tarefa</b>. A página da tarefa mostra cada dispositivo com o seu estado (em espera, em execução, concluído, falhado, expirado) e a sua saída. O código de saída 0 conta como sucesso. Os dispositivos offline executam o script quando se ligam, dentro de 24 horas; depois disso contam como expirados. No máximo 32 scripts de tarefas correm ao mesmo tempo; os outros dispositivos mostram <b>em espera</b> até haver um lugar livre.</p>
 
+<p>Além de dispositivos, locais e clientes, pode escolher <b>etiquetas</b>: a tarefa corre então nos dispositivos que as têm. Também assim os técnicos só chegam aos dispositivos dos seus clientes.</p>
 <h2 id="schedules">Agendamentos</h2>
 <p>Um script da biblioteca pode correr segundo um agendamento: nos dias da semana escolhidos a uma hora (hora do servidor), em dispositivos individuais, em todos os dispositivos de alguns clientes ou em todos os dispositivos (incluindo novos). Um agendamento pode ser pausado e retomado. Os dispositivos offline nessa altura executam o script quando se ligam, dentro de 24 horas.</p>
 
+<p>Um agendamento também pode correr nos dispositivos das etiquetas escolhidas; em cada execução usa os dispositivos que as têm, por isso os dispositivos etiquetados depois juntam-se sozinhos.</p>
 <h2 id="audit">O que é registado</h2>
 <p>O script e o início da sua saída são registados na auditoria com o seu nome. Os utilizadores só de leitura não podem executar scripts.</p>
 <div class="callout warn"><p>Os scripts têm todos os direitos nos computadores. Mantenha a biblioteca organizada, dê aos técnicos apenas os clientes de que precisam e teste um script num dispositivo antes de o executar em muitos.</p></div>

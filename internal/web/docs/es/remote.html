@@ -10,6 +10,9 @@
   <li><b>Las pantallas de inicio de sesión y UAC</b> se muestran y se pueden usar, así que puede iniciar sesión y confirmar solicitudes de administrador.</li>
 </ul>
 
+<h3 id="view-only">Solo ver</h3>
+<p><b>Solo ver</b>, junto a <b>Escritorio remoto</b>, muestra la pantalla sin tomar el control: el ratón, el teclado, el portapapeles y los archivos siguen en manos de la persona del equipo, y el aviso le indica que usted está mirando. Tanto el servidor como el agente rechazan cualquier entrada en esa sesión. Los usuarios de solo lectura pueden ver así la pantalla de sus dispositivos si un administrador lo permite en <a href="/settings/remote">Configuración → Escritorio remoto</a> (desactivado de forma predeterminada).</p>
+<p>Mientras está conectado, el equipo y su pantalla permanecen activos, y un monitor en reposo se enciende al empezar la sesión. <b>Enviar Ctrl+Alt+Supr</b> lo envía el servicio del agente, así que también funciona en la pantalla de inicio de sesión de los servidores. Una sesión inactiva sigue abierta: la consola mantiene la conexión aunque la pantalla no cambie.</p>
 <h3 id="clipboard">Portapapeles y archivos</h3>
 <p>En equipos Windows, el texto copiado va en ambos sentidos con <kbd>Ctrl</kbd>+<kbd>C</kbd> y <kbd>Ctrl</kbd>+<kbd>V</kbd>. Los <b>archivos</b> copiados en su Explorador se pegan en el equipo remoto con <kbd>Ctrl</kbd>+<kbd>V</kbd>. Los archivos copiados en el equipo remoto se ofrecen para descargar (<b>Descargar archivos copiados</b>), porque un navegador no puede poner archivos en su portapapeles. El intercambio de portapapeles se puede desactivar en <a href="/settings/remote">Configuración → Escritorio remoto</a>.</p>
 

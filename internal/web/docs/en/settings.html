@@ -34,6 +34,7 @@
 <p><b>Update channel</b>: <i>Official releases</i> (the default) or <i>Testing</i>, which offers release candidates before they become official, for a test console. Keep production consoles on official releases.</p>
 <div class="callout"><p>Updates, the time zone and the network need the <b>root helper</b> that comes with the Linux packages and the appliance. Without it (e.g. the plain program), update with <code>install.sh</code> or the package of the release.</p></div>
 
+<p>When a new version is out, administrators see a notice at the top of every page: <b>Install</b> opens this page (the confirmation stays here), <b>Release notes</b> shows what is new. <b>×</b> hides the notice for five days for you, in every browser; an even newer version shows it again at once. Consoles in a container show the commands to pull the new image instead of Install.</p>
 <h2 id="agent-updates">Agent updates</h2>
 <p>See <a href="/docs/agents#updates">Installing agents → Agent updates</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Custom fields</h2>
 <p>Under <a href="/settings/fields">Settings → Custom fields</a> administrators add their own fields for devices and customers — text, number or date — for example an asset number, the end of the warranty or a contract. Technicians fill them in on the device and customer pages; the API returns the device fields with each device and sets them with <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Tags</h2>
+<p>Under <a href="/settings/tags">Settings → Tags</a> administrators rename the device tags and delete them. Deleting takes the tag off all devices and removes the policy assigned to it.</p>
 <h2 id="backup">Console backup</h2>
 <p><a href="/settings/backup">Settings → Console backup</a> backs up the console every day at the chosen hour, or at once with <b>Back up now</b>. A backup holds the database, the secret key of the stored passwords, the certificates and keys the agents trust, and the software library. The newest backups (as many as you choose) stay in the folder <code>backups</code> of the data directory and can be downloaded from the page.</p>
 <p>With a <b>passphrase</b> the files are encrypted (AES-256-GCM); keep the passphrase elsewhere, because without it a backup cannot be restored. A copy of each backup can go to an <b>SFTP folder</b> on another server (password or private key). The first test of the connection shows the server's host key to trust; copies go only to a server with that key. When a backup or its copy fails, the alert email recipients get an email.</p>

@@ -10,9 +10,11 @@
 <h2 id="jobs">Trabajos</h2>
 <p>Ejecutar un script de la biblioteca en varios dispositivos crea un <b>trabajo</b>. La página del trabajo muestra cada dispositivo con su estado (en espera, en ejecución, correcto, fallido, caducado) y su salida. El código de salida 0 cuenta como éxito. Los dispositivos sin conexión ejecutan el script al conectarse, en un plazo de 24 horas; después cuentan como caducados. Como máximo se ejecutan 32 scripts de trabajos a la vez; los demás dispositivos muestran <b>en espera</b> hasta que haya un hueco libre.</p>
 
+<p>Además de dispositivos, sitios y clientes, puede elegir <b>etiquetas</b>: el trabajo se ejecuta entonces en los dispositivos que las tienen. Los técnicos también así solo llegan a los dispositivos de sus clientes.</p>
 <h2 id="schedules">Programaciones</h2>
 <p>Un script de la biblioteca puede ejecutarse según una programación: los días de la semana elegidos a una hora (hora del servidor), en dispositivos concretos, en todos los dispositivos de algunos clientes o en todos los dispositivos (también los nuevos). Una programación se puede pausar y reanudar. Los dispositivos sin conexión en ese momento ejecutan el script al conectarse, en un plazo de 24 horas.</p>
 
+<p>Una programación también puede ejecutarse en los dispositivos de las etiquetas elegidas; en cada ejecución toma los dispositivos que las tienen, de modo que los dispositivos etiquetados después se suman solos.</p>
 <h2 id="audit">Qué se registra</h2>
 <p>El script y el comienzo de su salida se anotan en el registro de auditoría con su nombre. Los usuarios de solo lectura no pueden ejecutar scripts.</p>
 <div class="callout warn"><p>Los scripts tienen todos los derechos en los equipos. Mantenga ordenada la biblioteca, dé a los técnicos solo los clientes que necesitan y pruebe un script en un dispositivo antes de ejecutarlo en muchos.</p></div>

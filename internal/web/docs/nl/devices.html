@@ -27,6 +27,9 @@
   <tr><td>Activiteit</td><td>Wat de console op het apparaat doet: lopende en wachtende taken, die gestopt of geannuleerd kunnen worden, en de geschiedenis, zie <a href="/docs/devices#activity">Activiteit</a>.</td></tr>
 </table>
 
+<h2 id="tags">Tags en groepen</h2>
+<p><b>Tags</b> zijn korte namen op apparaten, bijvoorbeeld <i>Servers</i> of <i>Receptie</i>. Technici voegen ze toe op de apparaatpagina of, voor veel apparaten tegelijk, met <b>Tag toevoegen</b> in de apparatenlijst; de lijst toont ze en filtert erop. Scripts kunnen op de apparaten van een tag draaien, en beheerders kunnen een beleid aan een tag toewijzen (zie <a href="/docs/policies#assign">Beleid</a>). Beheerders hernoemen en verwijderen tags onder <a href="/settings/tags">Instellingen → Tags</a>.</p>
+<p>Een <b>groep</b> is een opgeslagen zoekopdracht: zoek of filter de apparatenlijst en kies dan <b>Deze zoekopdracht als groep opslaan</b>. De knop van de groep boven de lijst toont de apparaten die nu voldoen; apparaten die de tag of toestand later krijgen, verschijnen vanzelf. De maker of een beheerder verwijdert hem.</p>
 <h2 id="activity">Activiteit</h2>
 <p>Elke actie van de console op een apparaat is een taak: scripts, bibliotheektaken, zoeken naar en installeren van Windows-updates, installeren en verwijderen van programma's (winget, Chocolatey, softwarebibliotheek), agentupdates, herstarten en afsluiten, ook de automatische acties van de server. Het tabblad <b>Activiteit</b> van een apparaat toont wat <b>loopt</b>, wat <b>wacht</b> en de <b>geschiedenis</b> met het resultaat en wie het startte; het getal op het tabblad telt de lopende en wachtende taken. De naam van een taak leidt naar de details, bijvoorbeeld de uitvoer van een script.</p>
 <p>De taken van een apparaat lopen na elkaar. Als het apparaat offline is, wacht een taak tot het verbinding maakt, tot 24 uur. U kunt de pagina altijd verlaten: een korte taak toont meteen het resultaat, een langere loopt door en het tabblad Activiteit werkt zichzelf bij. <b>Annuleren</b> verwijdert een wachtende taak; <b>Stoppen</b> beëindigt een lopende: de agent stopt het script of installatieprogramma dat hij ervoor uitvoert, inclusief de processen die die gestart hebben. Windows kan de update die het op dat moment installeert toch nog afmaken.</p>
@@ -37,5 +40,6 @@
 <h2 id="power">Herstarten en afsluiten</h2>
 <p>De aan/uit-knoppen op de apparaatpagina herstarten of sluiten de computer af, direct of na een vertraging, met een optioneel bericht aan de aangemelde gebruiker; een geplande herstart kan worden geannuleerd. Aangemelde gebruikers verliezen niet-opgeslagen werk.</p>
 
+<p><b>Wekken</b> verschijnt bij een offline apparaat waarvan de inventaris een netwerkkaartadres heeft: een online apparaat op dezelfde locatie (agent 0.14 of nieuwer) verstuurt het Wake-on-LAN-pakket in zijn netwerk. Wake-on-LAN moet in het BIOS/UEFI en de netwerkkaart van de computer zijn ingeschakeld en werkt binnen één netwerk.</p>
 <h2 id="remove">Een apparaat verwijderen</h2>
 <p><b>Apparaat verwijderen</b> haalt het uit de console. Een online agent verwijdert zichzelf; zie <a href="/docs/agents#remove">Een agent verwijderen</a>.</p>

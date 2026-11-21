@@ -10,6 +10,9 @@
   <li><b>Les écrans de connexion et UAC</b> sont affichés et utilisables, vous pouvez donc vous connecter et confirmer les demandes administrateur.</li>
 </ul>
 
+<h3 id="view-only">Visualisation seule</h3>
+<p><b>Visualisation seule</b>, à côté de <b>Bureau à distance</b>, affiche l'écran sans en prendre le contrôle : la souris, le clavier, le presse-papiers et les fichiers restent à la personne devant l'ordinateur, et l'avis lui indique que vous regardez. Le serveur et l'agent refusent toute saisie dans une telle session. Les utilisateurs en lecture seule peuvent ainsi voir l'écran de leurs appareils si un administrateur l'autorise dans <a href="/settings/remote">Paramètres → Bureau à distance</a> (désactivé par défaut).</p>
+<p>Tant que vous êtes connecté, l'ordinateur et son écran restent éveillés, et un moniteur en veille est réveillé au début de la session. <b>Envoyer Ctrl+Alt+Suppr</b> est envoyé par le service de l'agent, si bien que cela fonctionne aussi sur l'écran de connexion des serveurs. Une session inactive reste ouverte : la console maintient la connexion même si l'écran ne change pas.</p>
 <h3 id="clipboard">Presse-papiers et fichiers</h3>
 <p>Sur les ordinateurs Windows, le texte copié passe dans les deux sens avec <kbd>Ctrl</kbd>+<kbd>C</kbd> et <kbd>Ctrl</kbd>+<kbd>V</kbd>. Les <b>fichiers</b> copiés dans votre Explorateur sont collés sur l'ordinateur distant avec <kbd>Ctrl</kbd>+<kbd>V</kbd>. Les fichiers copiés sur l'ordinateur distant sont proposés au téléchargement (<b>Télécharger les fichiers copiés</b>), car un navigateur ne peut pas placer de fichiers dans votre presse-papiers. L'échange par le presse-papiers peut être désactivé dans <a href="/settings/remote">Paramètres → Bureau à distance</a>.</p>
 

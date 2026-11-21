@@ -10,9 +10,11 @@
 <h2 id="jobs">Úlohy</h2>
 <p>Spuštění skriptu z knihovny na více zařízeních vytvoří <b>úlohu</b>. Stránka úlohy ukazuje každé zařízení s jeho stavem (čeká, běží, úspěch, selhalo, vypršelo) a výstupem. Návratový kód 0 se počítá jako úspěch. Offline zařízení spustí skript po připojení, do 24 hodin; potom se počítají jako vypršelá. Najednou běží nejvýše 32 skriptů úloh; ostatní zařízení ukazují <b>čeká</b>, dokud se neuvolní místo.</p>
 
+<p>Kromě zařízení, míst a zákazníků můžete zvolit <b>štítky</b>: úloha pak běží na zařízeních, která je mají. I takto technici dosáhnou jen na zařízení svých zákazníků.</p>
 <h2 id="schedules">Plány</h2>
 <p>Skript z knihovny může běžet podle plánu: ve zvolené dny v týdnu v daný čas (čas serveru), na jednotlivých zařízeních, na všech zařízeních některých zákazníků nebo na všech zařízeních (i nových). Plán lze pozastavit a znovu spustit. Zařízení, která jsou v tu dobu offline, spustí skript po připojení, do 24 hodin.</p>
 
+<p>Plán může běžet i na zařízeních zvolených štítků; při každém spuštění vezme zařízení, která je mají, takže později označená zařízení se přidají sama.</p>
 <h2 id="audit">Co se zaznamenává</h2>
 <p>Skript a začátek jeho výstupu se zapisují do auditního protokolu s vaším jménem. Uživatelé jen pro čtení nemohou spouštět skripty.</p>
 <div class="callout warn"><p>Skripty mají na počítačích plná práva. Udržujte knihovnu v pořádku, technikům dávejte jen zákazníky, které potřebují, a skript vyzkoušejte na jednom zařízení, než jej spustíte na mnoha.</p></div>

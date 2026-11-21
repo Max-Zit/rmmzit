@@ -27,6 +27,9 @@
   <tr><td>Aktivita</td><td>Co konzole na zařízení dělá: běžící a čekající úlohy, které lze zastavit nebo zrušit, a historie, viz <a href="/docs/devices#activity">Aktivita</a>.</td></tr>
 </table>
 
+<h2 id="tags">Štítky a skupiny</h2>
+<p><b>Štítky</b> jsou krátké názvy na zařízeních, například <i>Servery</i> nebo <i>Recepce</i>. Technici je přidávají na stránce zařízení nebo pro více zařízení najednou pomocí <b>Přidat štítek</b> v seznamu zařízení; seznam je ukazuje a filtruje podle nich. Skripty mohou běžet na zařízeních se štítkem a správci mohou štítku přiřadit zásadu (viz <a href="/docs/policies#assign">Zásady</a>). Správci štítky přejmenovávají a mažou v <a href="/settings/tags">Nastavení → Štítky</a>.</p>
+<p><b>Skupina</b> je uložené hledání: vyhledejte nebo vyfiltrujte seznam zařízení a zvolte <b>Uložit toto hledání jako skupinu</b>. Tlačítko skupiny nad seznamem ukazuje zařízení, která nyní odpovídají; zařízení, která štítek nebo stav dostanou později, se objeví sama. Maže ji její autor nebo správce.</p>
 <h2 id="activity">Aktivita</h2>
 <p>Každá akce konzole na zařízení je úloha: skripty, úlohy z knihovny, hledání a instalace aktualizací Windows, instalace a odinstalace programů (winget, Chocolatey, knihovna softwaru), aktualizace agenta, restart a vypnutí, i automatické akce serveru. Karta <b>Aktivita</b> zařízení ukazuje, co <b>běží</b>, co <b>čeká</b>, a <b>historii</b> s výsledkem a tím, kdo úlohu spustil; číslo na kartě počítá běžící a čekající úlohy. Název úlohy vede na podrobnosti, například na výstup skriptu.</p>
 <p>Úlohy zařízení běží jedna po druhé. Pokud je zařízení offline, úloha čeká na připojení, až 24 hodin. Stránku můžete kdykoli opustit: rychlá úloha ukáže výsledek hned, delší běží dál a karta Aktivita se sama obnovuje. <b>Zrušit</b> odstraní čekající úlohu; <b>Zastavit</b> ukončí běžící: agent zastaví skript nebo instalátor, který pro ni spouští, včetně procesů, které spustily. Windows přesto může dokončit aktualizaci, kterou právě instaluje.</p>
@@ -37,5 +40,6 @@
 <h2 id="power">Restart a vypnutí</h2>
 <p>Tlačítka napájení na stránce zařízení restartují nebo vypnou počítač, hned nebo se zpožděním, s volitelnou zprávou přihlášenému uživateli; naplánovaný restart lze zrušit. Přihlášení uživatelé přijdou o neuloženou práci.</p>
 
+<p><b>Probudit</b> se objeví u offline zařízení, jehož inventář obsahuje adresu síťové karty: online zařízení na stejném místě (agent 0.14 nebo novější) odešle paket Wake-on-LAN ve své síti. Wake-on-LAN musí být zapnuté v BIOSu/UEFI a síťové kartě počítače a funguje v rámci jedné sítě.</p>
 <h2 id="remove">Odebrání zařízení</h2>
 <p><b>Odebrat zařízení</b> jej smaže z konzole. Agent online se sám odinstaluje; viz <a href="/docs/agents#remove">Odebrání agenta</a>.</p>

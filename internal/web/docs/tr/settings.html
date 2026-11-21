@@ -34,6 +34,7 @@
 <p><b>Güncelleme kanalı</b>: <i>Resmi sürümler</i> (varsayılan) veya resmileşmeden önce sürüm adaylarını sunan <i>Test</i> kanalı (bir test konsolu için). Üretim konsollarını resmi sürümlerde tutun.</p>
 <div class="callout"><p>Güncellemeler, saat dilimi ve ağ, Linux paketleri ve cihazla gelen <b>root yardımcısını</b> gerektirir. O yoksa (ör. yalnızca program), <code>install.sh</code> veya sürümün paketiyle güncelleyin.</p></div>
 
+<p>Yeni bir sürüm çıktığında yöneticiler her sayfanın üstünde bir bildirim görür: <b>Kur</b> bu sayfayı açar (onay burada kalır), <b>Sürüm notları</b> yenilikleri gösterir. <b>×</b> bildirimi sizin için beş gün boyunca her tarayıcıda gizler; daha da yeni bir sürüm onu hemen yeniden gösterir. Konteynerdeki konsollar Kur yerine yeni imajı çekme komutlarını gösterir.</p>
 <h2 id="agent-updates">Ajan güncellemeleri</h2>
 <p>Bkz. <a href="/docs/agents#updates">Ajanları kurma → Ajan güncellemeleri</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Özel alanlar</h2>
 <p><a href="/settings/fields">Ayarlar → Özel alanlar</a> altında yöneticiler cihazlar ve müşteriler için kendi alanlarını ekler — metin, sayı veya tarih — örneğin bir demirbaş numarası, garanti bitişi veya bir sözleşme. Teknisyenler bunları cihaz ve müşteri sayfalarında doldurur; API alanları her cihazla birlikte döndürür ve <code>PUT /api/v1/devices/{id}/fields</code> ile ayarlar.</p>
 
+<h2 id="tags">Etiketler</h2>
+<p><a href="/settings/tags">Ayarlar → Etiketler</a> altında yöneticiler cihaz etiketlerini yeniden adlandırır ve siler. Silme, etiketi tüm cihazlardan kaldırır ve ona atanan ilkeyi kaldırır.</p>
 <h2 id="backup">Konsol yedeği</h2>
 <p><a href="/settings/backup">Ayarlar → Konsol yedeği</a> konsolu her gün seçilen saatte veya <b>Şimdi yedekle</b> ile hemen yedekler. Bir yedek; veritabanını, kayıtlı parolaların gizli anahtarını, ajanların güvendiği sertifika ve anahtarları ve yazılım kitaplığını içerir. En yeni yedekler (seçtiğiniz sayıda) veri dizinindeki <code>backups</code> klasöründe kalır ve sayfadan indirilebilir.</p>
 <p><b>Parola</b> ile dosyalar şifrelenir (AES-256-GCM); parolayı başka bir yerde saklayın, çünkü parola olmadan yedek geri yüklenemez. Her yedeğin bir kopyası başka bir sunucudaki <b>SFTP klasörüne</b> gidebilir (parola veya özel anahtar). Bağlantının ilk testi, güvenilecek sunucu ana makine anahtarını gösterir; kopyalar yalnızca bu anahtara sahip sunucuya gider. Bir yedek veya kopyası başarısız olursa uyarı e-postası alıcılarına e-posta gönderilir.</p>

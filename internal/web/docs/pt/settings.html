@@ -34,6 +34,7 @@
 <p><b>Canal de atualização</b>: <i>Versões oficiais</i> (predefinido) ou <i>Testes</i>, que oferece as versões candidatas antes de se tornarem oficiais, para uma consola de testes. Mantenha as consolas de produção nas versões oficiais.</p>
 <div class="callout"><p>As atualizações, o fuso horário e a rede precisam do <b>auxiliar root</b> incluído nos pacotes Linux e no appliance. Sem ele (p. ex. o programa isolado), atualize com <code>install.sh</code> ou com o pacote da versão.</p></div>
 
+<p>Quando sai uma versão nova, os administradores veem um aviso no topo de cada página: <b>Instalar</b> abre esta página (a confirmação fica aqui) e <b>Notas da versão</b> mostra as novidades. <b>×</b> esconde o aviso durante cinco dias para si, em todos os navegadores; uma versão ainda mais recente volta a mostrá-lo de imediato. As consolas num contentor mostram os comandos para descarregar a nova imagem em vez de Instalar.</p>
 <h2 id="agent-updates">Atualizações dos agentes</h2>
 <p>Veja <a href="/docs/agents#updates">Instalar agentes → Atualizações dos agentes</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Campos personalizados</h2>
 <p>Em <a href="/settings/fields">Configurações → Campos personalizados</a> os administradores adicionam seus próprios campos para dispositivos e clientes — texto, número ou data —, por exemplo um número de patrimônio, o fim da garantia ou um contrato. Os técnicos os preenchem nas páginas de dispositivos e clientes; a API retorna os campos com cada dispositivo e os define com <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Etiquetas</h2>
+<p>Em <a href="/settings/tags">Definições → Etiquetas</a>, os administradores mudam o nome das etiquetas dos dispositivos e eliminam-nas. Eliminar retira a etiqueta de todos os dispositivos e remove a política atribuída a ela.</p>
 <h2 id="backup">Backup da consola</h2>
 <p><a href="/settings/backup">Definições → Backup da consola</a> faz o backup da consola todos os dias à hora escolhida, ou de imediato com <b>Fazer backup agora</b>. Um backup contém a base de dados, a chave secreta das palavras-passe guardadas, os certificados e chaves em que os agentes confiam e a biblioteca de software. Os backups mais recentes (tantos quantos escolher) ficam na pasta <code>backups</code> do diretório de dados e podem ser transferidos a partir da página.</p>
 <p>Com uma <b>frase-passe</b> os ficheiros são cifrados (AES-256-GCM); guarde-a noutro local, porque sem ela não é possível restaurar um backup. Uma cópia de cada backup pode ir para uma <b>pasta SFTP</b> noutro servidor (palavra-passe ou chave privada). O primeiro teste da ligação mostra a chave de anfitrião do servidor para confiar; as cópias só vão para um servidor com essa chave. Se um backup ou a sua cópia falhar, os destinatários dos e-mails de alerta recebem um e-mail.</p>

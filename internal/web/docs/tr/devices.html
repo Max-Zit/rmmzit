@@ -27,6 +27,9 @@
   <tr><td>Etkinlik</td><td>Konsolun cihazda yaptıkları: durdurulabilen veya iptal edilebilen çalışan ve bekleyen görevler ile geçmiş, bkz. <a href="/docs/devices#activity">Etkinlik</a>.</td></tr>
 </table>
 
+<h2 id="tags">Etiketler ve gruplar</h2>
+<p><b>Etiketler</b> cihazlardaki kısa adlardır, örneğin <i>Sunucular</i> veya <i>Resepsiyon</i>. Teknisyenler bunları cihaz sayfasında ya da birçok cihaz için aynı anda cihaz listesindeki <b>Etiket ekle</b> ile ekler; liste bunları gösterir ve onlara göre filtreler. Betikler bir etiketin cihazlarında çalışabilir, yöneticiler bir etikete ilke atayabilir (bkz. <a href="/docs/policies#assign">İlkeler</a>). Yöneticiler etiketleri <a href="/settings/tags">Ayarlar → Etiketler</a> altında yeniden adlandırır ve siler.</p>
+<p>Bir <b>grup</b>, kaydedilmiş bir aramadır: cihaz listesini arayın veya filtreleyin, ardından <b>Bu aramayı grup olarak kaydet</b>'i seçin. Listenin üstündeki grup düğmesi şu anda eşleşen cihazları gösterir; etiketi veya durumu sonradan alan cihazlar kendiliğinden görünür. Onu oluşturan kişi veya bir yönetici siler.</p>
 <h2 id="activity">Etkinlik</h2>
 <p>Konsolun bir cihazdaki her eylemi bir görevdir: betikler, kitaplık görevleri, Windows güncelleştirmelerini arama ve yükleme, program yükleme ve kaldırma (winget, Chocolatey, yazılım kitaplığı), aracı güncelleştirmeleri, yeniden başlatma ve kapatma, sunucunun otomatik eylemleri de. Bir cihazın <b>Etkinlik</b> sekmesi neyin <b>çalıştığını</b>, neyin <b>beklediğini</b> ve sonucu ile başlatanı içeren <b>geçmişi</b> gösterir; sekmedeki sayı çalışan ve bekleyen görevleri sayar. Bir görevin adı ayrıntılarına, örneğin bir betiğin çıktısına götürür.</p>
 <p>Bir cihazın görevleri sırayla çalışır. Cihaz çevrimdışıysa görev bağlanmasını 24 saate kadar bekler. Sayfadan istediğiniz zaman çıkabilirsiniz: kısa bir görev sonucunu hemen gösterir, daha uzun olan çalışmaya devam eder ve Etkinlik sekmesi kendini yeniler. <b>İptal</b> bekleyen bir görevi kaldırır; <b>Durdur</b> çalışan bir görevi bitirir: aracı onun için çalıştırdığı betiği veya yükleyiciyi, başlattıkları işlemlerle birlikte durdurur. Windows o anda yüklediği güncelleştirmeyi yine de tamamlayabilir.</p>
@@ -37,5 +40,6 @@
 <h2 id="power">Yeniden başlatma ve kapatma</h2>
 <p>Cihaz sayfasındaki güç düğmeleri bilgisayarı hemen veya bir gecikmeyle, oturum açmış kullanıcıya isteğe bağlı bir iletiyle yeniden başlatır ya da kapatır; zamanlanmış bir yeniden başlatma iptal edilebilir. Orada oturum açmış kullanıcılar kaydedilmemiş çalışmalarını kaybeder.</p>
 
+<p><b>Uyandır</b>, envanterinde bir ağ kartı adresi bulunan çevrimdışı bir cihazda görünür: aynı konumdaki çevrimiçi bir cihaz (ajan 0.14 veya daha yenisi) Wake-on-LAN paketini kendi ağında gönderir. Wake-on-LAN, bilgisayarın BIOS/UEFI'sinde ve ağ kartında açık olmalıdır ve tek bir ağ içinde çalışır.</p>
 <h2 id="remove">Bir cihazı kaldırma</h2>
 <p><b>Cihazı kaldır</b> onu konsoldan siler. Çevrimiçi bir ajan kendini kaldırır; bkz. <a href="/docs/agents#remove">Bir ajanı kaldırma</a>.</p>

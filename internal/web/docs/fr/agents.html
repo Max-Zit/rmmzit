@@ -10,6 +10,7 @@
 <h2 id="codes">Codes d'inscription</h2>
 <p>Les agents rejoignent un <b>site</b> d'un client avec un code d'inscription. Ouvrez le site dans <a href="/customers">Clients</a> et cliquez sur <b>Créer un code d'inscription</b>. Vous choisissez sa durée de validité (1–365 jours) et le nombre d'ordinateurs qui peuvent l'utiliser. Le code (<code>RZ1-…</code>) contient l'adresse du serveur et l'empreinte de son certificat, l'installateur n'a donc besoin de rien d'autre. Il n'est affiché qu'une fois ; révoquez-le quand il n'est plus utile.</p>
 
+<p>L'adresse du serveur dans le code est l'<b>adresse publique des agents</b> définie dans <a href="/settings/network">Paramètres → Réseau et accès</a>, si elle est renseignée. Après avoir modifié cette adresse, créez un nouveau code : les codes créés avant contiennent encore l'ancienne adresse. Le MSI lui-même est identique pour toutes les consoles ; l'adresse vient toujours avec le code.</p>
 <h2 id="windows">Windows</h2>
 <p>Téléchargez le MSI sur la page du site (<b>Télécharger l'agent (MSI, 64 bits)</b>) et double-cliquez dessus puis collez le code, ou installez-le en silence, par exemple par stratégie de groupe, Intune ou script :</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

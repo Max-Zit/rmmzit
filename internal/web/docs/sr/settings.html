@@ -34,6 +34,7 @@
 <p><b>Kanal ažuriranja</b>: <i>zvanična izdanja</i> (podrazumevano) ili <i>testiranje</i>, koje nudi kandidate pre nego što postanu zvanični, za test konzolu. Produkcijske konzole držite na zvaničnim izdanjima.</p>
 <div class="callout"><p>Ažuriranja, vremenska zona i mreža traže <b>root pomoćnika</b> koji dolazi sa Linux paketima i uređajem. Bez njega (npr. samostalan program) ažurirajte pomoću <code>install.sh</code> ili paketa izdanja.</p></div>
 
+<p>Kada izađe nova verzija, administratori vide obaveštenje na vrhu svake stranice: <b>Instaliraj</b> otvara ovu stranicu (potvrda ostaje ovde), <b>Beleške o izdanju</b> pokazuju šta je novo. <b>×</b> sakriva obaveštenje za vas na pet dana, u svakom browseru; još novija verzija ga odmah ponovo prikazuje. Konzole u kontejneru umesto Instaliraj prikazuju komande za preuzimanje novog image-a.</p>
 <h2 id="agent-updates">Ažuriranje agenata</h2>
 <p>Vidi <a href="/docs/agents#updates">Instalacija agenata → Ažuriranje agenata</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Prilagođena polja</h2>
 <p>U <a href="/settings/fields">Podešavanja → Prilagođena polja</a> administratori dodaju svoja polja za uređaje i klijente — tekst, broj ili datum — na primer inventarski broj, kraj garancije ili ugovor. Tehničari ih popunjavaju na stranicama uređaja i klijenata; API vraća polja uređaja uz svaki uređaj i menja ih sa <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Tagovi</h2>
+<p>U <a href="/settings/tags">Podešavanja → Tagovi</a> administratori preimenuju i brišu tagove uređaja. Brisanje skida tag sa svih uređaja i uklanja polisu koja mu je dodeljena.</p>
 <h2 id="backup">Rezervna kopija konzole</h2>
 <p><a href="/settings/backup">Podešavanja → Console backup</a> pravi rezervnu kopiju konzole svakog dana u izabrano vreme, ili odmah dugmetom <b>Back up now</b>. Kopija sadrži bazu, tajni ključ sačuvanih lozinki, sertifikate i ključeve kojima agenti veruju i biblioteku softvera. Najnovije kopije (onoliko koliko izaberete) ostaju u folderu <code>backups</code> direktorijuma podataka i mogu se preuzeti sa stranice.</p>
 <p>Sa <b>lozinkom</b> (passphrase) fajlovi su šifrovani (AES-256-GCM); čuvajte lozinku negde drugde, jer bez nje kopija ne može da se vrati. Kopija svake rezervne kopije može da ide u <b>SFTP folder</b> na drugom serveru (lozinka ili privatni ključ). Prvi test veze prikazuje ključ hosta servera kome treba verovati; kopije idu samo na server sa tim ključem. Kada kopija ili njeno kopiranje ne uspe, primaoci mejlova za uzbune dobijaju mejl.</p>

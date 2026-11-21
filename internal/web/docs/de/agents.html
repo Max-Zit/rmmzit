@@ -10,6 +10,7 @@
 <h2 id="codes">Registrierungscodes</h2>
 <p>Agents treten einem <b>Standort</b> eines Kunden mit einem Registrierungscode bei. Öffnen Sie den Standort unter <a href="/customers">Kunden</a> und klicken Sie auf <b>Registrierungscode erstellen</b>. Sie wählen, wie lange er gilt (1–365 Tage) und wie viele Computer ihn verwenden dürfen. Der Code (<code>RZ1-…</code>) enthält die Serveradresse und den Fingerabdruck des Serverzertifikats, das Installationsprogramm braucht also nichts weiter. Er wird nur einmal angezeigt; widerrufen Sie ihn, wenn er nicht mehr gebraucht wird.</p>
 
+<p>Die Serveradresse im Code ist die <b>öffentliche Agentenadresse</b> unter <a href="/settings/network">Einstellungen → Netzwerk und Zugriff</a>, wenn eine eingetragen ist. Erstellen Sie nach einer Änderung dieser Adresse einen neuen Code: Frühere Codes enthalten noch die alte Adresse. Die MSI selbst ist für jede Konsole gleich; die Adresse kommt immer mit dem Code.</p>
 <h2 id="windows">Windows</h2>
 <p>Laden Sie das MSI auf der Standortseite herunter (<b>Agent herunterladen (MSI, 64-Bit)</b>) und doppelklicken Sie es und fügen den Code ein, oder installieren Sie es still, zum Beispiel per Gruppenrichtlinie, Intune oder Skript:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

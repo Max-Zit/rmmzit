@@ -34,6 +34,7 @@
 <p><b>Update-Kanal</b>: <i>Offizielle Versionen</i> (Standard) oder <i>Test</i>, der Release-Kandidaten anbietet, bevor sie offiziell werden, für eine Testkonsole. Produktive Konsolen bleiben bei offiziellen Versionen.</p>
 <div class="callout"><p>Updates, Zeitzone und Netzwerk brauchen den <b>Root-Helfer</b>, der mit den Linux-Paketen und der Appliance kommt. Ohne ihn (z. B. das reine Programm) aktualisieren Sie mit <code>install.sh</code> oder dem Paket der Version.</p></div>
 
+<p>Wenn eine neue Version erschienen ist, sehen Administratoren oben auf jeder Seite einen Hinweis: <b>Installieren</b> öffnet diese Seite (die Bestätigung bleibt hier), <b>Versionshinweise</b> zeigt, was neu ist. <b>×</b> blendet den Hinweis für Sie fünf Tage lang aus, in jedem Browser; eine noch neuere Version zeigt ihn sofort wieder. Konsolen in einem Container zeigen statt Installieren die Befehle zum Laden des neuen Images.</p>
 <h2 id="agent-updates">Agent-Updates</h2>
 <p>Siehe <a href="/docs/agents#updates">Agents installieren → Agent-Updates</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Eigene Felder</h2>
 <p>Unter <a href="/settings/fields">Einstellungen → Eigene Felder</a> legen Administratoren eigene Felder für Geräte und Kunden an — Text, Zahl oder Datum —, zum Beispiel eine Inventarnummer, das Garantieende oder einen Vertrag. Techniker füllen sie auf den Seiten der Geräte und Kunden aus; die API liefert die Gerätefelder mit jedem Gerät und setzt sie mit <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Tags</h2>
+<p>Unter <a href="/settings/tags">Einstellungen → Tags</a> benennen Administratoren die Geräte-Tags um und löschen sie. Beim Löschen wird das Tag von allen Geräten entfernt und die ihm zugewiesene Richtlinie aufgehoben.</p>
 <h2 id="backup">Konsolensicherung</h2>
 <p><a href="/settings/backup">Einstellungen → Konsolensicherung</a> sichert die Konsole jeden Tag zur gewählten Stunde oder sofort mit <b>Jetzt sichern</b>. Eine Sicherung enthält die Datenbank, den geheimen Schlüssel der gespeicherten Passwörter, die Zertifikate und Schlüssel, denen die Agenten vertrauen, und die Software-Bibliothek. Die neuesten Sicherungen (so viele Sie wählen) bleiben im Ordner <code>backups</code> des Datenverzeichnisses und lassen sich von der Seite herunterladen.</p>
 <p>Mit einer <b>Passphrase</b> werden die Dateien verschlüsselt (AES-256-GCM); bewahren Sie die Passphrase woanders auf, denn ohne sie lässt sich eine Sicherung nicht wiederherstellen. Eine Kopie jeder Sicherung kann in einen <b>SFTP-Ordner</b> auf einem anderen Server gehen (Passwort oder privater Schlüssel). Der erste Test der Verbindung zeigt den Host-Schlüssel des Servers zum Vertrauen; Kopien gehen nur an einen Server mit diesem Schlüssel. Schlägt eine Sicherung oder ihre Kopie fehl, erhalten die Empfänger der Warn-E-Mails eine E-Mail.</p>

@@ -10,9 +10,11 @@
 <h2 id="jobs">Tâches</h2>
 <p>Exécuter un script de la bibliothèque sur plusieurs appareils crée une <b>tâche</b>. La page de la tâche montre chaque appareil avec son état (en attente, en cours, réussi, échoué, expiré) et sa sortie. Le code de sortie 0 compte comme un succès. Les appareils hors ligne exécutent le script à leur connexion, dans les 24 heures ; ensuite ils sont considérés comme expirés. Au plus 32 scripts de tâches s'exécutent en même temps ; les autres appareils affichent <b>en attente</b> jusqu'à ce qu'une place se libère.</p>
 
+<p>En plus des appareils, des sites et des clients, vous pouvez choisir des <b>étiquettes</b> : la tâche s'exécute alors sur les appareils qui les portent. Les techniciens n'atteignent ainsi, là aussi, que les appareils de leurs clients.</p>
 <h2 id="schedules">Planifications</h2>
 <p>Un script de la bibliothèque peut s'exécuter selon une planification : certains jours de la semaine à une heure donnée (heure du serveur), sur des appareils précis, sur tous les appareils de certains clients ou sur tous les appareils (y compris les nouveaux). Une planification peut être suspendue et reprise. Les appareils hors ligne à ce moment exécutent le script à leur connexion, dans les 24 heures.</p>
 
+<p>Une planification peut aussi s'exécuter sur les appareils d'étiquettes choisies ; à chaque exécution, elle prend les appareils qui les portent, si bien que les appareils étiquetés récemment s'y ajoutent d'eux-mêmes.</p>
 <h2 id="audit">Ce qui est journalisé</h2>
 <p>Le script et le début de sa sortie sont inscrits au journal d'audit avec votre nom. Les utilisateurs en lecture seule ne peuvent pas exécuter de scripts.</p>
 <div class="callout warn"><p>Les scripts ont tous les droits sur les ordinateurs. Gardez la bibliothèque en ordre, donnez aux techniciens uniquement les clients dont ils ont besoin et testez un script sur un appareil avant de l'exécuter sur plusieurs.</p></div>

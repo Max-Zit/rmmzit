@@ -10,9 +10,11 @@
 <h2 id="jobs">Processi</h2>
 <p>Eseguire uno script della libreria su più dispositivi crea un <b>processo</b>. La pagina del processo mostra ogni dispositivo con il suo stato (in attesa, in esecuzione, riuscito, non riuscito, scaduto) e l'output. Il codice di uscita 0 conta come successo. I dispositivi offline eseguono lo script quando si connettono, entro 24 ore; dopo vengono considerati scaduti. Al massimo 32 script dei job vengono eseguiti contemporaneamente; gli altri dispositivi mostrano <b>in attesa</b> finché non si libera un posto.</p>
 
+<p>Oltre a dispositivi, sedi e clienti può scegliere dei <b>tag</b>: il processo viene eseguito sui dispositivi che li hanno. Anche così i tecnici raggiungono solo i dispositivi dei loro clienti.</p>
 <h2 id="schedules">Pianificazioni</h2>
 <p>Uno script della libreria può essere eseguito secondo una pianificazione: nei giorni della settimana scelti a un'ora (ora del server), su singoli dispositivi, su tutti i dispositivi di alcuni clienti o su tutti i dispositivi (anche nuovi). Una pianificazione si può sospendere e riprendere. I dispositivi offline in quel momento eseguono lo script quando si connettono, entro 24 ore.</p>
 
+<p>Una pianificazione può essere eseguita anche sui dispositivi dei tag scelti; a ogni esecuzione prende i dispositivi che li hanno, così i dispositivi contrassegnati in seguito si aggiungono da soli.</p>
 <h2 id="audit">Cosa viene registrato</h2>
 <p>Lo script e l'inizio del suo output vengono scritti nel log di audit con il tuo nome. Gli utenti in sola lettura non possono eseguire script.</p>
 <div class="callout warn"><p>Gli script hanno pieni diritti sui computer. Tieni in ordine la libreria, dai ai tecnici solo i clienti di cui hanno bisogno e prova uno script su un dispositivo prima di eseguirlo su molti.</p></div>

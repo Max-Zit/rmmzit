@@ -10,6 +10,7 @@
 <h2 id="codes">Registrační kódy</h2>
 <p>Agenti se připojí k <b>pobočce</b> zákazníka pomocí registračního kódu. Otevřete pobočku v <a href="/customers">Zákazníci</a> a klikněte na <b>Vytvořit registrační kód</b>. Zvolíte, jak dlouho platí (1–365 dní) a kolik počítačů jej smí použít. Kód (<code>RZ1-…</code>) obsahuje adresu serveru a otisk jeho certifikátu, takže instalátor nepotřebuje nic dalšího. Zobrazí se jen jednou; zrušte jej, když už není potřeba.</p>
 
+<p>Adresa serveru v kódu je <b>veřejná adresa pro agenty</b> z <a href="/settings/network">Nastavení → Síť a přístup</a>, pokud je zadaná. Po změně této adresy vytvořte nový kód: dříve vytvořené kódy obsahují ještě starou adresu. Samotné MSI je pro každou konzoli stejné; adresa vždy přichází s kódem.</p>
 <h2 id="windows">Windows</h2>
 <p>Stáhněte MSI na stránce pobočky (<b>Stáhnout agenta (MSI, 64bitový)</b>) a buď na něj poklepejte a vložte kód, nebo jej nainstalujte tiše, například pomocí zásad skupiny, Intune nebo skriptu:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

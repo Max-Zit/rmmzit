@@ -10,6 +10,9 @@
   <li><b>Le schermate di accesso e UAC</b> sono visibili e utilizzabili, quindi puoi accedere e confermare le richieste di amministratore.</li>
 </ul>
 
+<h3 id="view-only">Solo visualizzazione</h3>
+<p><b>Solo visualizzazione</b>, accanto a <b>Desktop remoto</b>, mostra lo schermo senza prenderne il controllo: mouse, tastiera, appunti e file restano alla persona al computer, e l'avviso le dice che sta guardando. Sia il server sia l'agente rifiutano ogni input in questa sessione. Gli utenti in sola lettura possono guardare così lo schermo dei loro dispositivi se un amministratore lo consente in <a href="/settings/remote">Impostazioni → Desktop remoto</a> (disattivato per impostazione predefinita).</p>
+<p>Finché è connesso, il computer e il suo schermo restano attivi, e un monitor in sospensione viene risvegliato all'inizio della sessione. <b>Invia Ctrl+Alt+Canc</b> viene inviato dal servizio dell'agente, quindi funziona anche nella schermata di accesso dei server. Una sessione inattiva resta aperta: la console mantiene viva la connessione anche quando lo schermo non cambia.</p>
 <h3 id="clipboard">Appunti e file</h3>
 <p>Sui computer Windows il testo copiato va in entrambe le direzioni con <kbd>Ctrl</kbd>+<kbd>C</kbd> e <kbd>Ctrl</kbd>+<kbd>V</kbd>. I <b>file</b> copiati nel tuo Esplora file si incollano sul computer remoto con <kbd>Ctrl</kbd>+<kbd>V</kbd>. I file copiati sul computer remoto vengono offerti come download (<b>Scarica i file copiati</b>), perché un browser non può mettere file nei tuoi appunti. Lo scambio degli appunti si può disattivare in <a href="/settings/remote">Impostazioni → Desktop remoto</a>.</p>
 

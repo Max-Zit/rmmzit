@@ -10,6 +10,9 @@
   <li><b>Sign-in and UAC screens</b> are shown and can be used, so you can sign in and confirm administrator prompts.</li>
 </ul>
 
+<h3 id="view-only">View only</h3>
+<p><b>View only</b> next to <b>Remote desktop</b> shows the screen without taking control: the mouse, keyboard, clipboard and files stay with the person at the computer, and the notice tells them that you are viewing. Both the server and the agent refuse input in such a session. Read-only users can watch the screens of their devices this way when an administrator allows it under <a href="/settings/remote">Settings → Remote desktop</a> (off by default).</p>
+<p>While you are connected the computer and its screen stay awake, and a sleeping monitor is woken when the session starts. <b>Send Ctrl+Alt+Del</b> is sent by the agent service, so it also works on the sign-in screen of servers. An idle session stays open: the console keeps the connection alive while the screen does not change.</p>
 <h3 id="clipboard">Clipboard and files</h3>
 <p>On Windows computers, copied text goes both ways with <kbd>Ctrl</kbd>+<kbd>C</kbd> and <kbd>Ctrl</kbd>+<kbd>V</kbd>. <b>Files</b> copied in your Explorer are pasted on the remote computer with <kbd>Ctrl</kbd>+<kbd>V</kbd>. Files copied on the remote computer are offered as a download (<b>Download copied files</b>), because a browser cannot put files on your clipboard. The clipboard exchange can be switched off under <a href="/settings/remote">Settings → Remote desktop</a>.</p>
 

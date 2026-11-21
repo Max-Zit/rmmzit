@@ -34,6 +34,7 @@
 <p><b>Canal de actualización</b>: <i>Versiones oficiales</i> (predeterminado) o <i>Pruebas</i>, que ofrece las versiones candidatas antes de que sean oficiales, para una consola de pruebas. Mantenga las consolas de producción en las versiones oficiales.</p>
 <div class="callout"><p>Las actualizaciones, la zona horaria y la red necesitan el <b>asistente root</b> que viene con los paquetes de Linux y el appliance. Sin él (p. ej. el programa suelto), actualice con <code>install.sh</code> o el paquete de la versión.</p></div>
 
+<p>Cuando sale una versión nueva, los administradores ven un aviso arriba de cada página: <b>Instalar</b> abre esta página (la confirmación sigue aquí) y <b>Notas de la versión</b> muestra las novedades. <b>×</b> oculta el aviso durante cinco días para usted, en todos los navegadores; una versión todavía más nueva lo vuelve a mostrar enseguida. Las consolas en un contenedor muestran los comandos para descargar la nueva imagen en lugar de Instalar.</p>
 <h2 id="agent-updates">Actualizaciones de agentes</h2>
 <p>Consulte <a href="/docs/agents#updates">Instalar agentes → Actualizaciones de agentes</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Campos personalizados</h2>
 <p>En <a href="/settings/fields">Configuración → Campos personalizados</a> los administradores añaden sus propios campos para dispositivos y clientes — texto, número o fecha —, por ejemplo un número de inventario, el fin de la garantía o un contrato. Los técnicos los rellenan en las páginas de dispositivos y clientes; la API devuelve los campos con cada dispositivo y los establece con <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Etiquetas</h2>
+<p>En <a href="/settings/tags">Configuración → Etiquetas</a>, los administradores cambian el nombre de las etiquetas de dispositivos y las eliminan. Al eliminarla, la etiqueta se quita de todos los dispositivos y se retira la directiva asignada a ella.</p>
 <h2 id="backup">Copia de la consola</h2>
 <p><a href="/settings/backup">Configuración → Copia de la consola</a> hace una copia de la consola cada día a la hora elegida, o en el momento con <b>Hacer copia ahora</b>. Una copia contiene la base de datos, la clave secreta de las contraseñas guardadas, los certificados y claves en los que confían los agentes y la biblioteca de software. Las copias más recientes (tantas como elija) quedan en la carpeta <code>backups</code> del directorio de datos y se pueden descargar desde la página.</p>
 <p>Con una <b>frase de contraseña</b> los archivos se cifran (AES-256-GCM); guárdela en otro lugar, porque sin ella no se puede restaurar una copia. Una copia de cada copia de seguridad puede ir a una <b>carpeta SFTP</b> de otro servidor (contraseña o clave privada). La primera prueba de la conexión muestra la clave de host del servidor para confiar en ella; las copias solo van a un servidor con esa clave. Si una copia o su envío falla, los destinatarios de los correos de alerta reciben un correo.</p>

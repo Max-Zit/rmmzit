@@ -10,6 +10,7 @@
 <h2 id="codes">Códigos de registo</h2>
 <p>Os agentes juntam-se a um <b>local</b> de um cliente com um código de registo. Abra o local em <a href="/customers">Clientes</a> e clique em <b>Criar código de registo</b>. Escolhe durante quanto tempo é válido (1–365 dias) e quantos computadores o podem usar. O código (<code>RZ1-…</code>) contém o endereço do servidor e a impressão digital do seu certificado, pelo que o instalador não precisa de mais nada. Só é mostrado uma vez; revogue-o quando já não for necessário.</p>
 
+<p>O endereço do servidor no código é o <b>endereço público dos agentes</b> em <a href="/settings/network">Definições → Rede e acesso</a>, quando está definido. Depois de mudar esse endereço, crie um código novo: os códigos criados antes ainda têm o endereço antigo. O MSI é o mesmo para todas as consolas; o endereço vem sempre com o código.</p>
 <h2 id="windows">Windows</h2>
 <p>Transfira o MSI na página do local (<b>Transferir o agente (MSI, 64 bits)</b>) e faça duplo clique e cole o código, ou instale-o em modo silencioso, por exemplo com Política de Grupo, Intune ou um script:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>

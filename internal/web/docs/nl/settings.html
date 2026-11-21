@@ -34,6 +34,7 @@
 <p><b>Updatekanaal</b>: <i>Officiële versies</i> (standaard) of <i>Test</i>, dat releasekandidaten aanbiedt voordat ze officieel worden, voor een testconsole. Houd productieconsoles op de officiële versies.</p>
 <div class="callout"><p>Updates, tijdzone en netwerk hebben de <b>root-helper</b> nodig die met de Linux-pakketten en de appliance meekomt. Zonder (bijv. het losse programma) werkt u bij met <code>install.sh</code> of het pakket van de release.</p></div>
 
+<p>Als er een nieuwe versie is, zien beheerders bovenaan elke pagina een melding: <b>Installeren</b> opent deze pagina (de bevestiging blijft hier), <b>Versie-informatie</b> toont wat er nieuw is. <b>×</b> verbergt de melding vijf dagen voor u, in elke browser; een nog nieuwere versie toont hem meteen weer. Consoles in een container tonen de opdrachten om de nieuwe image op te halen in plaats van Installeren.</p>
 <h2 id="agent-updates">Agent-updates</h2>
 <p>Zie <a href="/docs/agents#updates">Agents installeren → Agent-updates</a>.</p>
 
@@ -43,6 +44,8 @@
 <h2 id="fields">Eigen velden</h2>
 <p>Onder <a href="/settings/fields">Instellingen → Eigen velden</a> voegen beheerders eigen velden toe voor apparaten en klanten — tekst, getal of datum —, bijvoorbeeld een inventarisnummer, het einde van de garantie of een contract. Technici vullen ze in op de pagina's van apparaten en klanten; de API geeft de velden mee met elk apparaat en zet ze met <code>PUT /api/v1/devices/{id}/fields</code>.</p>
 
+<h2 id="tags">Tags</h2>
+<p>Onder <a href="/settings/tags">Instellingen → Tags</a> hernoemen en verwijderen beheerders de apparaattags. Verwijderen haalt de tag van alle apparaten en heft het beleid op dat eraan is toegewezen.</p>
 <h2 id="backup">Back-up van de console</h2>
 <p><a href="/settings/backup">Instellingen → Back-up van de console</a> maakt elke dag op het gekozen uur een back-up van de console, of meteen met <b>Nu back-up maken</b>. Een back-up bevat de database, de geheime sleutel van de opgeslagen wachtwoorden, de certificaten en sleutels die de agents vertrouwen en de softwarebibliotheek. De nieuwste back-ups (zoveel als u kiest) blijven in de map <code>backups</code> van de datamap en zijn te downloaden vanaf de pagina.</p>
 <p>Met een <b>wachtzin</b> worden de bestanden versleuteld (AES-256-GCM); bewaar de wachtzin ergens anders, want zonder kan een back-up niet worden hersteld. Een kopie van elke back-up kan naar een <b>SFTP-map</b> op een andere server (wachtwoord of privésleutel). De eerste test van de verbinding toont de hostsleutel van de server om te vertrouwen; kopieën gaan alleen naar een server met die sleutel. Mislukt een back-up of de kopie, dan krijgen de ontvangers van de waarschuwingsmails een e-mail.</p>

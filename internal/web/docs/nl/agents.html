@@ -10,6 +10,7 @@
 <h2 id="codes">Registratiecodes</h2>
 <p>Agents voegen zich bij een <b>locatie</b> van een klant met een registratiecode. Open de locatie onder <a href="/customers">Klanten</a> en klik op <b>Registratiecode aanmaken</b>. U kiest hoe lang hij geldig is (1–365 dagen) en hoeveel computers hem mogen gebruiken. De code (<code>RZ1-…</code>) bevat het serveradres en de vingerafdruk van het servercertificaat, dus het installatieprogramma heeft niets anders nodig. Hij wordt maar één keer getoond; trek hem in als u hem niet meer nodig hebt.</p>
 
+<p>Het serveradres in de code is het <b>openbare agentadres</b> onder <a href="/settings/network">Instellingen → Netwerk en toegang</a>, als dat is ingevuld. Maak na het wijzigen van dat adres een nieuwe code: eerder gemaakte codes bevatten nog het oude adres. De MSI zelf is voor elke console gelijk; het adres komt altijd met de code.</p>
 <h2 id="windows">Windows</h2>
 <p>Download de MSI op de locatiepagina (<b>Agent downloaden (MSI, 64-bit)</b>) en dubbelklik erop en plak de code, of installeer hem stil, bijvoorbeeld met Groepsbeleid, Intune of een script:</p>
 <pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"</pre>
