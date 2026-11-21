@@ -5,6 +5,8 @@ import (
 	"io/fs"
 	"strings"
 	"time"
+
+	"github.com/max-zit/rmmzit/internal/update"
 )
 
 // CallForTest sends a command without arguments (tests).
@@ -31,4 +33,11 @@ func DocLinkPaths() map[string]bool {
 		return nil
 	})
 	return paths
+}
+
+// SetLatestForTest sets the result of the last release check (tests).
+func (s *Server) SetLatestForTest(version string) {
+	s.upd.mu.Lock()
+	defer s.upd.mu.Unlock()
+	s.upd.latest = &update.Manifest{Product: update.ManifestProduct, Version: version}
 }

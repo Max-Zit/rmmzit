@@ -88,6 +88,8 @@ type Page struct {
 	AlertCount int
 	Path       string
 	Data       any
+	// Update: the notice of a new version (administrators, see updatenotice.go).
+	Update *updateNotice
 	// activeTasks counts the queued and running tasks of a device (the
 	// Activity tab shows the number).
 	activeTasks func(deviceID int64) int
@@ -272,6 +274,7 @@ func (s *Server) render(w http.ResponseWriter, r *http.Request, status int, name
 	p.DevNo2FA = s.DevNo2FA && !s.DevNoBanner
 	p.Asset = assetVersion
 	p.Path = r.URL.RequestURI()
+	p.Update = s.updateNoticeFor(r, p.User)
 	if p.User != nil {
 		p.AlertCount, _ = s.store.OpenAlertCount(r.Context(), p.User)
 	}

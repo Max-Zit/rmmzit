@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "Die Sitzung wird im Prüfprotokoll festgehalten.",
   "View only": "Nur ansehen",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Nur ansehen: Sie sehen den Bildschirm, aber Maus, Tastatur, Zwischenablage und Dateien bleiben bei der Person am Computer.",
-  "View screen": "Bildschirm ansehen"
+  "View screen": "Bildschirm ansehen",
+  "Commands": "Befehle",
+  "Hide for 5 days": "5 Tage ausblenden",
+  "Pull the new image on the Docker host.": "Laden Sie das neue Image auf dem Docker-Host.",
+  "RMMZit %s is available (installed: %s).": "RMMZit %s ist verfügbar (installiert: %s).",
+  "Release notes": "Versionshinweise"
 }

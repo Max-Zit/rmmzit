@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "セッションは監査ログに記録されます。",
   "View only": "表示のみ",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "表示のみ: 画面は見えますが、マウス、キーボード、クリップボード、ファイルはコンピューターの前にいる人のものです。",
-  "View screen": "画面を見る"
+  "View screen": "画面を見る",
+  "Commands": "コマンド",
+  "Hide for 5 days": "5 日間表示しない",
+  "Pull the new image on the Docker host.": "Docker ホストで新しいイメージを取得してください。",
+  "RMMZit %s is available (installed: %s).": "RMMZit %s が利用可能です (インストール済み: %s)。",
+  "Release notes": "リリースノート"
 }

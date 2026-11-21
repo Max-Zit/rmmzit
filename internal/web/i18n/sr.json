@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "Sesija se upisuje u dnevnik revizije.",
   "View only": "Samo gledanje",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Samo gledanje: vidite ekran, ali miš, tastatura, klipbord i fajlovi ostaju kod osobe za računarom.",
-  "View screen": "Pogledaj ekran"
+  "View screen": "Pogledaj ekran",
+  "Commands": "Komande",
+  "Hide for 5 days": "Sakrij na 5 dana",
+  "Pull the new image on the Docker host.": "Preuzmite novi image na Docker hostu.",
+  "RMMZit %s is available (installed: %s).": "Dostupan je RMMZit %s (instalirano: %s).",
+  "Release notes": "Beleške o izdanju"
 }

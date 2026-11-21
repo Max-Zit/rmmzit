@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "Oturum denetim günlüğüne yazılır.",
   "View only": "Yalnızca izle",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Yalnızca izle: ekranı görürsünüz, ancak fare, klavye, pano ve dosyalar bilgisayarın başındaki kişide kalır.",
-  "View screen": "Ekranı izle"
+  "View screen": "Ekranı izle",
+  "Commands": "Komutlar",
+  "Hide for 5 days": "5 gün gizle",
+  "Pull the new image on the Docker host.": "Yeni imajı Docker ana bilgisayarında çekin.",
+  "RMMZit %s is available (installed: %s).": "RMMZit %s kullanılabilir (yüklü: %s).",
+  "Release notes": "Sürüm notları"
 }

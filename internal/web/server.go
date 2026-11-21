@@ -455,6 +455,7 @@ func (s *Server) Handler() http.Handler {
 	admin("POST /settings/version/check", s.handleVersionCheck)
 	admin("POST /settings/version/install", s.handleVersionInstall)
 	admin("POST /settings/version/settings", s.handleVersionSettings)
+	admin("POST /settings/version/hide-notice", s.handleHideUpdateNotice)
 	admin("GET /settings/ldap", s.handleLDAPSettings)
 	admin("POST /settings/ldap", s.handleLDAPSave)
 	admin("POST /settings/ldap/test", s.handleLDAPTest)

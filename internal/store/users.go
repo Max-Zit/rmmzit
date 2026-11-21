@@ -40,6 +40,10 @@ type User struct {
 	// Source is local, ldap (Active Directory) or sso (single sign-on).
 	Source string
 	Email  string
+	// UpdateHiddenVersion and UpdateHiddenUntil: the new-version notice this
+	// administrator hid, and until when.
+	UpdateHiddenVersion string
+	UpdateHiddenUntil   *time.Time
 }
 
 // IsAdmin reports the admin role.
@@ -63,12 +67,12 @@ func ValidUsername(u string) error {
 	return nil
 }
 
-const userCols = `id, username, display_name, role, all_customers, totp_enabled, must_change_password, disabled, lang, created_at, last_login_at, source, email`
+const userCols = `id, username, display_name, role, all_customers, totp_enabled, must_change_password, disabled, lang, created_at, last_login_at, source, email, update_hidden_version, update_hidden_until`
 
 func scanUser(row interface{ Scan(...any) error }) (*User, error) {
 	u := &User{}
 	err := row.Scan(&u.ID, &u.Username, &u.DisplayName, &u.Role, &u.AllCustomers, &u.TOTPEnabled, &u.MustChangePassword,
-		&u.Disabled, &u.Lang, &u.CreatedAt, &u.LastLoginAt, &u.Source, &u.Email)
+		&u.Disabled, &u.Lang, &u.CreatedAt, &u.LastLoginAt, &u.Source, &u.Email, &u.UpdateHiddenVersion, &u.UpdateHiddenUntil)
 	return u, err
 }
 
@@ -429,4 +433,11 @@ func (s *Store) UserSource(ctx context.Context, username string) string {
 	var src string
 	_ = s.db.QueryRow(ctx, `SELECT source FROM users WHERE lower(username)=lower($1)`, strings.TrimSpace(username)).Scan(&src)
 	return src
+}
+
+// HideUpdateNotice hides the notice of a new version for one user, until a
+// time or a newer version.
+func (s *Store) HideUpdateNotice(ctx context.Context, userID int64, version string, until time.Time) error {
+	_, err := s.db.Exec(ctx, `UPDATE users SET update_hidden_version=$2, update_hidden_until=$3 WHERE id=$1`, userID, version, until)
+	return err
 }

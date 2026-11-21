@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "De sessie wordt in het auditlogboek vastgelegd.",
   "View only": "Alleen bekijken",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Alleen bekijken: u ziet het scherm, maar muis, toetsenbord, klembord en bestanden blijven bij de persoon achter de computer.",
-  "View screen": "Scherm bekijken"
+  "View screen": "Scherm bekijken",
+  "Commands": "Opdrachten",
+  "Hide for 5 days": "5 dagen verbergen",
+  "Pull the new image on the Docker host.": "Haal de nieuwe image op de Docker-host op.",
+  "RMMZit %s is available (installed: %s).": "RMMZit %s is beschikbaar (geïnstalleerd: %s).",
+  "Release notes": "Versie-informatie"
 }

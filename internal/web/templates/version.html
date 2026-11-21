@@ -18,7 +18,7 @@
 </section>
 {{with .Data.Last}}<div class="flash {{if eq .Status "done"}}ok{{else if eq .Status "running"}}info{{else}}err{{end}}" role="status">{{template "icon" "check"}}<span>{{$.T "Last installation"}} ({{$.Time .Started}}): {{.Message}}</span></div>{{end}}
 {{if .Data.Newer}}{{with .Data.Latest}}
-<section class="panel accent">
+<section class="panel accent" id="new-version">
   <h2>{{$.T "Version %s is available" .Version}}</h2>
   {{with .Notes}}<pre class="notes">{{.}}</pre>{{end}}
   {{if $.Data.Pending}}<p class="flash info">{{$.T "The installation is running; the console restarts when it is done."}}</p>

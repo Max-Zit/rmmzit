@@ -1745,5 +1745,10 @@
   "The session is written to the audit log.": "会话会记录到审核日志。",
   "View only": "仅查看",
   "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "仅查看：你能看到屏幕，但鼠标、键盘、剪贴板和文件仍由电脑前的人使用。",
-  "View screen": "查看屏幕"
+  "View screen": "查看屏幕",
+  "Commands": "命令",
+  "Hide for 5 days": "隐藏 5 天",
+  "Pull the new image on the Docker host.": "请在 Docker 主机上拉取新镜像。",
+  "RMMZit %s is available (installed: %s).": "RMMZit %s 已可用（已安装：%s）。",
+  "Release notes": "发行说明"
 }
