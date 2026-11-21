@@ -18,8 +18,8 @@ Its programs contain the following components under their own licenses, all comp
 | github.com/google/uuid | v1.6.0 | BSD-3-Clause |
 | github.com/jackc/pgpassfile | v1.0.0 | MIT |
 | github.com/jackc/pgservicefile | v0.0.0-20240606120523-5a60cdf6a761 | MIT |
-| github.com/jackc/pgx/v5 | v5.11.0 | MIT |
-| github.com/jackc/puddle/v2 | v2.2.2 | MIT |
+| github.com/jackc/pgx/v5 | v5.13.0 | MIT |
+| github.com/jackc/puddle/v2 | v2.2.3 | MIT |
 | github.com/jchv/go-webview2 | v0.0.0-20260205173254-56598839c808 | MIT |
 | github.com/jchv/go-winloader | v0.0.0-20250406163304-c1995be93bd1 | ISC |
 | github.com/jezek/xgb | v1.3.1 | BSD-3-Clause |
@@ -27,11 +27,11 @@ Its programs contain the following components under their own licenses, all comp
 | github.com/lib/pq | v1.10.9 | MIT |
 | github.com/russellhaering/goxmldsig | v1.6.1 | Apache-2.0 |
 | github.com/xi2/xz | v0.0.0-20171230120015-48954b6210f8 | Public domain |
-| golang.org/x/crypto | v0.58.0 | BSD-3-Clause |
-| golang.org/x/oauth2 | v0.37.0 | BSD-3-Clause |
-| golang.org/x/sync | v0.24.0 | BSD-3-Clause |
-| golang.org/x/sys | v0.49.0 | BSD-3-Clause |
-| golang.org/x/text | v0.43.0 | BSD-3-Clause |
+| golang.org/x/crypto | v0.59.0 | BSD-3-Clause |
+| golang.org/x/oauth2 | v0.38.0 | BSD-3-Clause |
+| golang.org/x/sync | v0.25.0 | BSD-3-Clause |
+| golang.org/x/sys | v0.50.0 | BSD-3-Clause |
+| golang.org/x/text | v0.44.0 | BSD-3-Clause |
 | rsc.io/qr | v0.2.0 | BSD-3-Clause |
 
 Other components:
@@ -762,7 +762,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## github.com/jackc/pgx/v5 v5.11.0 (MIT)
+## github.com/jackc/pgx/v5 v5.13.0 (MIT)
 
 ```
 Copyright (c) 2013-2021 Jack Christensen
@@ -789,7 +789,7 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-## github.com/jackc/puddle/v2 v2.2.2 (MIT)
+## github.com/jackc/puddle/v2 v2.2.3 (MIT)
 
 ```
 Copyright (c) 2018 Jack Christensen
@@ -1355,7 +1355,7 @@ Licensing of github.com/xi2/xz
     This software is provided "as is", without any warranty.
 ```
 
-## golang.org/x/crypto v0.58.0 (BSD-3-Clause)
+## golang.org/x/crypto v0.59.0 (BSD-3-Clause)
 
 ```
 Copyright 2009 The Go Authors.
@@ -1387,7 +1387,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## golang.org/x/oauth2 v0.37.0 (BSD-3-Clause)
+## golang.org/x/oauth2 v0.38.0 (BSD-3-Clause)
 
 ```
 Copyright 2009 The Go Authors.
@@ -1419,7 +1419,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## golang.org/x/sync v0.24.0 (BSD-3-Clause)
+## golang.org/x/sync v0.25.0 (BSD-3-Clause)
 
 ```
 Copyright 2009 The Go Authors.
@@ -1451,7 +1451,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## golang.org/x/sys v0.49.0 (BSD-3-Clause)
+## golang.org/x/sys v0.50.0 (BSD-3-Clause)
 
 ```
 Copyright 2009 The Go Authors.
@@ -1483,7 +1483,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## golang.org/x/text v0.43.0 (BSD-3-Clause)
+## golang.org/x/text v0.44.0 (BSD-3-Clause)
 
 ```
 Copyright 2009 The Go Authors.
