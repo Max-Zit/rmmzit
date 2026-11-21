@@ -81,7 +81,7 @@ func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
 	dd.CanWake = !dd.Online && userFrom(r).CanWrite() && len(wakeMACs(d)) > 0
 	dd.Tags, _ = s.store.TagsOf(r.Context(), d.ID)
 	if userFrom(r).CanWrite() {
-		dd.AllTags, _ = s.store.Tags(r.Context())
+		dd.AllTags, _ = s.store.Tags(r.Context(), userFrom(r))
 	}
 	if d.Inventory != nil {
 		q := strings.ToLower(strings.TrimSpace(r.FormValue("sw")))

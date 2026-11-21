@@ -68,7 +68,7 @@ func (s *Server) handleDeviceTagRemove(w http.ResponseWriter, r *http.Request) {
 
 // handleTags is Settings → Tags (administrators): rename and delete.
 func (s *Server) handleTags(w http.ResponseWriter, r *http.Request) {
-	tags, err := s.store.Tags(r.Context())
+	tags, err := s.store.Tags(r.Context(), nil) // administrators only
 	if err != nil {
 		s.serverError(w, r, err)
 		return
@@ -149,7 +149,7 @@ func (s *Server) handleGroupSave(w http.ResponseWriter, r *http.Request) {
 func (s *Server) handleGroupDelete(w http.ResponseWriter, r *http.Request) {
 	u := userFrom(r)
 	gid, ok := pathID(r, "gid")
-	g, err := s.store.DeviceGroup(r.Context(), gid)
+	g, err := s.store.DeviceGroup(r.Context(), u, gid)
 	if !ok || err != nil {
 		s.notFound(w, r)
 		return

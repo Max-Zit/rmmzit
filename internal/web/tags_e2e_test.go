@@ -1,11 +1,13 @@
 package web_test
 
 import (
+	"bytes"
 	"context"
 	"net/http"
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/max-zit/rmmzit/internal/store"
 )
@@ -29,20 +31,20 @@ func TestTagsAndGroups(t *testing.T) {
 	if r := tech.post("/devices/"+itoa(a.ID)+"/tags", "name", "  Servers  "); r.code != http.StatusSeeOther {
 		t.Fatalf("tag a device: %d", r.code)
 	}
-	tags, _ := e.st.Tags(ctx)
+	tags, _ := e.st.Tags(ctx, nil)
 	if len(tags) != 1 || tags[0].Name != "Servers" || tags[0].Devices != 1 {
 		t.Fatalf("tags after the first one: %+v", tags)
 	}
 	tid := itoa(tags[0].ID)
 	// The same name in other letters is the same tag; a bad name is refused.
 	tech.post("/devices/"+itoa(b.ID)+"/tags", "name", "servers")
-	if tags, _ = e.st.Tags(ctx); len(tags) != 1 || tags[0].Devices != 2 {
+	if tags, _ = e.st.Tags(ctx, nil); len(tags) != 1 || tags[0].Devices != 2 {
 		t.Fatalf("case-insensitive tag: %+v", tags)
 	}
 	for _, bad := range []string{"", "   ", "a,b", strings.Repeat("x", 41), "bell\x07"} {
 		tech.post("/devices/"+itoa(c.ID)+"/tags", "name", bad)
 	}
-	if tags, _ = e.st.Tags(ctx); len(tags) != 1 {
+	if tags, _ = e.st.Tags(ctx, nil); len(tags) != 1 {
 		t.Fatalf("a bad tag name was accepted: %+v", tags)
 	}
 	// Read-only users see tags but cannot change them.
@@ -62,7 +64,7 @@ func TestTagsAndGroups(t *testing.T) {
 	tech.post("/devices/bulk", "action", "tag-add", "tagname", "Office", "ids", itoa(b.ID), "ids", itoa(c.ID))
 	tech.post("/devices/bulk", "action", "tag-remove", "tagname", "office", "ids", itoa(b.ID))
 	byName := map[string]int{}
-	tags, _ = e.st.Tags(ctx)
+	tags, _ = e.st.Tags(ctx, nil)
 	for _, x := range tags {
 		byName[x.Name] = x.Devices
 	}
@@ -74,7 +76,7 @@ func TestTagsAndGroups(t *testing.T) {
 	if r := tech.post("/device-groups", "name", "All servers", "tag", tid); r.code != http.StatusSeeOther || !strings.HasPrefix(r.loc, "/devices?group=") {
 		t.Fatalf("save group: %d %s", r.code, r.loc)
 	}
-	groups, _ := e.st.DeviceGroups(ctx)
+	groups, _ := e.st.DeviceGroups(ctx, nil)
 	if len(groups) != 1 {
 		t.Fatalf("groups: %+v", groups)
 	}
@@ -86,7 +88,7 @@ func TestTagsAndGroups(t *testing.T) {
 	if r := tech.post("/device-groups", "name", "all SERVERS", "q", "srv"); !strings.Contains(r.loc, "/devices") {
 		t.Fatalf("duplicate group: %s", r.loc)
 	}
-	if groups, _ = e.st.DeviceGroups(ctx); len(groups) != 1 {
+	if groups, _ = e.st.DeviceGroups(ctx, nil); len(groups) != 1 {
 		t.Fatal("a second group with the same name was saved")
 	}
 	if c := ro.post("/device-groups", "name", "ro group", "tag", tid).code; c != http.StatusForbidden {
@@ -157,7 +159,7 @@ func TestTagsAndGroups(t *testing.T) {
 		t.Fatalf("read-only deletes a group: %d", c)
 	}
 	tech.post("/device-groups/" + gid + "/delete")
-	if groups, _ = e.st.DeviceGroups(ctx); len(groups) != 0 {
+	if groups, _ = e.st.DeviceGroups(ctx, nil); len(groups) != 0 {
 		t.Fatal("group not deleted by its creator")
 	}
 }
@@ -178,4 +180,119 @@ func tagAssignments(t *testing.T, e *env, pid string) []store.Assignment {
 		t.Fatal(err)
 	}
 	return as
+}
+
+// A user of some customers sees only the tags on devices of those customers
+// and only the groups saved by administrators, users of all customers or
+// themselves: tag and group names can say something about another customer.
+func TestTagScope(t *testing.T) {
+	e := newEnv(t)
+	admin, _ := e.setupAdmin("192.168.1.10")
+	ctx := context.Background()
+	mine := e.device(t, "lab-pc", "Microsoft Windows 11 Pro")
+	other, err := e.st.CreateCustomer(ctx, "Other Ltd", "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	theirs := e.deviceIn(t, other, "other-pc")
+	admin.post("/devices/"+itoa(mine.ID)+"/tags", "name", "Shared")
+	admin.post("/devices/"+itoa(theirs.ID)+"/tags", "name", "Shared")
+	admin.post("/devices/"+itoa(theirs.ID)+"/tags", "name", "Other secret")
+	tech := e.signedInFor(t, admin, "scopetech", mine.CustomerID, "192.168.1.51")
+	otherTech := e.signedInFor(t, admin, "othertech", other, "192.168.1.52")
+
+	for _, p := range []string{"/devices", "/devices/" + itoa(mine.ID)} {
+		b := tech.get(p).body
+		if !strings.Contains(b, "Shared") || strings.Contains(b, "Other secret") {
+			t.Fatalf("%s: a tag of another customer is shown", p)
+		}
+	}
+	if tags, _ := e.st.Tags(ctx, nil); len(tags) != 2 {
+		t.Fatalf("all tags: %+v", tags)
+	}
+	// Counts only the user's devices.
+	users, _ := e.st.Users(ctx)
+	for _, u := range users {
+		if u.Username != "scopetech" {
+			continue
+		}
+		if tags, _ := e.st.Tags(ctx, u); len(tags) != 1 || tags[0].Name != "Shared" || tags[0].Devices != 1 {
+			t.Fatalf("tags of a user of one customer: %+v", tags)
+		}
+	}
+
+	// Groups: the administrator's and one's own, not another customer's.
+	admin.post("/device-groups", "name", "Admin group", "q", "pc")
+	otherTech.post("/device-groups", "name", "Other group", "q", "other")
+	groups, _ := e.st.DeviceGroups(ctx, nil)
+	if len(groups) != 2 {
+		t.Fatalf("groups: %+v", groups)
+	}
+	var otherGID string
+	for _, g := range groups {
+		if g.Name == "Other group" {
+			otherGID = strconv.FormatInt(g.ID, 10)
+		}
+	}
+	b := tech.get("/devices").body
+	if !strings.Contains(b, "Admin group") || strings.Contains(b, "Other group") {
+		t.Fatal("device groups of another customer are shown")
+	}
+	if b := tech.get("/devices?group=" + otherGID).body; strings.Contains(b, "Other group") {
+		t.Fatal("another customer's group opens by its id")
+	}
+	if c := tech.post("/device-groups/" + otherGID + "/delete").code; c != http.StatusNotFound {
+		t.Fatalf("delete another customer's group: %d", c)
+	}
+
+	// A policy of the user's customer on a hidden tag does not name it.
+	r := admin.post("/policies/new", "name", "Lab policy", "customer", itoa(mine.CustomerID))
+	pid := strings.TrimPrefix(r.loc, "/policies/")
+	for _, name := range []string{"Shared", "Other secret"} {
+		var tid int64
+		tags, _ := e.st.Tags(ctx, nil)
+		for _, x := range tags {
+			if x.Name == name {
+				tid = x.ID
+			}
+		}
+		admin.post("/policies/"+pid+"/assign", "target", "tag:"+strconv.FormatInt(tid, 10))
+	}
+	if as := tagAssignments(t, e, pid); len(as) != 2 {
+		t.Fatalf("assignments: %+v", as)
+	}
+	b = tech.get("/policies/" + pid).body
+	if !strings.Contains(b, ">Shared</a>") || strings.Contains(b, "Other secret") {
+		t.Fatal("the policy page names a tag of another customer")
+	}
+}
+
+// deviceIn enrolls a device in a new site of a customer.
+func (e *env) deviceIn(t *testing.T, cid int64, hostname string) *store.Device {
+	t.Helper()
+	ctx := context.Background()
+	site, _ := e.st.CreateSite(ctx, cid, hostname+" site", "", "")
+	tok, err := e.st.CreateEnrollToken(ctx, site, "test", "admin", time.Hour, 1)
+	if err != nil {
+		t.Fatal(err)
+	}
+	pub := bytes.Repeat([]byte{byte(len(hostname) + 7)}, 32)
+	copy(pub, hostname)
+	d, err := e.st.EnrollDevice(ctx, tok, pub, hostname, "Microsoft Windows 11 Pro", "0.8.0", "127.0.0.1")
+	if err != nil {
+		t.Fatal(err)
+	}
+	return d
+}
+
+// signedInFor signs in a new technician of one customer.
+func (e *env) signedInFor(t *testing.T, admin *client, name string, cid int64, ip string) *client {
+	t.Helper()
+	admin.post("/users", "username", name, "password", name+" password 1", "role", "technician", "customers", itoa(cid))
+	c := e.client(ip)
+	c.post("/login", "username", name, "password", name+" password 1")
+	sec := secretRE.FindStringSubmatch(c.get("/login/enroll").body)[1]
+	c.post("/login/enroll", "code", e.code(sec))
+	c.post("/account/password", "current", name+" password 1", "password", name+" password 22", "password2", name+" password 22")
+	return c
 }

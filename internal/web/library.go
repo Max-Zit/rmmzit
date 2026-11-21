@@ -264,7 +264,7 @@ func (s *Server) handleLibScript(w http.ResponseWriter, r *http.Request) {
 			s.serverError(w, r, err)
 			return
 		}
-		d.Tags, _ = s.store.Tags(r.Context())
+		d.Tags, _ = s.store.Tags(r.Context(), u)
 	}
 	s.render(w, r, http.StatusOK, "libscript", &Page{Title: x.Name, Nav: "scripts", Data: d})
 }

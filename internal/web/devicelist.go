@@ -96,7 +96,7 @@ func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 	d := &devicesData{Now: s.now(), Alerts: map[int64]int{}, Vulns: map[int64]int{}}
 	// A dynamic group is a saved search: its devices are those that match now.
 	if gid, err := strconv.ParseInt(r.FormValue("group"), 10, 64); err == nil && gid > 0 {
-		g, err := s.store.DeviceGroup(ctx, gid)
+		g, err := s.store.DeviceGroup(ctx, u, gid)
 		if err != nil {
 			s.notFound(w, r)
 			return
@@ -107,8 +107,8 @@ func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 	}
 	q := view.Q
 	d.Q, d.F = q, view.F
-	d.Groups, _ = s.store.DeviceGroups(ctx)
-	d.Tags, _ = s.store.Tags(ctx)
+	d.Groups, _ = s.store.DeviceGroups(ctx, u)
+	d.Tags, _ = s.store.Tags(ctx, u)
 	d.DevTags, _ = s.store.DeviceTags(ctx)
 	list, err := s.store.Devices(ctx, u, store.DeviceFilter{Query: q, CustomerID: d.F.Customer, Limit: 2000})
 	if err != nil {

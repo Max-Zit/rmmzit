@@ -512,7 +512,7 @@ func (s *Server) targets(r *http.Request, windowsOnly bool) (*targetData, error)
 		}
 		td.Sites = append(td.Sites, sites...)
 	}
-	if td.Tags, err = s.store.Tags(r.Context()); err != nil {
+	if td.Tags, err = s.store.Tags(r.Context(), u); err != nil {
 		return nil, err
 	}
 	devs, err := s.store.Devices(r.Context(), u, store.DeviceFilter{Limit: 2000})

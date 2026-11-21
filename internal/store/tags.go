@@ -39,10 +39,23 @@ func CleanTagName(name string) (string, error) {
 	return name, nil
 }
 
-// Tags lists all tags with their device counts, by name.
-func (s *Store) Tags(ctx context.Context) ([]Tag, error) {
-	rows, err := s.db.Query(ctx, `SELECT t.id, t.name, count(dt.device_id) FROM tags t LEFT JOIN device_tags dt ON dt.tag_id=t.id
-		GROUP BY t.id ORDER BY lower(t.name)`)
+// Tags lists the tags a user may see with their device counts, by name.
+// Administrators and users of all customers (and u == nil) see every tag; a
+// user of some customers sees only the tags on devices of those customers,
+// counting only those devices: a tag name can say something about another
+// customer.
+func (s *Store) Tags(ctx context.Context, u *User) ([]Tag, error) {
+	q := `SELECT t.id, t.name, count(dt.device_id) FROM tags t LEFT JOIN device_tags dt ON dt.tag_id=t.id
+		GROUP BY t.id ORDER BY lower(t.name)`
+	var args []any
+	if !seesAllCustomers(u) {
+		q = `SELECT t.id, t.name, count(DISTINCT d.id) FROM tags t JOIN device_tags dt ON dt.tag_id=t.id
+		JOIN devices d ON d.id=dt.device_id JOIN sites x ON x.id=d.site_id
+		WHERE x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$1)
+		GROUP BY t.id ORDER BY lower(t.name)`
+		args = append(args, u.ID)
+	}
+	rows, err := s.db.Query(ctx, q, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -182,8 +195,14 @@ type DeviceGroup struct {
 }
 
 // DeviceGroups lists the groups by name.
-func (s *Store) DeviceGroups(ctx context.Context) ([]DeviceGroup, error) {
-	rows, err := s.db.Query(ctx, `SELECT id, name, filter, created_by, created_at FROM device_groups ORDER BY lower(name)`)
+func (s *Store) DeviceGroups(ctx context.Context, u *User) ([]DeviceGroup, error) {
+	q := `SELECT id, name, filter, created_by, created_at FROM device_groups`
+	var args []any
+	if !seesAllCustomers(u) {
+		q += ` WHERE ` + groupVisible + `$1)`
+		args = append(args, u.Username)
+	}
+	rows, err := s.db.Query(ctx, q+` ORDER BY lower(name)`, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,13 +218,30 @@ func (s *Store) DeviceGroups(ctx context.Context) ([]DeviceGroup, error) {
 	return out, rows.Err()
 }
 
-// DeviceGroup returns one group.
-func (s *Store) DeviceGroup(ctx context.Context, id int64) (*DeviceGroup, error) {
+// DeviceGroup returns one group the user may see (ErrNotFound otherwise).
+func (s *Store) DeviceGroup(ctx context.Context, u *User, id int64) (*DeviceGroup, error) {
 	g := &DeviceGroup{}
-	err := s.db.QueryRow(ctx, `SELECT id, name, filter, created_by, created_at FROM device_groups WHERE id=$1`, id).
-		Scan(&g.ID, &g.Name, &g.Filter, &g.CreatedBy, &g.CreatedAt)
+	q := `SELECT id, name, filter, created_by, created_at FROM device_groups WHERE id=$1`
+	args := []any{id}
+	if !seesAllCustomers(u) {
+		q += ` AND ` + groupVisible + `$2)`
+		args = append(args, u.Username)
+	}
+	err := s.db.QueryRow(ctx, q, args...).Scan(&g.ID, &g.Name, &g.Filter, &g.CreatedBy, &g.CreatedAt)
 	return g, notFound(err)
 }
+
+// seesAllCustomers: administrators, users of all customers and the system
+// (u == nil).
+func seesAllCustomers(u *User) bool {
+	return u == nil || u.IsAdmin() || u.AllCustomers
+}
+
+// groupVisible (followed by the placeholder of the user name) limits the
+// saved device groups a user of some customers sees to those saved by
+// administrators, by users of all customers and by the user: a group's name
+// can say something about another customer.
+const groupVisible = `(created_by IN (SELECT username FROM users WHERE role='admin' OR all_customers) OR created_by=`
 
 // SaveDeviceGroup creates a group (ErrConflict: the name is taken).
 func (s *Store) SaveDeviceGroup(ctx context.Context, name string, filter json.RawMessage, by string) (int64, error) {

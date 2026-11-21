@@ -202,6 +202,17 @@ func (s *Server) showPolicy(w http.ResponseWriter, r *http.Request, p *store.Pol
 		}
 	}
 	u := userFrom(r)
+	if !u.IsAdmin() && !u.AllCustomers {
+		// Only the tags this user sees (a tag name can say something about
+		// another customer).
+		seen := map[int64]bool{}
+		if tags, err := s.store.Tags(ctx, u); err == nil {
+			for _, t := range tags {
+				seen[t.ID] = true
+			}
+		}
+		d.Assigned = slices.DeleteFunc(d.Assigned, func(a store.Assignment) bool { return a.TargetType == "tag" && !seen[a.TargetID] })
+	}
 	if d.Customers, err = s.store.Customers(ctx, u); err != nil {
 		s.serverError(w, r, err)
 		return
@@ -219,7 +230,7 @@ func (s *Server) showPolicy(w http.ResponseWriter, r *http.Request, p *store.Pol
 		return
 	}
 	if u.IsAdmin() {
-		d.Tags, _ = s.store.Tags(ctx)
+		d.Tags, _ = s.store.Tags(ctx, u)
 	}
 	// A customer's policy is assigned only within that customer.
 	if p.CustomerID != nil {
