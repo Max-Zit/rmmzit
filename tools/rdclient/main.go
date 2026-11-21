@@ -41,6 +41,7 @@ func main() {
 	clip := flag.String("clip", "", "text to put on the remote clipboard after the first frame")
 	monitor := flag.Int("monitor", -2, "monitor to show after the first frame (-1: all)")
 	term := flag.String("term", "", "terminal mode (Linux): run this command line and print what the shell shows")
+	view := flag.Bool("view", false, "a view-only session (input is not taken)")
 	flag.Parse()
 	if *term != "" {
 		os.Exit(runTerm(*console, *device, *cookie, *term, *wait))
@@ -49,6 +50,9 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), *wait+40*time.Second)
 	defer cancel()
 	u := strings.Replace(*console, "https://", "wss://", 1) + "/devices/" + strconv.Itoa(*device) + "/rd/ws"
+	if *view {
+		u += "?view=1"
+	}
 	hc := &http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{MinVersion: tls.VersionTLS12, InsecureSkipVerify: true}}} // #nosec G402 -- lab test tool
 	ws, _, err := websocket.Dial(ctx, u, &websocket.DialOptions{HTTPClient: hc, HTTPHeader: http.Header{
 		"Origin": {*console}, "Cookie": {"__Host-czsession=" + *cookie}}})
