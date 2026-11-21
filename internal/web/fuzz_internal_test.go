@@ -23,6 +23,8 @@ func FuzzDecodeAgentMessage(f *testing.F) {
 		`{"t":"patch_report","d":{}}`,
 		`{"t":"inventory","d":{"software":[{"name":"a"}]}}`,
 		`{"t":"heartbeat","d":null}`,
+		`{"t":"inventory","d":{"hostname":"h\u0000","software":[{"name":"a\u0000b"}]}}`,
+		`{"t":"inventory","d":{"software":[{"name":"a0000b"}]}}`,
 		`{"t":"nope"}`, `{}`, `[]`, `{"t":"inventory","d":"x"}`,
 	} {
 		f.Add([]byte(s))
@@ -43,6 +45,10 @@ func FuzzDecodeAgentMessage(f *testing.F) {
 		}
 		if m.Inventory != nil && len(m.Inventory.Software) > maxAgentSoftware {
 			t.Fatal("inventory over the limit")
+		}
+		// PostgreSQL stores no NUL: none may reach the store.
+		if out, _ := json.Marshal(m); strings.Contains(string(out), `\u0000`) {
+			t.Fatalf("NUL left in %s", out)
 		}
 		set := 0
 		for _, p := range []bool{m.Hello != nil, m.Heartbeat != nil, m.Result != nil, m.Patch != nil, m.Inventory != nil} {

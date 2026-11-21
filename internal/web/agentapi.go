@@ -353,6 +353,7 @@ const (
 // limits; it touches nothing (fuzzed in FuzzDecodeAgentMessage).
 func decodeAgentMessage(env proto.Envelope) (agentMsg, error) {
 	m := agentMsg{Type: env.Type}
+	env.Data = withoutNUL(env.Data)
 	var err error
 	switch env.Type {
 	case proto.TypeHello:
