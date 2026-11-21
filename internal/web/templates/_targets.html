@@ -5,6 +5,10 @@
     <h3 class="mt">{{.T "Customers"}}</h3>
     <div class="checks">{{range .Data.Customers}}<label class="check"><input type="checkbox" name="customer" value="{{.ID}}">{{.Name}}</label>{{end}}</div>
     {{end}}
+    {{if .Data.Tags}}
+    <h3 class="mt">{{.T "Tags"}}</h3>
+    <div class="checks">{{range .Data.Tags}}<label class="check"><input type="checkbox" name="tag" value="{{.ID}}">{{.Name}} <small class="muted">({{.Devices}})</small></label>{{end}}</div>
+    {{end}}
     {{if .Data.Sites}}
     <h3 class="mt">{{.T "Sites"}}</h3>
     <div class="checks">{{range .Data.Sites}}<label class="check"><input type="checkbox" name="site" value="{{.ID}}">{{.Customer}} / {{.Name}}</label>{{end}}</div>

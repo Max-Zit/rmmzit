@@ -8,6 +8,10 @@
       <h1>{{$d.Hostname}} {{if .Data.Online}}<span class="badge ok"><i></i>{{.T "Online"}}</span>{{else}}<span class="badge bad"><i></i>{{.T "Offline"}}</span>{{end}}</h1>
       {{if .User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/refresh"><button class="iconbtn" title="{{.T "Refresh inventory"}}" aria-label="{{.T "Refresh inventory"}}" {{if not .Data.Online}}disabled{{end}}>{{template "icon" "refresh"}}</button></form>{{end}}
     </div>
+    <div class="tags" aria-label="{{.T "Tags"}}">
+      {{range .Data.Tags}}<span class="tag"><a href="/devices?tag={{.ID}}">{{.Name}}</a>{{if $.User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/tags/{{.ID}}/remove"><button class="tag-x" title="{{$.T "Remove the tag %s" .Name}}" aria-label="{{$.T "Remove the tag %s" .Name}}">×</button></form>{{end}}</span>{{end}}
+      {{if .User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/tags" class="tag-add"><input name="name" list="alltags" maxlength="40" required placeholder="{{.T "Add a tag"}}" aria-label="{{.T "Add a tag"}}"><datalist id="alltags">{{range .Data.AllTags}}<option value="{{.Name}}"></option>{{end}}</datalist><button class="ghost sm">{{template "icon" "plus"}}</button></form>{{end}}
+    </div>
   </div>
   {{if .User.CanWrite}}
   <div class="devhead-actions">

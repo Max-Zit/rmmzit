@@ -210,6 +210,7 @@ type libScriptData struct {
 	Schedules []store.ScriptSchedule
 	Days      []int
 	Customers []store.Customer
+	Tags      []store.Tag
 }
 
 func (s *Server) libScriptFor(w http.ResponseWriter, r *http.Request) *store.LibScript {
@@ -263,6 +264,7 @@ func (s *Server) handleLibScript(w http.ResponseWriter, r *http.Request) {
 			s.serverError(w, r, err)
 			return
 		}
+		d.Tags, _ = s.store.Tags(r.Context())
 	}
 	s.render(w, r, http.StatusOK, "libscript", &Page{Title: x.Name, Nav: "scripts", Data: d})
 }
@@ -318,6 +320,7 @@ type targetData struct {
 	Customers []store.Customer
 	Sites     []store.Site
 	Devices   []*store.Device
+	Tags      []store.Tag
 	Online    map[int64]bool
 }
 
@@ -346,7 +349,7 @@ func parseTarget(r *http.Request) store.ScriptTarget {
 		}
 		return out
 	}
-	return store.ScriptTarget{All: r.FormValue("all") == "1", Customers: ids("customer"), Sites: ids("site"), Devices: ids("device")}
+	return store.ScriptTarget{All: r.FormValue("all") == "1", Customers: ids("customer"), Sites: ids("site"), Devices: ids("device"), Tags: ids("tag")}
 }
 
 func (s *Server) handleJobCreate(w http.ResponseWriter, r *http.Request) {

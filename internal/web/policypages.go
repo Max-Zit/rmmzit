@@ -69,6 +69,7 @@ type policyData struct {
 	Customers   []store.Customer
 	Sites       []store.Site
 	Devices     []*store.Device
+	Tags        []store.Tag // administrators assign policies to tags
 	Packages    []store.SoftwarePackage
 	Scripts     []store.LibScript
 	Chocolatey  bool
@@ -216,6 +217,9 @@ func (s *Server) showPolicy(w http.ResponseWriter, r *http.Request, p *store.Pol
 	if d.Devices, err = s.store.Devices(ctx, u, store.DeviceFilter{Limit: 2000}); err != nil {
 		s.serverError(w, r, err)
 		return
+	}
+	if u.IsAdmin() {
+		d.Tags, _ = s.store.Tags(ctx)
 	}
 	// A customer's policy is assigned only within that customer.
 	if p.CustomerID != nil {
@@ -484,7 +488,7 @@ func (s *Server) handlePolicyDelete(w http.ResponseWriter, r *http.Request) {
 func parseTargetRef(v string) (string, int64, bool) {
 	kind, id, ok := strings.Cut(v, ":")
 	n, err := strconv.ParseInt(id, 10, 64)
-	if !ok || err != nil || n <= 0 || (kind != "customer" && kind != "site" && kind != "device") {
+	if !ok || err != nil || n <= 0 || (kind != "customer" && kind != "site" && kind != "device" && kind != "tag") {
 		return "", 0, false
 	}
 	return kind, n, true
@@ -718,6 +722,13 @@ func (s *Server) targetCustomer(ctx context.Context, kind string, id int64) (int
 // mayAssign reports whether the user may give policy p to the target: the
 // user sees the target, and a customer's policy stays within its customer.
 func (s *Server) mayAssign(ctx context.Context, u *store.User, p *store.Policy, kind string, id int64) bool {
+	if kind == "tag" {
+		// Tags are shared by all customers and a tag has one policy, so
+		// only administrators assign them (a customer's policy then applies
+		// to that customer's devices with the tag only).
+		_, err := s.store.TagByID(ctx, id)
+		return u.IsAdmin() && err == nil
+	}
 	cid, ok := s.targetCustomer(ctx, kind, id)
 	if !ok || !u.SeesCustomer(cid) || !canManagePolicy(u, p) {
 		return false

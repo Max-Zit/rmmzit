@@ -11,7 +11,7 @@
     <thead><tr><th>{{.T "Part"}}</th><th>{{.T "From"}}</th></tr></thead>
     <tbody>{{range .Data.Parts}}<tr>
       <td>{{$.T .Name}}</td>
-      <td>{{with .Source}}{{if $.User.IsAdmin}}<a href="/policies/{{.Policy.ID}}">{{.Policy.Name}}</a>{{else}}{{.Policy.Name}}{{end}} <span class="small muted">({{if eq .Level "device"}}{{$.T "assigned to the device"}}{{else if eq .Level "site"}}{{$.T "assigned to the site"}}{{else}}{{$.T "assigned to the customer"}}{{end}})</span>{{else}}<span class="muted">{{$.T "built-in defaults"}}</span>{{end}}</td>
+      <td>{{with .Source}}{{if $.User.IsAdmin}}<a href="/policies/{{.Policy.ID}}">{{.Policy.Name}}</a>{{else}}{{.Policy.Name}}{{end}} <span class="small muted">({{if eq .Level "device"}}{{$.T "assigned to the device"}}{{else if eq .Level "tag"}}{{$.T "assigned to a tag of the device"}}{{else if eq .Level "site"}}{{$.T "assigned to the site"}}{{else}}{{$.T "assigned to the customer"}}{{end}})</span>{{else}}<span class="muted">{{$.T "built-in defaults"}}</span>{{end}}</td>
     </tr>{{end}}</tbody>
   </table></div>
   {{if .Data.CanChange}}

@@ -54,6 +54,8 @@ type deviceData struct {
 	WatchScreen bool
 	// CanWake: offline, with a network card address, and the user may act.
 	CanWake bool
+	Tags    []store.Tag // of the device
+	AllTags []store.Tag // to choose from
 }
 
 func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
@@ -77,6 +79,10 @@ func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
 	dd.Fields, _ = s.store.FieldValues(r.Context(), "device", d.ID)
 	dd.WatchScreen = !userFrom(r).CanWrite() && s.Remote(r.Context()).ReadOnlyView
 	dd.CanWake = !dd.Online && userFrom(r).CanWrite() && len(wakeMACs(d)) > 0
+	dd.Tags, _ = s.store.TagsOf(r.Context(), d.ID)
+	if userFrom(r).CanWrite() {
+		dd.AllTags, _ = s.store.Tags(r.Context())
+	}
 	if d.Inventory != nil {
 		q := strings.ToLower(strings.TrimSpace(r.FormValue("sw")))
 		dd.SwQuery = q

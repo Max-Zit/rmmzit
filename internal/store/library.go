@@ -82,11 +82,14 @@ type ScriptTarget struct {
 	Customers []int64 `json:"customers,omitempty"`
 	Sites     []int64 `json:"sites,omitempty"`
 	Devices   []int64 `json:"devices,omitempty"`
+	// Tags select the devices that carry them when the job is made (a
+	// schedule takes them again every time it runs).
+	Tags []int64 `json:"tags,omitempty"`
 }
 
 // Empty reports whether the target selects nothing.
 func (t ScriptTarget) Empty() bool {
-	return !t.All && len(t.Customers) == 0 && len(t.Sites) == 0 && len(t.Devices) == 0
+	return !t.All && len(t.Customers) == 0 && len(t.Sites) == 0 && len(t.Devices) == 0 && len(t.Tags) == 0
 }
 
 // ResolveTarget returns the IDs of the target's devices that u may see (u
@@ -101,10 +104,13 @@ func (s *Store) ResolveTarget(ctx context.Context, u *User, t ScriptTarget) ([]i
 	if t.Devices == nil {
 		t.Devices = []int64{}
 	}
+	if t.Tags == nil {
+		t.Tags = []int64{}
+	}
 	rows, err := s.db.Query(ctx, `SELECT d.id`+deviceFrom+`
-		WHERE ($1 OR x.customer_id = ANY($2) OR d.site_id = ANY($3) OR d.id = ANY($4))
+		WHERE ($1 OR x.customer_id = ANY($2) OR d.site_id = ANY($3) OR d.id = ANY($4) OR d.id IN (SELECT device_id FROM device_tags WHERE tag_id = ANY($7)))
 		  AND ($5 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$6))
-		ORDER BY d.id`, t.All, t.Customers, t.Sites, t.Devices, u == nil || u.IsAdmin() || u.AllCustomers, userID(u))
+		ORDER BY d.id`, t.All, t.Customers, t.Sites, t.Devices, u == nil || u.IsAdmin() || u.AllCustomers, userID(u), t.Tags)
 	if err != nil {
 		return nil, err
 	}

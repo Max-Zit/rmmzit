@@ -180,8 +180,8 @@
   {{if .Data.Assigned}}
   <div class="table-wrap"><table>
     <tbody>{{range .Data.Assigned}}<tr>
-      <td><span class="badge"><i></i>{{if eq .TargetType "customer"}}{{$.T "Customer"}}{{else if eq .TargetType "site"}}{{$.T "Site"}}{{else}}{{$.T "Device"}}{{end}}</span></td>
-      <td>{{if eq .TargetType "customer"}}<a href="/customers/{{.TargetID}}">{{.Name}}</a>{{else if eq .TargetType "site"}}<a href="/sites/{{.TargetID}}">{{.Name}}</a>{{else}}<a href="/devices/{{.TargetID}}/policy">{{.Name}}</a>{{end}}</td>
+      <td><span class="badge"><i></i>{{if eq .TargetType "customer"}}{{$.T "Customer"}}{{else if eq .TargetType "site"}}{{$.T "Site"}}{{else if eq .TargetType "tag"}}{{$.T "Tag"}}{{else}}{{$.T "Device"}}{{end}}</span></td>
+      <td>{{if eq .TargetType "customer"}}<a href="/customers/{{.TargetID}}">{{.Name}}</a>{{else if eq .TargetType "site"}}<a href="/sites/{{.TargetID}}">{{.Name}}</a>{{else if eq .TargetType "tag"}}<a href="/devices?tag={{.TargetID}}">{{.Name}}</a>{{else}}<a href="/devices/{{.TargetID}}/policy">{{.Name}}</a>{{end}}</td>
       <td class="small muted hide-sm">{{$.Time .AssignedAt}} · {{.AssignedBy}}</td>
       <td class="nowrap actions"><form method="post" action="/policies/{{$p.ID}}/unassign" class="inline"><input type="hidden" name="target" value="{{.TargetType}}:{{.TargetID}}"><button class="ghost sm">{{$.T "Remove"}}</button></form></td>
     </tr>{{end}}</tbody>
@@ -193,10 +193,11 @@
       <optgroup label="{{.T "Customers"}}">{{range .Data.Customers}}<option value="customer:{{.ID}}">{{.Name}}</option>{{end}}</optgroup>
       <optgroup label="{{.T "Sites"}}">{{range .Data.Sites}}<option value="site:{{.ID}}">{{.Customer}} / {{.Name}}</option>{{end}}</optgroup>
       <optgroup label="{{.T "Devices"}}">{{range .Data.Devices}}<option value="device:{{.ID}}">{{.Hostname}} ({{.Customer}})</option>{{end}}</optgroup>
+      {{with .Data.Tags}}<optgroup label="{{$.T "Tags"}}">{{range .}}<option value="tag:{{.ID}}">{{.Name}} ({{.Devices}})</option>{{end}}</optgroup>{{end}}
     </select>
     <button class="secondary">{{.T "Assign"}}</button>
   </form>
-  <p class="small muted mt">{{.T "A customer, site or device has one policy; assigning this one replaces the one it had."}}</p>
+  <p class="small muted mt">{{.T "A customer, site or device has one policy; assigning this one replaces the one it had."}}{{if .Data.Tags}} {{.T "A tag has one policy too; on a device it comes after the device's own policy and before the site and customer. A customer's policy on a tag applies to that customer's devices only."}}{{end}}</p>
 </section>
 <form method="post" action="/policies/{{$p.ID}}/delete" data-confirm="{{.T "Delete policy %s? Its customers, sites and devices fall back to less specific policies or the built-in defaults." $p.Name}}">
   <button class="danger">{{template "icon" "trash"}}{{.T "Delete"}}</button>

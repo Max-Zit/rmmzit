@@ -205,6 +205,7 @@ type policyLevel struct {
 type policyResolver struct {
 	byTarget map[string]*policyLevel
 	scopes   map[int64]store.DeviceScope
+	tags     map[int64][]store.Tag // by device, by name
 }
 
 // policyCache keeps the resolver the background loops share; it is loaded
@@ -267,17 +268,30 @@ func (s *Server) loadPolicies(ctx context.Context) (*policyResolver, error) {
 	for _, d := range scopes {
 		pr.scopes[d.DeviceID] = d
 	}
+	if pr.tags, err = s.store.DeviceTags(ctx); err != nil {
+		return nil, err
+	}
 	return pr, nil
 }
 
-// chain lists the policies of a device, most specific first.
+// chain lists the policies of a device, most specific first: its own, its
+// tags' (by tag name; a customer's policy only for that customer's
+// devices), its site's and its customer's.
 func (pr *policyResolver) chain(deviceID int64) []*policyLevel {
 	sc, ok := pr.scopes[deviceID]
 	if !ok {
 		return nil
 	}
+	keys := []string{"device:" + strconv.FormatInt(deviceID, 10)}
+	for _, t := range pr.tags[deviceID] {
+		k := "tag:" + strconv.FormatInt(t.ID, 10)
+		if l := pr.byTarget[k]; l != nil && (l.Policy.CustomerID == nil || *l.Policy.CustomerID == sc.CustomerID) {
+			keys = append(keys, k)
+		}
+	}
+	keys = append(keys, "site:"+strconv.FormatInt(sc.SiteID, 10), "customer:"+strconv.FormatInt(sc.CustomerID, 10))
 	var out []*policyLevel
-	for _, k := range []string{"device:" + strconv.FormatInt(deviceID, 10), "site:" + strconv.FormatInt(sc.SiteID, 10), "customer:" + strconv.FormatInt(sc.CustomerID, 10)} {
+	for _, k := range keys {
 		if l := pr.byTarget[k]; l != nil {
 			out = append(out, l)
 		}

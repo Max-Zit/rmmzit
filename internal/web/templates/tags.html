@@ -1,0 +1,23 @@
+{{template "app" .}}
+{{define "content"}}
+<h1>{{.T "Settings"}}</h1>
+<div class="settings">
+{{template "settingstabs" .}}
+<div class="settings-body">
+<section class="panel">
+  <h2>{{template "icon" "tag"}}{{.T "Tags"}}</h2>
+  <p class="small muted">{{.T "Technicians put tags on devices (on the device page or for many devices in the device list). Scripts can run on the devices of a tag, administrators can assign a policy to a tag, and the device list filters by tag. Deleting a tag takes it off all devices and removes its policy assignment."}}</p>
+  {{if .Data}}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{{.T "Tag"}}</th><th>{{.T "Devices"}}</th><th></th></tr></thead>
+    <tbody>{{range .Data}}<tr>
+      <td><form method="post" action="/settings/tags/{{.ID}}" class="row"><input type="hidden" name="action" value="rename"><input name="name" value="{{.Name}}" maxlength="40" required aria-label="{{$.T "Name"}}"><button class="ghost sm">{{$.T "Rename"}}</button></form></td>
+      <td><a href="/devices?tag={{.ID}}">{{.Devices}}</a></td>
+      <td class="nowrap actions"><form method="post" action="/settings/tags/{{.ID}}" data-confirm="{{$.T "Delete the tag %s? It is taken off %d devices, and a policy assigned to it no longer applies." .Name .Devices}}"><input type="hidden" name="action" value="delete"><button class="ghost sm">{{template "icon" "trash"}}{{$.T "Delete"}}</button></form></td>
+    </tr>{{end}}</tbody>
+  </table></div>
+  {{else}}<p class="muted">{{.T "No tags yet. Add one on a device page or in the device list."}}</p>{{end}}
+</section>
+</div>
+</div>
+{{end}}

@@ -108,12 +108,13 @@ func (s *Store) Unassign(ctx context.Context, targetType string, targetID int64)
 }
 
 const assignmentCols = `a.target_type, a.target_id, a.policy_id, p.name,
-	COALESCE(c.name, x.name, d.hostname, ''), a.assigned_by, a.assigned_at`
+	COALESCE(c.name, x.name, d.hostname, t.name, ''), a.assigned_by, a.assigned_at`
 
 const assignmentJoins = ` FROM policy_assignments a JOIN policies p ON p.id=a.policy_id
 	LEFT JOIN customers c ON a.target_type='customer' AND c.id=a.target_id
 	LEFT JOIN sites x ON a.target_type='site' AND x.id=a.target_id
-	LEFT JOIN devices d ON a.target_type='device' AND d.id=a.target_id`
+	LEFT JOIN devices d ON a.target_type='device' AND d.id=a.target_id
+	LEFT JOIN tags t ON a.target_type='tag' AND t.id=a.target_id`
 
 func (s *Store) assignments(ctx context.Context, where string, args ...any) ([]Assignment, error) {
 	rows, err := s.db.Query(ctx, `SELECT `+assignmentCols+assignmentJoins+where+` ORDER BY a.target_type, 5`, args...)

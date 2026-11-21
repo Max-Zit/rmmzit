@@ -45,6 +45,8 @@
         <label class="check"><input type="checkbox" name="all" value="1">{{.T "All devices (also new ones)"}}</label>
         {{if .Data.Customers}}<span class="small muted">{{.T "Or all devices of these customers:"}}</span>
         <div class="checks">{{range .Data.Customers}}<label class="check"><input type="checkbox" name="customer" value="{{.ID}}">{{.Name}}</label>{{end}}</div>{{end}}
+        {{if .Data.Tags}}<span class="small muted">{{.T "Or all devices with these tags (as they are when the schedule runs):"}}</span>
+        <div class="checks">{{range .Data.Tags}}<label class="check"><input type="checkbox" name="tag" value="{{.ID}}">{{.Name}}</label>{{end}}</div>{{end}}
       </fieldset>
       <small class="muted">{{.T "Devices that are offline at that time run the script when they connect, within 24 hours."}}</small>
       <div><button class="primary sm">{{.T "Add schedule"}}</button></div>

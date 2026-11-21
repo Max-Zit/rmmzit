@@ -2,6 +2,7 @@ package web
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"slices"
 	"strconv"
@@ -24,9 +25,43 @@ type deviceFilters struct {
 	Policy     int64
 	Field      int64
 	FieldValue string
+	Tag        int64
 }
 
 func (f deviceFilters) Any() bool { return f != deviceFilters{} }
+
+// deviceView is a search with filters: what a dynamic group saves.
+type deviceView struct {
+	Q string        `json:"q,omitempty"`
+	F deviceFilters `json:"f"`
+}
+
+// parseDeviceView reads the search and filters of the device list form.
+func parseDeviceView(r *http.Request) deviceView {
+	q := strings.TrimSpace(r.FormValue("q"))
+	if len(q) > 100 {
+		q = q[:100]
+	}
+	num := func(k string) int64 {
+		n, _ := strconv.ParseInt(r.FormValue(k), 10, 64)
+		return max(n, 0)
+	}
+	oneOf := func(v string, ok ...string) string {
+		if slices.Contains(ok, v) {
+			return v
+		}
+		return ""
+	}
+	fval := strings.TrimSpace(r.FormValue("fval"))
+	if len(fval) > 100 {
+		fval = fval[:100]
+	}
+	return deviceView{Q: q, F: deviceFilters{
+		Customer: num("customer"), Status: oneOf(r.FormValue("status"), "online", "offline"), OS: oneOf(r.FormValue("os"), "windows", "linux"),
+		Alerts: r.FormValue("alerts") == "1", Vuln: oneOf(r.FormValue("vuln"), "critical", "high"), Policy: num("policy"),
+		Field: num("field"), FieldValue: fval, Tag: num("tag"),
+	}}
+}
 
 type devicesData struct {
 	Devices   []*store.Device
@@ -40,6 +75,15 @@ type devicesData struct {
 	Alerts    map[int64]int // open alerts by device
 	Vulns     map[int64]int // fixable high or critical vulnerabilities by device
 	Total     int           // devices before the filters
+	Tags      []store.Tag
+	DevTags   map[int64][]store.Tag
+	Groups    []store.DeviceGroup
+	Group     *store.DeviceGroup // the group shown, if any
+}
+
+// MayDeleteGroup: administrators and the group's creator.
+func (d *devicesData) MayDeleteGroup(u *store.User, g store.DeviceGroup) bool {
+	return u.IsAdmin() || (u.CanWrite() && g.CreatedBy == u.Username)
 }
 
 // Online is used by the device lists.
@@ -48,15 +92,24 @@ func (d *devicesData) Online(x *store.Device) bool { return x.Online(d.Now, onli
 func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	u := userFrom(r)
-	q := strings.TrimSpace(r.FormValue("q"))
-	if len(q) > 100 {
-		q = q[:100]
+	view := parseDeviceView(r)
+	d := &devicesData{Now: s.now(), Alerts: map[int64]int{}, Vulns: map[int64]int{}}
+	// A dynamic group is a saved search: its devices are those that match now.
+	if gid, err := strconv.ParseInt(r.FormValue("group"), 10, 64); err == nil && gid > 0 {
+		g, err := s.store.DeviceGroup(ctx, gid)
+		if err != nil {
+			s.notFound(w, r)
+			return
+		}
+		view = deviceView{}
+		_ = json.Unmarshal(g.Filter, &view)
+		d.Group = g
 	}
-	num := func(k string) int64 { n, _ := strconv.ParseInt(r.FormValue(k), 10, 64); return n }
-	d := &devicesData{Q: q, Now: s.now(), Alerts: map[int64]int{}, Vulns: map[int64]int{}, F: deviceFilters{
-		Customer: num("customer"), Status: r.FormValue("status"), OS: r.FormValue("os"), Alerts: r.FormValue("alerts") == "1",
-		Vuln: r.FormValue("vuln"), Policy: num("policy"), Field: num("field"), FieldValue: strings.TrimSpace(r.FormValue("fval")),
-	}}
+	q := view.Q
+	d.Q, d.F = q, view.F
+	d.Groups, _ = s.store.DeviceGroups(ctx)
+	d.Tags, _ = s.store.Tags(ctx)
+	d.DevTags, _ = s.store.DeviceTags(ctx)
 	list, err := s.store.Devices(ctx, u, store.DeviceFilter{Query: q, CustomerID: d.F.Customer, Limit: 2000})
 	if err != nil {
 		s.serverError(w, r, err)
@@ -120,6 +173,9 @@ func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 			if pr == nil || !slices.ContainsFunc(pr.chain(x.ID), func(l *policyLevel) bool { return l.Policy.ID == f.Policy }) {
 				return false
 			}
+		}
+		if f.Tag != 0 && !slices.ContainsFunc(d.DevTags[x.ID], func(t store.Tag) bool { return t.ID == f.Tag }) {
+			return false
 		}
 		if f.Field != 0 {
 			v := values[x.ID][fieldName]
@@ -185,6 +241,36 @@ func (s *Server) handleDevicesBulk(w http.ResponseWriter, r *http.Request) {
 		s.audit(r, "job.create", "job:"+strconv.FormatInt(j.ID, 10), "run library script %q on %d devices (device list)", x.Name, len(ids))
 		go s.DispatchJobs(context.Background()) // #nosec G118 -- the job runs after the page has answered
 		s.redirect(w, r, "/jobs/"+strconv.FormatInt(j.ID, 10), "")
+		return
+	}
+	if action == "tag-add" || action == "tag-remove" {
+		ids := make([]int64, len(devs))
+		for i, d := range devs {
+			ids[i] = d.ID
+		}
+		name := r.FormValue("tagname")
+		var t *store.Tag
+		var err error
+		if action == "tag-add" {
+			var created bool
+			t, created, err = s.store.EnsureTag(ctx, name, u.Username)
+			if created {
+				s.audit(r, "tag.create", "tag:"+strconv.FormatInt(t.ID, 10), "created tag %q", t.Name)
+			}
+		} else {
+			t, err = s.store.TagByName(ctx, name)
+		}
+		if err != nil {
+			s.redirectErr(w, r, back, uiErr("Type the name of a tag (1 to 40 characters, no commas)."))
+			return
+		}
+		if err := s.store.SetDeviceTag(ctx, t.ID, ids, action == "tag-add"); err != nil {
+			s.serverError(w, r, err)
+			return
+		}
+		verb := map[bool]string{true: "added to", false: "removed from"}[action == "tag-add"]
+		s.audit(r, "device.tag", "tag:"+strconv.FormatInt(t.ID, 10), "tag %q %s %d devices (device list)", t.Name, verb, len(ids))
+		s.redirect(w, r, back, "Saved.")
 		return
 	}
 	queued := 0
