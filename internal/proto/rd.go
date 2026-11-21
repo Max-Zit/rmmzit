@@ -29,6 +29,24 @@ type RDStart struct {
 	NoNotice bool `json:"no_notice,omitempty"`
 	// NoClipboard: no clipboard exchange (setting).
 	NoClipboard bool `json:"no_clipboard,omitempty"`
+	// ViewOnly: the technician only watches the screen; the helper takes
+	// no mouse, keyboard, clipboard or files (the server filters them too).
+	ViewOnly bool `json:"view_only,omitempty"`
+}
+
+// KindRDCAD sends Ctrl+Alt+Del (the secure attention sequence) to the
+// console session. The agent service sends it: Windows accepts SendSAS
+// from a service, not from the helper in the user's session.
+const KindRDCAD = "rd.cad"
+
+// ViewOnlyInput reports whether a viewer message is allowed in a view-only
+// session: frame acknowledgements, quality, monitor choice and refresh.
+func ViewOnlyInput(t string) bool {
+	switch t {
+	case "ack", "q", "mon", "full":
+		return true
+	}
+	return false
 }
 
 // Binary messages from the helper start with one of these bytes.

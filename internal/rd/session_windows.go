@@ -26,10 +26,13 @@ const (
 // Serve streams the screen over ws and replays the input it receives,
 // until the connection ends. Unless the console setting switched it off, it
 // shows the notice while connected.
-func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, clipboard bool, log *slog.Logger) error {
+func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, clipboard, viewOnly bool, log *slog.Logger) error {
 	setDPIAware()
+	if viewOnly {
+		clipboard = false // nothing goes to or from the remote clipboard
+	}
 	if notice {
-		banner := ShowBanner("RMMZit: " + technician + " is connected to this computer")
+		banner := ShowBanner(noticeText(technician, viewOnly))
 		defer banner.Close()
 		if banner.hwnd == 0 {
 			log.Error("the on-screen notice could not be shown", "err", banner.Err)
@@ -97,6 +100,9 @@ func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, c
 			var in proto.RDInput
 			if json.Unmarshal(data, &in) != nil {
 				continue
+			}
+			if viewOnly && !proto.ViewOnlyInput(in.T) {
+				continue // view only: the server filters these too
 			}
 			switch in.T {
 			case "ack":
@@ -169,6 +175,8 @@ func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, c
 func desktopLoop(ctx context.Context, ws *websocket.Conn, inputs <-chan proto.RDInput, credits, quality *atomic.Int32, log *slog.Logger) error {
 	runtime.LockOSThread()
 	defer runtime.UnlockOSThread()
+	defer keepAwake()() // on this locked thread, for the whole session
+	woken := false
 	var c Capturer
 	defer c.Close()
 	c.Monitor = 0 // the primary display; the browser can choose another or all
@@ -227,12 +235,21 @@ func desktopLoop(ctx context.Context, ws *websocket.Conn, inputs <-chan proto.RD
 				if failures == 1 || failures%100 == 0 {
 					log.Warn("screen capture failed", "err", err)
 				}
-				if failures > 600 {
+				if failures%100 == 0 {
+					// Start the capture again (a desktop or display change it
+					// did not get over by itself), keeping the chosen monitor.
+					c.Close()
+				}
+				if failures > 4500 { // 3 minutes
 					return errors.New("screen capture keeps failing: " + err.Error())
 				}
 				continue
 			}
 			failures = 0
+			if !woken {
+				woken = true
+				wakeDisplay() // now on the input desktop; the next frames show it awake
+			}
 			if m := map[bool]string{true: "desktop duplication", false: "GDI"}[c.UsingDXGI()]; m != method {
 				method = m
 				log.Info("screen capture", "method", m, "desktop", c.Desktop())

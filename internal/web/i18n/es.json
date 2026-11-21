@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Las versiones candidatas llegan antes de una versión oficial para poder probarlas en una consola de pruebas. Mantenga las consolas de producción en las versiones oficiales.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Esta consola se ejecuta en un contenedor. Actualícela en el host de Docker; hace una copia de su base de datos antes de que la nueva versión la cambie:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Qué versiones indica esta página. Lo que se ejecuta lo decide la etiqueta de la imagen: latest para las versiones oficiales, testing para las versiones candidatas.",
-  "Source code (GNU AGPLv3)": "Código fuente (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Código fuente (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Una sesión de solo visualización muestra la pantalla sin ratón, teclado, portapapeles ni archivos. Los técnicos pueden elegirla en cualquier sesión; los usuarios de solo lectura solo obtienen sesiones de solo visualización, y solo si la casilla de arriba está marcada.",
+  "Read-only users may watch the screens of their devices (view only)": "Los usuarios de solo lectura pueden ver la pantalla de sus dispositivos (solo visualización)",
+  "See the screen without mouse or keyboard": "Ver la pantalla sin ratón ni teclado",
+  "The session is written to the audit log.": "La sesión se registra en el registro de auditoría.",
+  "View only": "Solo ver",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Solo ver: usted ve la pantalla, pero el ratón, el teclado, el portapapeles y los archivos siguen en manos de la persona del equipo.",
+  "View screen": "Ver pantalla"
 }

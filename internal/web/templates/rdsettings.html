@@ -9,7 +9,9 @@
   <form method="post" action="/settings/remote" class="stack">
     <label class="check"><input type="checkbox" name="show_notice" value="1" {{if .Data.ShowNotice}}checked{{end}}>{{.T "Show a notice on the remote screen while a technician is connected"}}</label>
     <label class="check"><input type="checkbox" name="clipboard" value="1" {{if .Data.Clipboard}}checked{{end}}>{{.T "Exchange copied text (clipboard) between the technician and the remote computer"}} <small class="muted">{{.T "(Windows computers)"}}</small></label>
+    <label class="check"><input type="checkbox" name="readonly_view" value="1" {{if .Data.ReadOnlyView}}checked{{end}}>{{.T "Read-only users may watch the screens of their devices (view only)"}}</label>
     <p class="small muted">{{.T "The notice is a bar at the top of the screen with the technician's name; the technician does not see it in the picture. Switching it off applies to new sessions. Every session is written to the audit log either way."}}</p>
+    <p class="small muted">{{.T "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked."}}</p>
     <div><button class="primary">{{.T "Save"}}</button></div>
   </form>
 </section>

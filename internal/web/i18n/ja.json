@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "リリース候補は公式リリースの前に提供され、テスト用コンソールで試せます。本番のコンソールは公式リリースのままにしてください。",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "このコンソールはコンテナーで実行されています。Docker ホストで更新してください。新しいバージョンがデータベースを変更する前に、コンソールはデータベースをバックアップします:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "このページが報告するリリース。実行されるものはイメージのタグで決まります: 正式リリースは latest、リリース候補は testing。",
-  "Source code (GNU AGPLv3)": "ソースコード (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "ソースコード (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "表示のみのセッションでは、マウス、キーボード、クリップボード、ファイルを使わずに画面だけを表示します。技術者はどのセッションでも選べます。読み取り専用ユーザーは上のボックスがオンのときだけ、表示のみのセッションを使えます。",
+  "Read-only users may watch the screens of their devices (view only)": "読み取り専用ユーザーが自分のデバイスの画面を見られるようにする (表示のみ)",
+  "See the screen without mouse or keyboard": "マウスやキーボードを使わずに画面を見る",
+  "The session is written to the audit log.": "セッションは監査ログに記録されます。",
+  "View only": "表示のみ",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "表示のみ: 画面は見えますが、マウス、キーボード、クリップボード、ファイルはコンピューターの前にいる人のものです。",
+  "View screen": "画面を見る"
 }

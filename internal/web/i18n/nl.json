@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Releasekandidaten komen vóór een officiële versie, zodat ze op een testconsole kunnen worden uitgeprobeerd. Houd productieconsoles op de officiële versies.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Deze console draait in een container. Werk hem bij op de Docker-host; hij maakt een back-up van zijn database voordat de nieuwe versie die wijzigt:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Welke versies deze pagina meldt. Wat er draait, bepaalt de tag van de image: latest voor officiële versies, testing voor releasekandidaten.",
-  "Source code (GNU AGPLv3)": "Broncode (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Broncode (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Een sessie 'alleen bekijken' toont het scherm zonder muis, toetsenbord, klembord of bestanden. Technici kunnen dit voor elke sessie kiezen; gebruikers met alleen-lezen krijgen alleen zulke sessies, en alleen als het vakje hierboven is aangevinkt.",
+  "Read-only users may watch the screens of their devices (view only)": "Gebruikers met alleen-lezen mogen het scherm van hun apparaten bekijken (alleen bekijken)",
+  "See the screen without mouse or keyboard": "Het scherm bekijken zonder muis of toetsenbord",
+  "The session is written to the audit log.": "De sessie wordt in het auditlogboek vastgelegd.",
+  "View only": "Alleen bekijken",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Alleen bekijken: u ziet het scherm, maar muis, toetsenbord, klembord en bestanden blijven bij de persoon achter de computer.",
+  "View screen": "Scherm bekijken"
 }

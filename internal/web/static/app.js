@@ -1,4 +1,4 @@
-// RMMZit console: small progressive enhancements (the console works
+if (document.getElementById("rd") || document.getElementById("term")) window.location.href = url.split("?")[0].replace(//(rd|terminal)$/, "");// RMMZit console: small progressive enhancements (the console works
 // without JavaScript). No inline scripts: the CSP allows only this file.
 (function () {
   "use strict";
@@ -159,14 +159,16 @@ document.addEventListener("click", function (ev) {
   var a = ev.target.closest && ev.target.closest("a[data-rdwin]");
   if (a) {
     var w = Math.min(screen.availWidth, 1600), h = Math.min(screen.availHeight, 960);
-    var url = a.getAttribute("href").split("?")[0] + "?w=1";
+    // Keep the link's parameters (view=1: view only) and add w=1.
+    var href = a.getAttribute("href");
+    var url = /[?&]w=1(&|$)/.test(href) ? href : href + (href.indexOf("?") >= 0 ? "&" : "?") + "w=1";
     var name = (a.getAttribute("data-winname") || "czrd") + a.getAttribute("data-rdwin");
     var win = window.open(url, name, "popup=yes,width=" + w + ",height=" + h);
     if (win) {
       ev.preventDefault();
       win.focus();
       // A viewer in this page would be a second session: go back to the device.
-      if (document.getElementById("rd") || document.getElementById("term")) window.location.href = url.replace(/\/(rd|terminal)\?w=1$/, "");
+      if (document.getElementById("rd") || document.getElementById("term")) window.location.href = url.split("?")[0].replace(/\/(rd|terminal)$/, "");
     }
     return;
   }

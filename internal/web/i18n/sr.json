@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidati za izdanje stižu pre zvaničnog izdanja da bi mogli da se isprobaju na test konzoli. Produkcijske konzole držite na zvaničnim izdanjima.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Ova konzola radi u kontejneru. Ažurirajte je na Docker hostu; pre nego što nova verzija promeni bazu, konzola pravi njenu rezervnu kopiju:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Koja izdanja ova strana prijavljuje. Šta radi određuje oznaka image-a: latest za zvanična izdanja, testing za kandidate.",
-  "Source code (GNU AGPLv3)": "Izvorni kod (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Izvorni kod (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Sesija samo za gledanje prikazuje ekran bez miša, tastature, klipborda i fajlova. Tehničari je mogu izabrati za svaku sesiju; korisnici samo za čitanje dobijaju samo takve sesije, i to samo kada je polje iznad označeno.",
+  "Read-only users may watch the screens of their devices (view only)": "Korisnici samo za čitanje mogu da gledaju ekrane svojih uređaja (samo gledanje)",
+  "See the screen without mouse or keyboard": "Gledanje ekrana bez miša i tastature",
+  "The session is written to the audit log.": "Sesija se upisuje u dnevnik revizije.",
+  "View only": "Samo gledanje",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Samo gledanje: vidite ekran, ali miš, tastatura, klipbord i fajlovi ostaju kod osobe za računarom.",
+  "View screen": "Pogledaj ekran"
 }

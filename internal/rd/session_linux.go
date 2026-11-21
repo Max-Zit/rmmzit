@@ -24,14 +24,14 @@ const (
 
 // Serve streams the X11 screen over ws and replays the input it receives,
 // until the connection ends. The clipboard is not exchanged on Linux yet.
-func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, _ bool, log *slog.Logger) error {
+func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, _, viewOnly bool, log *slog.Logger) error {
 	d, err := openX()
 	if err != nil {
 		return errors.New("cannot open the X11 desktop: " + err.Error())
 	}
 	defer d.Close()
 	if notice {
-		b, err := showXBanner("RMMZit: " + technician + " is connected to this computer")
+		b, err := showXBanner(noticeText(technician, viewOnly))
 		if err != nil {
 			log.Error("the on-screen notice could not be shown", "err", err)
 		}
@@ -39,6 +39,19 @@ func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, _
 	}
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
+	d.wake()
+	go func() {
+		t := time.NewTicker(30 * time.Second)
+		defer t.Stop()
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case <-t.C:
+				d.wake()
+			}
+		}
+	}()
 	inputs := make(chan proto.RDInput, 256)
 	var credits atomic.Int32
 	credits.Store(maxInFlight)
@@ -58,6 +71,9 @@ func Serve(ctx context.Context, ws *websocket.Conn, technician string, notice, _
 			var in proto.RDInput
 			if json.Unmarshal(data, &in) != nil {
 				continue
+			}
+			if viewOnly && !proto.ViewOnlyInput(in.T) {
+				continue // view only: the server filters these too
 			}
 			switch in.T {
 			case "ack":

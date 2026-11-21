@@ -50,6 +50,8 @@ type deviceData struct {
 	NetChecks []store.NetCheckState
 	Monitors  []monitorRow
 	Fields    []store.CustomField
+	// WatchScreen: a read-only user may watch the screen (setting).
+	WatchScreen bool
 }
 
 func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
@@ -71,6 +73,7 @@ func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
 		dd.Monitors = s.deviceMonitors(r.Context(), pr, d)
 	}
 	dd.Fields, _ = s.store.FieldValues(r.Context(), "device", d.ID)
+	dd.WatchScreen = !userFrom(r).CanWrite() && s.Remote(r.Context()).ReadOnlyView
 	if d.Inventory != nil {
 		q := strings.ToLower(strings.TrimSpace(r.FormValue("sw")))
 		dd.SwQuery = q

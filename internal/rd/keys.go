@@ -31,3 +31,12 @@ func ScanCode(code string) (sc uint16, extended, ok bool) {
 	v, ok := scanCodes[code]
 	return v & 0xFF, v&0xE000 == 0xE000, ok
 }
+
+// noticeText is the notice on the remote screen while a technician is
+// connected (or only watching).
+func noticeText(technician string, viewOnly bool) string {
+	if viewOnly {
+		return "RMMZit: " + technician + " is viewing this screen"
+	}
+	return "RMMZit: " + technician + " is connected to this computer"
+}

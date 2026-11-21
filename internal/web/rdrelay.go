@@ -70,15 +70,39 @@ type rdData struct {
 	Notice    bool
 	Clipboard bool
 	Window    bool // in its own browser window
+	// ViewOnly: the screen only (chosen, or the only way for a read-only
+	// user); CanControl: the user may also take control.
+	ViewOnly   bool
+	CanControl bool
+}
+
+// deviceForRD returns the device of a remote desktop request and whether
+// the session must be view-only: technicians and administrators choose,
+// read-only users may watch screens only when the setting allows it.
+func (s *Server) deviceForRD(w http.ResponseWriter, r *http.Request) (*store.Device, bool) {
+	d := s.deviceFor(w, r)
+	if d == nil {
+		return nil, false
+	}
+	if userFrom(r).CanWrite() {
+		return d, r.FormValue("view") == "1"
+	}
+	if s.Remote(r.Context()).ReadOnlyView {
+		return d, true
+	}
+	s.forbidden(w, r)
+	return nil, false
 }
 
 // handleRD is the viewer page.
 func (s *Server) handleRD(w http.ResponseWriter, r *http.Request) {
-	d := s.deviceForFiles(w, r)
+	d, viewOnly := s.deviceForRD(w, r)
 	if d == nil {
 		return
 	}
-	data := &rdData{D: d, Online: s.Connected(d.ID), Notice: s.Remote(r.Context()).ShowNotice, Clipboard: s.Remote(r.Context()).Clipboard && d.IsWindows(), Window: r.FormValue("w") == "1"}
+	rs := s.Remote(r.Context())
+	data := &rdData{D: d, Online: s.Connected(d.ID), Notice: rs.ShowNotice, Clipboard: rs.Clipboard && d.IsWindows() && !viewOnly, Window: r.FormValue("w") == "1",
+		ViewOnly: viewOnly, CanControl: userFrom(r).CanWrite()}
 	page := "rd"
 	if data.Window {
 		page = "rdwin"
@@ -88,7 +112,7 @@ func (s *Server) handleRD(w http.ResponseWriter, r *http.Request) {
 
 // handleRDSocket is the browser side of a session.
 func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
-	d := s.deviceForFiles(w, r)
+	d, viewOnly := s.deviceForRD(w, r)
 	if d == nil {
 		return
 	}
@@ -120,10 +144,10 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 	}
 	lang := s.lang(r, u)
 	settings := s.Remote(ctx)
-	if !d.IsWindows() {
-		settings.Clipboard = false // not on Linux yet
+	if !d.IsWindows() || viewOnly {
+		settings.Clipboard = false // not on Linux yet; never in view-only sessions
 	}
-	if err := s.call(ctx, d.ID, u.Username, proto.KindRDStart, proto.RDStart{Session: sess.id, Token: sess.token, Technician: name, NoNotice: !settings.ShowNotice, NoClipboard: !settings.Clipboard}, nil, rdStartTimeout); err != nil {
+	if err := s.call(ctx, d.ID, u.Username, proto.KindRDStart, proto.RDStart{Session: sess.id, Token: sess.token, Technician: name, NoNotice: !settings.ShowNotice, NoClipboard: !settings.Clipboard, ViewOnly: viewOnly}, nil, rdStartTimeout); err != nil {
 		s.log.Warn("remote desktop start failed", "device", d.ID, "err", err)
 		fail(err.Error())
 		return
@@ -136,8 +160,13 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer aws.CloseNow()
+	// Pings keep both legs alive while the screen does not change and
+	// nothing is typed: NAT routers and firewalls drop idle connections
+	// after a few minutes.
+	go keepAlive(ctx, bws)
+	go keepAlive(ctx, aws)
 	start := s.now()
-	s.audit(r, "rd.start", "device:"+strconv.FormatInt(d.ID, 10), "remote desktop session %s to %q started (notice on screen: %v, clipboard: %v)", sess.id, d.Hostname, settings.ShowNotice, settings.Clipboard)
+	s.audit(r, "rd.start", "device:"+strconv.FormatInt(d.ID, 10), "remote desktop session %s to %q started (view only: %v, notice on screen: %v, clipboard: %v)", sess.id, d.Hostname, viewOnly, settings.ShowNotice, settings.Clipboard)
 	s.log.Info("remote desktop session started", "device", d.ID, "user", u.Username, "session", sess.id)
 
 	var bytesDown atomic.Int64
@@ -179,7 +208,16 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 			if typ != websocket.MessageText {
 				continue
 			}
-			if isClip(data) {
+			t := inputType(data)
+			if viewOnly && !proto.ViewOnlyInput(t) {
+				continue // view only: no mouse, keys, text, clipboard or files
+			}
+			if t == "cad" && s.sendCAD(ctx, d, u.Username) {
+				// The agent service sends Ctrl+Alt+Del (Windows accepts it
+				// from a service only); older agents get it the old way.
+				continue
+			}
+			if t == "clip" {
 				if !settings.Clipboard {
 					continue
 				}
@@ -243,16 +281,34 @@ func (s *Server) handleStream(w http.ResponseWriter, r *http.Request) {
 	<-sess.done
 }
 
-// isClip reports whether a browser message sets the remote clipboard.
-func isClip(data []byte) bool {
-	if !bytes.Contains(data, []byte(`"clip"`)) {
-		return false
-	}
+// inputType is the type ("t") of a message from the browser ("" when it
+// cannot be read: such a message is dropped in view-only sessions).
+func inputType(data []byte) string {
 	var m struct {
 		T string `json:"t"`
 	}
-	return json.Unmarshal(data, &m) == nil && m.T == "clip"
+	if json.Unmarshal(data, &m) != nil {
+		return ""
+	}
+	return m.T
 }
+
+// sendCAD asks the agent service to send Ctrl+Alt+Del; false when the agent
+// is too old for that (then the helper is asked, as before).
+func (s *Server) sendCAD(ctx context.Context, d *store.Device, by string) bool {
+	if !d.IsWindows() || tooOldFor(d, cadServiceVersion) {
+		return false
+	}
+	go func() {
+		if err := s.call(ctx, d.ID, by, proto.KindRDCAD, nil, nil, 15*time.Second); err != nil {
+			s.log.Warn("Ctrl+Alt+Del failed", "device", d.ID, "err", err)
+		}
+	}()
+	return true
+}
+
+// cadServiceVersion is the first agent whose service sends Ctrl+Alt+Del.
+const cadServiceVersion = "0.14.0"
 
 // translateReply translates the text of an error message from the helper.
 func translateReply(data []byte, lang string) []byte {

@@ -18,7 +18,14 @@
   var monSel = document.getElementById("rd-monitor");
   var clipBtn = document.getElementById("rd-clip");
 
-  function send(o) { if (open && ws.readyState === 1) ws.send(JSON.stringify(o)); }
+  // View only: frame acknowledgements, quality, monitor and refresh go out;
+  // no mouse, keys, text or clipboard (the server and the agent drop them too).
+  var viewOnly = root.getAttribute("data-view") === "1";
+  var viewOnlyOK = { ack: 1, q: 1, mon: 1, full: 1 };
+  function send(o) {
+    if (viewOnly && !viewOnlyOK[o.t]) return;
+    if (open && ws.readyState === 1) ws.send(JSON.stringify(o));
+  }
   function setStatus(s, cls) { status.textContent = s; status.className = "rd-status " + (cls || ""); }
 
   ws.onopen = function () { setStatus(t("connecting")); };

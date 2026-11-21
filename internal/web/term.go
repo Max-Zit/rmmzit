@@ -84,6 +84,10 @@ func (s *Server) handleTermSocket(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer aws.CloseNow()
+	// Pings keep both legs alive while nothing is typed or shown: NAT
+	// routers and firewalls drop idle connections after a few minutes.
+	go keepAlive(ctx, bws)
+	go keepAlive(ctx, aws)
 	start := s.now()
 	s.audit(r, "term.start", "device:"+strconv.FormatInt(d.ID, 10), "terminal session %s to %q started (root shell)", sess.id, d.Hostname)
 

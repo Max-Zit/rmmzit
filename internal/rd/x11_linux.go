@@ -459,3 +459,9 @@ func (b *xBanner) Close() {
 		b.c.Close()
 	}
 }
+
+// wake resets the screen saver: a blanked screen comes back on and stays
+// on while a technician is connected (called every 30 seconds).
+func (d *xDesktop) wake() {
+	xproto.ForceScreenSaver(d.c, xproto.ScreenSaverReset)
+}

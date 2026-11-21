@@ -51,14 +51,14 @@ func init() {
 
 // RunHelper is the rdhelper command: it reads the session token from
 // stdin, connects the stream and serves the desktop.
-func RunHelper(ctx context.Context, dir, session, technician, token string, notice, clipboard bool, log *slog.Logger) error {
+func RunHelper(ctx context.Context, dir, session, technician, token string, notice, clipboard, viewOnly bool, log *slog.Logger) error {
 	ws, err := dialStream(ctx, dir, session, token)
 	if err != nil {
 		return err
 	}
 	defer ws.CloseNow()
-	log.Info("remote desktop session started", "session", session, "technician", technician)
-	err = rd.Serve(ctx, ws, technician, notice, clipboard, log)
+	log.Info("remote desktop session started", "session", session, "technician", technician, "view_only", viewOnly)
+	err = rd.Serve(ctx, ws, technician, notice, clipboard, viewOnly, log)
 	log.Info("remote desktop session ended", "session", session, "err", err)
 	return err
 }

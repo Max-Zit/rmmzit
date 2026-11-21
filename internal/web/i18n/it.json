@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Le release candidate arrivano prima di una versione ufficiale per poterle provare su una console di prova. Tieni le console di produzione sulle versioni ufficiali.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Questa console è in esecuzione in un container. Aggiornatela sull'host Docker; esegue il backup del database prima che la nuova versione lo modifichi:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Quali versioni segnala questa pagina. Cosa è in esecuzione lo decide il tag dell'immagine: latest per le versioni ufficiali, testing per le release candidate.",
-  "Source code (GNU AGPLv3)": "Codice sorgente (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Codice sorgente (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Una sessione di sola visualizzazione mostra lo schermo senza mouse, tastiera, appunti o file. I tecnici possono sceglierla per ogni sessione; gli utenti in sola lettura ottengono solo sessioni di sola visualizzazione, e solo se la casella qui sopra è selezionata.",
+  "Read-only users may watch the screens of their devices (view only)": "Gli utenti in sola lettura possono guardare lo schermo dei loro dispositivi (sola visualizzazione)",
+  "See the screen without mouse or keyboard": "Vedere lo schermo senza mouse né tastiera",
+  "The session is written to the audit log.": "La sessione viene scritta nel registro di audit.",
+  "View only": "Solo visualizzazione",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Solo visualizzazione: vede lo schermo, ma mouse, tastiera, appunti e file restano alla persona al computer.",
+  "View screen": "Vedi schermo"
 }

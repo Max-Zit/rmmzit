@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Les versions candidates arrivent avant une version officielle pour être essayées sur une console de test. Gardez les consoles de production sur les versions officielles.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Cette console fonctionne dans un conteneur. Mettez-la à jour sur l'hôte Docker ; elle sauvegarde sa base de données avant que la nouvelle version ne la modifie :",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Les versions que cette page signale. C'est le tag de l'image qui décide de ce qui tourne : latest pour les versions officielles, testing pour les versions candidates.",
-  "Source code (GNU AGPLv3)": "Code source (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Code source (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Une session en lecture seule affiche l'écran sans souris, clavier, presse-papiers ni fichiers. Les techniciens peuvent la choisir pour toute session ; les utilisateurs en lecture seule n'obtiennent que ce type de session, et seulement si la case ci-dessus est cochée.",
+  "Read-only users may watch the screens of their devices (view only)": "Les utilisateurs en lecture seule peuvent voir l'écran de leurs appareils (visualisation seule)",
+  "See the screen without mouse or keyboard": "Voir l'écran sans souris ni clavier",
+  "The session is written to the audit log.": "La session est inscrite dans le journal d'audit.",
+  "View only": "Visualisation seule",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Visualisation seule : vous voyez l'écran, mais la souris, le clavier, le presse-papiers et les fichiers restent à la personne devant l'ordinateur.",
+  "View screen": "Voir l'écran"
 }

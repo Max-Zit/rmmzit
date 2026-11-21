@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandydaci do wydania pojawiają się przed oficjalną wersją, aby można ich było wypróbować na konsoli testowej. Konsole produkcyjne trzymaj na oficjalnych wersjach.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Ta konsola działa w kontenerze. Aktualizuj ją na hoście Docker; przed zmianą bazy danych przez nową wersję konsola robi jej kopię:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Które wydania zgłasza ta strona. O tym, co działa, decyduje tag obrazu: latest dla oficjalnych wydań, testing dla kandydatów do wydania.",
-  "Source code (GNU AGPLv3)": "Kod źródłowy (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Kod źródłowy (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Sesja tylko do podglądu pokazuje ekran bez myszy, klawiatury, schowka i plików. Technicy mogą ją wybrać dla każdej sesji; użytkownicy tylko do odczytu dostają wyłącznie takie sesje i tylko wtedy, gdy pole powyżej jest zaznaczone.",
+  "Read-only users may watch the screens of their devices (view only)": "Użytkownicy tylko do odczytu mogą oglądać ekrany swoich urządzeń (tylko podgląd)",
+  "See the screen without mouse or keyboard": "Podgląd ekranu bez myszy i klawiatury",
+  "The session is written to the audit log.": "Sesja jest zapisywana w dzienniku audytu.",
+  "View only": "Tylko podgląd",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Tylko podgląd: widzisz ekran, ale mysz, klawiatura, schowek i pliki pozostają przy osobie przy komputerze.",
+  "View screen": "Podgląd ekranu"
 }

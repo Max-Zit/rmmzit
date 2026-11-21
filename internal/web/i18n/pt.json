@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "As versões candidatas chegam antes de uma versão oficial para poderem ser experimentadas numa consola de testes. Mantenha as consolas de produção nas versões oficiais.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Esta consola é executada num contentor. Atualize-a no anfitrião Docker; faz uma cópia da base de dados antes de a nova versão a alterar:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Que versões esta página indica. O que é executado é decidido pela etiqueta da imagem: latest para as versões oficiais, testing para as versões candidatas.",
-  "Source code (GNU AGPLv3)": "Código-fonte (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Código-fonte (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Uma sessão só de visualização mostra o ecrã sem rato, teclado, área de transferência nem ficheiros. Os técnicos podem escolhê-la em qualquer sessão; os utilizadores só de leitura só têm sessões de visualização, e só quando a caixa acima está marcada.",
+  "Read-only users may watch the screens of their devices (view only)": "Os utilizadores só de leitura podem ver o ecrã dos seus dispositivos (só visualização)",
+  "See the screen without mouse or keyboard": "Ver o ecrã sem rato nem teclado",
+  "The session is written to the audit log.": "A sessão fica registada no registo de auditoria.",
+  "View only": "Só ver",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Só ver: vê o ecrã, mas o rato, o teclado, a área de transferência e os ficheiros ficam com a pessoa no computador.",
+  "View screen": "Ver ecrã"
 }

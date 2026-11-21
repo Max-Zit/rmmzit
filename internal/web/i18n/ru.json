@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Кандидаты в релиз выходят раньше официальной версии, чтобы их можно было проверить на тестовой консоли. Рабочие консоли держите на официальных версиях.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Эта консоль работает в контейнере. Обновляйте её на хосте Docker; перед тем как новая версия изменит базу данных, консоль делает её резервную копию:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "О каких выпусках сообщает эта страница. Что запущено, определяет тег образа: latest для официальных выпусков, testing для кандидатов.",
-  "Source code (GNU AGPLv3)": "Исходный код (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Исходный код (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Сеанс только для просмотра показывает экран без мыши, клавиатуры, буфера обмена и файлов. Техники могут выбрать его для любого сеанса; пользователи только для чтения получают только такие сеансы, и только если флажок выше установлен.",
+  "Read-only users may watch the screens of their devices (view only)": "Пользователи только для чтения могут смотреть экраны своих устройств (только просмотр)",
+  "See the screen without mouse or keyboard": "Смотреть экран без мыши и клавиатуры",
+  "The session is written to the audit log.": "Сеанс записывается в журнал аудита.",
+  "View only": "Только просмотр",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Только просмотр: вы видите экран, но мышь, клавиатура, буфер обмена и файлы остаются у человека за компьютером.",
+  "View screen": "Смотреть экран"
 }

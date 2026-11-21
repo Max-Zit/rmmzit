@@ -1738,5 +1738,12 @@
   "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidáti na vydání přicházejí před oficiální verzí, aby je bylo možné vyzkoušet na testovací konzoli. Produkční konzole nechte na oficiálních verzích.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Tato konzole běží v kontejneru. Aktualizujte ji na hostiteli Docker; před tím, než nová verze změní databázi, ji konzole zálohuje:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Která vydání tato stránka hlásí. Co běží, určuje značka image: latest pro oficiální vydání, testing pro kandidáty na vydání.",
-  "Source code (GNU AGPLv3)": "Zdrojový kód (GNU AGPLv3)"
+  "Source code (GNU AGPLv3)": "Zdrojový kód (GNU AGPLv3)",
+  "A view-only session shows the screen without mouse, keyboard, clipboard or files. Technicians can choose it for any session; read-only users get only view-only sessions, and only when the box above is ticked.": "Relace jen pro sledování ukazuje obrazovku bez myši, klávesnice, schránky a souborů. Technici ji mohou zvolit pro každou relaci; uživatelé jen pro čtení dostanou jen takové relace, a jen když je políčko výše zaškrtnuté.",
+  "Read-only users may watch the screens of their devices (view only)": "Uživatelé jen pro čtení mohou sledovat obrazovky svých zařízení (jen sledování)",
+  "See the screen without mouse or keyboard": "Sledovat obrazovku bez myši a klávesnice",
+  "The session is written to the audit log.": "Relace se zapisuje do protokolu auditu.",
+  "View only": "Jen sledovat",
+  "View only: you see the screen, but the mouse, keyboard, clipboard and files stay with the person at the computer.": "Jen sledovat: vidíte obrazovku, ale myš, klávesnice, schránka a soubory zůstávají u člověka u počítače.",
+  "View screen": "Sledovat obrazovku"
 }

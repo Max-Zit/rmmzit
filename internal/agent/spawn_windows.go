@@ -31,6 +31,9 @@ func startHelper(dir string, a proto.RDStart) error {
 	if a.NoClipboard {
 		argv = append(argv, "--no-clipboard")
 	}
+	if a.ViewOnly {
+		argv = append(argv, "--view-only")
+	}
 	if !isSystem() {
 		cmd := exec.Command(exe, argv[1:]...) // #nosec G204 -- our own executable
 		cmd.Stdin = strings.NewReader(a.Token + "\n")
