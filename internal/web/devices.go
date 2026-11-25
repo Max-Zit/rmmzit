@@ -54,8 +54,9 @@ type deviceData struct {
 	WatchScreen bool
 	// CanWake: offline, with a network card address, and the user may act.
 	CanWake bool
-	Tags    []store.Tag // of the device
-	AllTags []store.Tag // to choose from
+	Tags    []store.Tag  // of the device
+	AllTags []store.Tag  // to choose from
+	Sites   []store.Site // to move the device into
 }
 
 func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
@@ -64,6 +65,9 @@ func (s *Server) handleDevice(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	dd := &deviceData{D: d, Inv: d.Inventory, Online: d.Online(s.now(), onlineWindow) && s.Connected(d.ID), Now: s.now(), Package: s.packages()}
+	if userFrom(r).CanWrite() {
+		dd.Sites, _ = s.sitesFor(r.Context(), userFrom(r))
+	}
 	dd.Forecast = s.deviceForecasts(d.ID)
 	dd.Alerts, _ = s.store.Alerts(r.Context(), userFrom(r), store.AlertFilter{DeviceID: d.ID, Open: true})
 	dd.Metrics, dd.MetricsAt, dd.Stopped, _ = s.store.DeviceMetrics(r.Context(), d.ID)
@@ -126,21 +130,15 @@ func (s *Server) handleDeviceDelete(w http.ResponseWriter, r *http.Request) {
 		s.forbidden(w, r)
 		return
 	}
-	// An online agent uninstalls itself first (and gives Windows Update its
-	// own settings back); an offline one is removed by hand.
-	removing := s.call(r.Context(), d.ID, s.issuer(r), proto.KindAgentRemove, nil, nil, 15*time.Second) == nil
-	if err := s.store.DeleteDevice(r.Context(), d.ID); err != nil {
+	removing, err := s.removeDevice(r, d)
+	if err != nil {
 		s.serverError(w, r, err)
 		return
 	}
-	s.disconnect(d.ID)
-	what := "its agent can no longer connect"
 	msg := "Device removed. It was offline or did not answer: uninstall the agent on the machine."
 	if removing {
-		what = "its agent is uninstalling itself"
 		msg = "Device removed. The agent uninstalls itself from the computer in a few seconds."
 	}
-	s.audit(r, "device.delete", "device:"+strconv.FormatInt(d.ID, 10), "removed device %q from site %q of %q; %s", d.Hostname, d.Site, d.Customer, what)
 	s.redirect(w, r, "/sites/"+strconv.FormatInt(d.SiteID, 10), msg)
 }
 

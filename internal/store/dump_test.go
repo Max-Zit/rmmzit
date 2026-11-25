@@ -29,7 +29,7 @@ func TestDumpRestore(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	d, err := src.EnrollDevice(ctx, tok, bytes.Repeat([]byte{1}, 32), "PC-1", "Windows 11", "0.11.0", "10.0.0.1")
+	d, err := src.EnrollDevice(ctx, tok, bytes.Repeat([]byte{1}, 32), "PC-1", "", "Windows 11", "0.11.0", "10.0.0.1")
 	if err != nil {
 		t.Fatal(err)
 	}

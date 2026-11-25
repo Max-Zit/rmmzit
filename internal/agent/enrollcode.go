@@ -36,6 +36,7 @@ func ParseEnrollCode(code string) (EnrollData, error) {
 	if err != nil || json.Unmarshal(b, &d) != nil {
 		return d, errors.New("the enrollment code is damaged; copy it again from the console")
 	}
+	d.Name = "" // a code is the same for the whole site; the name comes from --name
 	return checkEnroll(d)
 }
 
@@ -83,7 +84,7 @@ func LoadPending(dir string) (EnrollData, bool) {
 
 // EnrollWith enrolls with the data of a code or of the pending file.
 func EnrollWith(ctx context.Context, dir string, d EnrollData) (*Config, error) {
-	return Enroll(ctx, dir, d.Server, d.Fingerprint, d.Token)
+	return enroll(ctx, dir, d.Server, d.Fingerprint, d.Token, d.Name)
 }
 
 // Forget removes the enrollment (uninstall): the configuration, the key and

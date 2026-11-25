@@ -6,6 +6,7 @@ import (
 	"errors"
 	"strings"
 	"time"
+	"unicode"
 
 	"github.com/max-zit/rmmzit/internal/auth"
 	"github.com/max-zit/rmmzit/internal/proto"
@@ -19,7 +20,9 @@ type Device struct {
 	CustomerID   int64
 	Customer     string
 	AgentID      string
-	Hostname     string
+	Hostname     string // what the console shows: Name, or the reported hostname
+	Name         string // display name; empty = the hostname
+	RealHostname string // the hostname the agent reports
 	OS           string
 	OSVersion    string
 	OSBuild      string
@@ -49,7 +52,7 @@ func clip(s string, n int) string {
 
 // EnrollDevice consumes one use of an enrollment token and registers the
 // agent key in the token's site, in one transaction.
-func (s *Store) EnrollDevice(ctx context.Context, token string, pub []byte, hostname, osName, agentVersion, ip string) (*Device, error) {
+func (s *Store) EnrollDevice(ctx context.Context, token string, pub []byte, hostname, name, osName, agentVersion, ip string) (*Device, error) {
 	defer s.scopesChanged()
 	if len(pub) != 32 {
 		return nil, errors.New("bad agent key")
@@ -67,9 +70,9 @@ func (s *Store) EnrollDevice(ctx context.Context, token string, pub []byte, host
 		return nil, ErrTokenInvalid
 	}
 	var id int64
-	err = tx.QueryRow(ctx, `INSERT INTO devices(site_id, agent_id, hostname, os, key_id, public_key, token_id, agent_version, remote_ip, enrolled_at)
-		VALUES($1, gen_random_uuid(), $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
-		siteID, clip(hostname, 255), clip(osName, 200), proto.KeyID(pub), pub, tokenID, clip(agentVersion, 40), ip, s.now()).Scan(&id)
+	err = tx.QueryRow(ctx, `INSERT INTO devices(site_id, agent_id, hostname, name, os, key_id, public_key, token_id, agent_version, remote_ip, enrolled_at)
+		VALUES($1, gen_random_uuid(), $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
+		siteID, clip(hostname, 255), CleanDeviceName(name), clip(osName, 200), proto.KeyID(pub), pub, tokenID, clip(agentVersion, 40), ip, s.now()).Scan(&id)
 	if isUnique(err) {
 		return nil, ErrConflict
 	}
@@ -82,14 +85,17 @@ func (s *Store) EnrollDevice(ctx context.Context, token string, pub []byte, host
 	return s.Device(ctx, id)
 }
 
-const deviceCols = `d.id, d.site_id, x.name, x.customer_id, c.name, d.agent_id::text, d.hostname, d.os, d.os_version, d.os_build,
+// DeviceLabel is the SQL of the name the console shows for device d.
+const DeviceLabel = `COALESCE(NULLIF(d.name, ''), d.hostname)`
+
+const deviceCols = `d.id, d.site_id, x.name, x.customer_id, c.name, d.agent_id::text, ` + DeviceLabel + `, d.name, d.hostname, d.os, d.os_version, d.os_build,
 	d.agent_version, d.last_user, d.boot_time, d.remote_ip, d.enrolled_at, d.last_seen_at, d.connected, d.inventory_at`
 
 const deviceFrom = ` FROM devices d JOIN sites x ON x.id=d.site_id JOIN customers c ON c.id=x.customer_id `
 
 func scanDevice(row interface{ Scan(...any) error }, extra ...any) (*Device, error) {
 	d := &Device{}
-	dst := []any{&d.ID, &d.SiteID, &d.Site, &d.CustomerID, &d.Customer, &d.AgentID, &d.Hostname, &d.OS, &d.OSVersion, &d.OSBuild,
+	dst := []any{&d.ID, &d.SiteID, &d.Site, &d.CustomerID, &d.Customer, &d.AgentID, &d.Hostname, &d.Name, &d.RealHostname, &d.OS, &d.OSVersion, &d.OSBuild,
 		&d.AgentVersion, &d.LastUser, &d.BootTime, &d.RemoteIP, &d.EnrolledAt, &d.LastSeenAt, &d.Connected, &d.InventoryAt}
 	return d, row.Scan(append(dst, extra...)...)
 }
@@ -133,8 +139,8 @@ func (s *Store) Devices(ctx context.Context, u *User, f DeviceFilter) ([]*Device
 	rows, err := s.db.Query(ctx, `SELECT `+deviceCols+deviceFrom+`
 		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2))
 		  AND ($3::bigint = 0 OR d.site_id=$3) AND ($4::bigint = 0 OR x.customer_id=$4)
-		  AND ($5 = '%%' OR d.hostname ILIKE $5 OR d.last_user ILIKE $5 OR d.os ILIKE $5 OR c.name ILIKE $5)
-		ORDER BY lower(c.name), lower(x.name), lower(d.hostname) LIMIT $6`,
+		  AND ($5 = '%%' OR d.hostname ILIKE $5 OR d.name ILIKE $5 OR d.last_user ILIKE $5 OR d.os ILIKE $5 OR c.name ILIKE $5)
+		ORDER BY lower(c.name), lower(x.name), lower(`+DeviceLabel+`) LIMIT $6`,
 		u.IsAdmin() || u.AllCustomers, u.ID, f.SiteID, f.CustomerID, q, f.Limit)
 	if err != nil {
 		return nil, err
@@ -202,6 +208,74 @@ func (s *Store) SaveInventory(ctx context.Context, id int64, inv *proto.Inventor
 		os_version=CASE WHEN $5<>'' THEN $5 ELSE os_version END, os_build=CASE WHEN $6<>'' THEN $6 ELSE os_build END WHERE id=$1`,
 		id, raw, s.now(), osName, clip(inv.OS.Version, 60), clip(inv.OS.Build, 60))
 	return err
+}
+
+// MaxDeviceName is the longest display name, in characters.
+const MaxDeviceName = 100
+
+// CleanDeviceName trims a display name, turns control and format
+// characters (also the invisible bidi ones) into spaces and shortens it to
+// MaxDeviceName characters. Empty means: show the hostname.
+func CleanDeviceName(name string) string {
+	var b strings.Builder
+	n := 0
+	for _, r := range strings.ToValidUTF8(name, "") {
+		if n == MaxDeviceName {
+			break
+		}
+		if unicode.IsControl(r) || unicode.Is(unicode.Cf, r) {
+			r = ' '
+		}
+		b.WriteRune(r)
+		n++
+	}
+	return strings.Join(strings.Fields(b.String()), " ")
+}
+
+// RenameDevice sets the display name of a device (empty = the hostname).
+func (s *Store) RenameDevice(ctx context.Context, id int64, name string) error {
+	tag, err := s.db.Exec(ctx, `UPDATE devices SET name=$2 WHERE id=$1`, id, CleanDeviceName(name))
+	if err == nil && tag.RowsAffected() == 0 {
+		return ErrNotFound
+	}
+	return err
+}
+
+// MoveDevice puts a device into another site. The policies of the old site
+// and customer stop applying and those of the new ones apply; the device's
+// own policy, its tags and fields stay with it.
+func (s *Store) MoveDevice(ctx context.Context, id, siteID int64) error {
+	defer s.scopesChanged()
+	tag, err := s.db.Exec(ctx, `UPDATE devices SET site_id=$2 WHERE id=$1 AND EXISTS (SELECT 1 FROM sites WHERE id=$2)`, id, siteID)
+	if err == nil && tag.RowsAffected() == 0 {
+		return ErrNotFound
+	}
+	return err
+}
+
+// SameHostname counts, for each device the user may see, the other such
+// devices that report the same hostname (case does not count): cloned or
+// reinstalled machines show up this way.
+func (s *Store) SameHostname(ctx context.Context, u *User) (map[int64]int, error) {
+	rows, err := s.db.Query(ctx, `SELECT d.id, count(*) OVER (PARTITION BY lower(d.hostname)) - 1`+deviceFrom+`
+		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2)) AND d.hostname <> ''`,
+		u.IsAdmin() || u.AllCustomers, u.ID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	out := map[int64]int{}
+	for rows.Next() {
+		var id int64
+		var n int
+		if err := rows.Scan(&id, &n); err != nil {
+			return nil, err
+		}
+		if n > 0 {
+			out[id] = n
+		}
+	}
+	return out, rows.Err()
 }
 
 // DeleteDevice removes a device; its agent can no longer connect.

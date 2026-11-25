@@ -44,10 +44,10 @@ func usage() error {
 commands:
   enroll     join this machine to an RMMZit server
              --code RZ1-… (or --server URL --fingerprint SHA256 --token TOKEN)
-             [--force] [--if-not-enrolled] [--pending-ok] [--dir DIR]
+             [--name NAME] [--force] [--if-not-enrolled] [--pending-ok] [--dir DIR]
   forget     remove the enrollment (configuration and key)
   run        run the agent in the foreground
-  install    install and start the service (Linux: --code RZ1-… enrolls too)
+  install    install and start the service (Linux: --code RZ1-… [--name NAME] enrolls too)
   uninstall  stop and remove the service
   status     show the enrollment
   inventory  print the inventory of this machine as JSON
@@ -71,6 +71,7 @@ func run(args []string) error {
 	token := fs.String("token", "", "enrollment token of the site")
 	force := fs.Bool("force", false, "enroll again even if already enrolled")
 	code := fs.String("code", "", "enrollment code from the console (RZ1-…), instead of --server, --fingerprint and --token")
+	name := fs.String("name", "", "display name of this device in the console (only when it enrolls; empty = the hostname)")
 	ifNot := fs.Bool("if-not-enrolled", false, "do nothing when already enrolled (installer upgrades)")
 	pendingOK := fs.Bool("pending-ok", false, "if the server cannot be reached, let the service finish the enrollment later")
 	session := fs.String("session", "", "remote desktop session (rdhelper, started by the service)")
@@ -101,6 +102,7 @@ func run(args []string) error {
 		if err != nil {
 			return err
 		}
+		d.Name = *name
 		if c, err := agent.LoadConfig(*dir); err == nil && !*force {
 			if *ifNot {
 				fmt.Printf("Already enrolled with %s (customer %q, site %q); nothing to do.\n", c.ServerURL, c.Customer, c.Site)
@@ -174,7 +176,7 @@ func run(args []string) error {
 		// Started by a remote desktop helper as the signed-in user.
 		return rd.WatchFiles(ctx, os.Stdout)
 	case "install":
-		return installService(*code)
+		return installService(*code, *name)
 	case "uninstall":
 		return uninstallService()
 	}

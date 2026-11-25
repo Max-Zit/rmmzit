@@ -6,6 +6,8 @@
 
   Silent (GPO, Intune, RMM, script):
     msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…"
+  optionally with a display name for the console (only when it enrolls):
+    msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
   or with the parts:
     msiexec /i rmmzit-agent-x64.msi /qn SERVER_URL="https://rmm:8444" FINGERPRINT="…" TOKEN="czet_…"
 
@@ -41,6 +43,8 @@
     <Property Id="SERVER_URL" Secure="yes" />
     <Property Id="FINGERPRINT" Secure="yes" />
     <Property Id="TOKEN" Secure="yes" Hidden="yes" />
+    <!-- Display name in the console; used only when the device enrolls. -->
+    <Property Id="DEVICENAME" Secure="yes" />
     <Property Id="FORCEENROLL" Secure="yes" />
     <Property Id="SKIPENROLL" Secure="yes" />
     <!-- Written by the agent after a successful enrollment. -->
@@ -89,16 +93,16 @@
     <!-- Enrollment (as SYSTEM, before the service starts). The command line
          holds the token, so it is hidden from the installer log. -->
     <CustomAction Id="EnrollCode" FileRef="AgentExeFile"
-                  ExeCommand="enroll --if-not-enrolled --pending-ok --code &quot;[ENROLLCODE]&quot;"
+                  ExeCommand="enroll --if-not-enrolled --pending-ok --code &quot;[ENROLLCODE]&quot; --name &quot;[DEVICENAME]&quot;"
                   Execute="deferred" Impersonate="no" Return="check" HideTarget="yes" />
     <CustomAction Id="EnrollCodeForce" FileRef="AgentExeFile"
-                  ExeCommand="enroll --force --pending-ok --code &quot;[ENROLLCODE]&quot;"
+                  ExeCommand="enroll --force --pending-ok --code &quot;[ENROLLCODE]&quot; --name &quot;[DEVICENAME]&quot;"
                   Execute="deferred" Impersonate="no" Return="check" HideTarget="yes" />
     <CustomAction Id="EnrollParts" FileRef="AgentExeFile"
-                  ExeCommand="enroll --if-not-enrolled --pending-ok --server &quot;[SERVER_URL]&quot; --fingerprint &quot;[FINGERPRINT]&quot; --token &quot;[TOKEN]&quot;"
+                  ExeCommand="enroll --if-not-enrolled --pending-ok --server &quot;[SERVER_URL]&quot; --fingerprint &quot;[FINGERPRINT]&quot; --token &quot;[TOKEN]&quot; --name &quot;[DEVICENAME]&quot;"
                   Execute="deferred" Impersonate="no" Return="check" HideTarget="yes" />
     <CustomAction Id="EnrollPartsForce" FileRef="AgentExeFile"
-                  ExeCommand="enroll --force --pending-ok --server &quot;[SERVER_URL]&quot; --fingerprint &quot;[FINGERPRINT]&quot; --token &quot;[TOKEN]&quot;"
+                  ExeCommand="enroll --force --pending-ok --server &quot;[SERVER_URL]&quot; --fingerprint &quot;[FINGERPRINT]&quot; --token &quot;[TOKEN]&quot; --name &quot;[DEVICENAME]&quot;"
                   Execute="deferred" Impersonate="no" Return="check" HideTarget="yes" />
     <!-- Close the tray icons so their file can be replaced or removed. -->
     <util:CloseApplication Id="CloseTray" Target="rmmzit-tray.exe" TerminateProcess="0" RebootPrompt="no" />

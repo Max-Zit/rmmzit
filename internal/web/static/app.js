@@ -131,16 +131,28 @@ document.addEventListener("submit", function (ev) {
   f.appendChild(p);
 });
 
-// "Select all" checkboxes (data-check-all="field name") and pages that wait
-// for an agent (data-autorefresh: reload every 15 s while it is shown).
+// "Select all" checkboxes (data-check-all="field name"), the number of
+// chosen boxes (data-count-of="field name", text "%d chosen") and pages that
+// wait for an agent (data-autorefresh: reload every 15 s while it is shown).
+function countChosen() {
+  "use strict";
+  document.querySelectorAll("[data-count-of]").forEach(function (el) {
+    var f = el.closest("form"), n = 0;
+    document.querySelectorAll('input[type=checkbox][name="' + el.getAttribute("data-count-of") + '"]').forEach(function (c) { if (c.form === f && c.checked) n++; });
+    el.textContent = n ? el.getAttribute("data-count-text").replace("%d", n) : "";
+  });
+}
 document.addEventListener("change", function (ev) {
   "use strict";
   var name = ev.target.getAttribute && ev.target.getAttribute("data-check-all");
-  if (!name) return;
-  document.querySelectorAll('input[type=checkbox][name="' + name + '"]').forEach(function (c) { if (c.form === ev.target.form) c.checked = ev.target.checked; });
+  if (name) {
+    document.querySelectorAll('input[type=checkbox][name="' + name + '"]').forEach(function (c) { if (c.form === ev.target.form) c.checked = ev.target.checked; });
+  }
+  if (ev.target.type === "checkbox") countChosen();
 });
 document.addEventListener("DOMContentLoaded", function () {
   "use strict";
+  countChosen(); // the browser may keep the boxes ticked after "back"
   if (document.querySelector("[data-autorefresh]")) {
     setTimeout(function () { window.location.reload(); }, 15000);
   }

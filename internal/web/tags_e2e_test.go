@@ -57,7 +57,7 @@ func TestTagsAndGroups(t *testing.T) {
 
 	// The device list filters by tag and shows the tags.
 	r := tech.get("/devices?tag=" + tid)
-	if !strings.Contains(r.body, "srv-one") || !strings.Contains(r.body, "srv-two") || strings.Contains(r.body, "desk-one") {
+	if b := deviceTable(r.body); !strings.Contains(b, "srv-one") || !strings.Contains(b, "srv-two") || strings.Contains(b, "desk-one") {
 		t.Fatal("tag filter")
 	}
 	// Bulk: add a second tag to two devices, remove it from one.
@@ -278,7 +278,7 @@ func (e *env) deviceIn(t *testing.T, cid int64, hostname string) *store.Device {
 	}
 	pub := bytes.Repeat([]byte{byte(len(hostname) + 7)}, 32)
 	copy(pub, hostname)
-	d, err := e.st.EnrollDevice(ctx, tok, pub, hostname, "Microsoft Windows 11 Pro", "0.8.0", "127.0.0.1")
+	d, err := e.st.EnrollDevice(ctx, tok, pub, hostname, "", "Microsoft Windows 11 Pro", "0.8.0", "127.0.0.1")
 	if err != nil {
 		t.Fatal(err)
 	}

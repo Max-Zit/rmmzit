@@ -1735,7 +1735,7 @@
   "Update channel": "Kanál aktualizací",
   "Official releases": "Oficiální verze",
   "Testing (release candidates, for test consoles)": "Testování (kandidáti na vydání, pro testovací konzole)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidáti na vydání přicházejí před oficiální verzí, aby je bylo možné vyzkoušet na testovací konzoli. Produkční konzole nechte na oficiálních verzích.",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidáti na vydání přicházejí před oficiální verzí, aby je bylo možné vyzkoušet na testovací konzoli. Produkční konzole nechte na oficiálních verzích.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Tato konzole běží v kontejneru. Aktualizujte ji na hostiteli Docker; před tím, než nová verze změní databázi, ji konzole zálohuje:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Která vydání tato stránka hlásí. Co běží, určuje značka image: latest pro oficiální vydání, testing pro kandidáty na vydání.",
   "Source code (GNU AGPLv3)": "Zdrojový kód (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "Zadejte název štítku (1 až 40 znaků, bez čárek).",
   "Type the name of the group (1 to 40 characters, no commas).": "Zadejte název skupiny (1 až 40 znaků, bez čárek).",
   "a name has 1 to 40 characters, without commas or line breaks": "název má 1 až 40 znaků, bez čárek a zalomení řádků",
-  "assigned to a tag of the device": "přiřazeno štítku zařízení"
+  "assigned to a tag of the device": "přiřazeno štítku zařízení",
+  "%d chosen": "Vybráno: %d",
+  "%d other devices report the same hostname": "Stejný název počítače hlásí ještě %d zařízení",
+  "Display name": "Zobrazovaný název",
+  "Hostname": "Název počítače",
+  "Move": "Přesunout",
+  "Move this device? The policies of the new site and customer apply to it at once.": "Přesunout toto zařízení? Zásady nové pobočky a zákazníka platí okamžitě.",
+  "Move to another site": "Přesunout na jinou pobočku",
+  "Name and site": "Název a pobočka",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "Odebrat vybraná zařízení? Agenti online se sami odinstalují ze svých počítačů. Tuto akci nelze vrátit.",
+  "Same hostname": "Stejný název počítače",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "Konzole zobrazuje tento název místo názvu počítače. Agent ho nikdy nemění; při instalaci ho lze zadat pomocí DEVICENAME= (MSI) nebo --name (Linux).",
+  "empty = the hostname": "prázdné = název počítače",
+  "Choose a site.": "Vyberte pobočku.",
+  "The device was moved. The policies of its new site and customer apply now.": "Zařízení bylo přesunuto. Nyní platí zásady jeho nové pobočky a zákazníka.",
+  "The devices were moved. The policies of their new site and customer apply now.": "Zařízení byla přesunuta. Nyní platí zásady jejich nové pobočky a zákazníka.",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Zařízení odebrána. Agenti, kteří byli online, se sami odinstalují; ostatní odinstalujte ručně.",
+  "Export as CSV": "Exportovat jako CSV"
 }

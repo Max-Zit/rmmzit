@@ -33,7 +33,7 @@ func TestScriptLibraryAndJobs(t *testing.T) {
 	osite, _ := e.st.CreateSite(ctx, other, "Branch", "", "")
 	tok, _ := e.st.CreateEnrollToken(ctx, osite, "", "admin", time.Hour, 1)
 	pub, _, _ := ed25519.GenerateKey(rand.Reader)
-	off, err := e.st.EnrollDevice(ctx, tok, pub, "OFFLINE-PC", "Windows", "0.2.11", "10.0.0.5")
+	off, err := e.st.EnrollDevice(ctx, tok, pub, "OFFLINE-PC", "", "Windows", "0.2.11", "10.0.0.5")
 	if err != nil {
 		t.Fatal(err)
 	}

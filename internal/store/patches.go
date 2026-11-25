@@ -60,7 +60,7 @@ func (s *Store) PatchOverview(ctx context.Context, u *User) ([]DevicePatches, er
 	rows, err := s.db.Query(ctx, `SELECT `+deviceCols+`, p.report, p.auto_install_on`+deviceFrom+`
 		LEFT JOIN device_patches p ON p.device_id=d.id
 		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2))
-		ORDER BY lower(c.name), lower(x.name), lower(d.hostname) LIMIT 2000`, u == nil || u.IsAdmin() || u.AllCustomers, userID(u))
+		ORDER BY lower(c.name), lower(x.name), lower(COALESCE(NULLIF(d.name, ''), d.hostname)) LIMIT 2000`, u == nil || u.IsAdmin() || u.AllCustomers, userID(u))
 	if err != nil {
 		return nil, err
 	}

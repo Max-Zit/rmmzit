@@ -53,6 +53,7 @@ type EnrollRequest struct {
 	Protocol     int    `json:"protocol"`
 	Token        string `json:"token"`
 	Hostname     string `json:"hostname"`
+	Name         string `json:"name,omitempty"` // display name given at installation (0.15+)
 	OS           string `json:"os"`
 	AgentVersion string `json:"agent_version"`
 }
@@ -228,6 +229,7 @@ type EnrollData struct {
 	Server      string `json:"u"`
 	Fingerprint string `json:"f"`
 	Token       string `json:"t"`
+	Name        string `json:"n,omitempty"` // display name (enroll --name); never part of a console code
 }
 
 // MakeEnrollCode encodes the data as RZ1-<base64url JSON>.

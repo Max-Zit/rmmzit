@@ -426,6 +426,8 @@ func (s *Server) Handler() http.Handler {
 	app("POST /device-groups", s.handleGroupSave)
 	app("POST /device-groups/{gid}/delete", s.handleGroupDelete)
 	app("POST /devices/{id}/delete", s.handleDeviceDelete)
+	app("POST /devices/{id}/name", s.handleDeviceRename)
+	app("POST /devices/{id}/move", s.handleDeviceMove)
 	app("GET /account", s.handleAccount)
 	app("POST /account/password", s.handleAccountPassword)
 	app("POST /account/recovery", s.handleAccountRecovery)

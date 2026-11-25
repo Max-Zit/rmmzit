@@ -1735,7 +1735,7 @@
   "Update channel": "Kanal ažuriranja",
   "Official releases": "Zvanična izdanja",
   "Testing (release candidates, for test consoles)": "Testiranje (kandidati za izdanje, za test konzole)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidati za izdanje stižu pre zvaničnog izdanja da bi mogli da se isprobaju na test konzoli. Produkcijske konzole držite na zvaničnim izdanjima.",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Kandidati za izdanje stižu pre zvaničnog izdanja da bi mogli da se isprobaju na test konzoli. Produkcijske konzole držite na zvaničnim izdanjima.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Ova konzola radi u kontejneru. Ažurirajte je na Docker hostu; pre nego što nova verzija promeni bazu, konzola pravi njenu rezervnu kopiju:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Koja izdanja ova strana prijavljuje. Šta radi određuje oznaka image-a: latest za zvanična izdanja, testing za kandidate.",
   "Source code (GNU AGPLv3)": "Izvorni kod (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "Upišite ime taga (1 do 40 znakova, bez zareza).",
   "Type the name of the group (1 to 40 characters, no commas).": "Upišite ime grupe (1 do 40 znakova, bez zareza).",
   "a name has 1 to 40 characters, without commas or line breaks": "ime ima od 1 do 40 znakova, bez zareza i prelaza u novi red",
-  "assigned to a tag of the device": "dodeljena tagu uređaja"
+  "assigned to a tag of the device": "dodeljena tagu uređaja",
+  "%d chosen": "Izabrano: %d",
+  "%d other devices report the same hostname": "Još %d uređaja prijavljuje isto ime računara",
+  "Display name": "Prikazno ime",
+  "Hostname": "Ime računara",
+  "Move": "Premesti",
+  "Move this device? The policies of the new site and customer apply to it at once.": "Premestiti ovaj uređaj? Odmah važe polise nove lokacije i klijenta.",
+  "Move to another site": "Premesti na drugu lokaciju",
+  "Name and site": "Ime i lokacija",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "Ukloniti izabrane uređaje? Agenti koji su na mreži sami se deinstaliraju sa računara. Ovo se ne može poništiti.",
+  "Same hostname": "Isto ime računara",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "Konzola prikazuje ovo ime umesto imena računara. Agent ga nikad ne menja; pri instalaciji se može zadati sa DEVICENAME= (MSI) ili --name (Linux).",
+  "empty = the hostname": "prazno = ime računara",
+  "Choose a site.": "Izaberite lokaciju.",
+  "The device was moved. The policies of its new site and customer apply now.": "Uređaj je premešten. Sada važe polise njegove nove lokacije i klijenta.",
+  "The devices were moved. The policies of their new site and customer apply now.": "Uređaji su premešteni. Sada važe polise njihove nove lokacije i klijenta.",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Uređaji su uklonjeni. Agenti koji su bili na mreži sami se deinstaliraju; ostale deinstalirajte ručno.",
+  "Export as CSV": "Izvezi kao CSV"
 }

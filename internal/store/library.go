@@ -215,10 +215,10 @@ type JobDevice struct {
 
 // JobDevices lists the devices of a job.
 func (s *Store) JobDevices(ctx context.Context, jobID int64) ([]JobDevice, error) {
-	rows, err := s.db.Query(ctx, `SELECT jd.device_id, d.hostname, c.name, c.id, x.name, jd.status, jd.run_id, r.exit_code, COALESCE(r.timed_out, false), COALESCE(r.error, ''), jd.updated_at
+	rows, err := s.db.Query(ctx, `SELECT jd.device_id, COALESCE(NULLIF(d.name, ''), d.hostname), c.name, c.id, x.name, jd.status, jd.run_id, r.exit_code, COALESCE(r.timed_out, false), COALESCE(r.error, ''), jd.updated_at
 		FROM script_job_devices jd JOIN devices d ON d.id=jd.device_id JOIN sites x ON x.id=d.site_id JOIN customers c ON c.id=x.customer_id
 		LEFT JOIN script_runs r ON r.id=jd.run_id
-		WHERE jd.job_id=$1 ORDER BY lower(c.name), lower(d.hostname)`, jobID)
+		WHERE jd.job_id=$1 ORDER BY lower(c.name), lower(COALESCE(NULLIF(d.name, ''), d.hostname))`, jobID)
 	if err != nil {
 		return nil, err
 	}

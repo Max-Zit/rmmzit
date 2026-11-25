@@ -1735,7 +1735,7 @@
   "Update channel": "更新チャネル",
   "Official releases": "公式リリース",
   "Testing (release candidates, for test consoles)": "テスト (リリース候補、テスト用コンソール向け)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "リリース候補は公式リリースの前に提供され、テスト用コンソールで試せます。本番のコンソールは公式リリースのままにしてください。",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "リリース候補は公式リリースの前に提供され、テスト用コンソールで試せます。本番のコンソールは公式リリースのままにしてください。",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "このコンソールはコンテナーで実行されています。Docker ホストで更新してください。新しいバージョンがデータベースを変更する前に、コンソールはデータベースをバックアップします:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "このページが報告するリリース。実行されるものはイメージのタグで決まります: 正式リリースは latest、リリース候補は testing。",
   "Source code (GNU AGPLv3)": "ソースコード (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "タグ名を入力してください (1〜40 文字、カンマなし)。",
   "Type the name of the group (1 to 40 characters, no commas).": "グループ名を入力してください (1〜40 文字、カンマなし)。",
   "a name has 1 to 40 characters, without commas or line breaks": "名前は 1〜40 文字で、カンマや改行は使えません",
-  "assigned to a tag of the device": "デバイスのタグに割り当て"
+  "assigned to a tag of the device": "デバイスのタグに割り当て",
+  "%d chosen": "%d 台を選択",
+  "%d other devices report the same hostname": "ほかに %d 台のデバイスが同じホスト名を報告しています",
+  "Display name": "表示名",
+  "Hostname": "ホスト名",
+  "Move": "移動",
+  "Move this device? The policies of the new site and customer apply to it at once.": "このデバイスを移動しますか？新しい拠点と顧客のポリシーがすぐに適用されます。",
+  "Move to another site": "別の拠点へ移動",
+  "Name and site": "名前と拠点",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "選択したデバイスを削除しますか？オンラインのエージェントはコンピューターから自動でアンインストールされます。元に戻せません。",
+  "Same hostname": "同じホスト名",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "コンソールはホスト名の代わりにこの名前を表示します。エージェントがこの名前を変更することはありません。インストール時に DEVICENAME=（MSI）または --name（Linux）で指定できます。",
+  "empty = the hostname": "空 = ホスト名",
+  "Choose a site.": "拠点を選択してください。",
+  "The device was moved. The policies of its new site and customer apply now.": "デバイスを移動しました。新しい拠点と顧客のポリシーが適用されます。",
+  "The devices were moved. The policies of their new site and customer apply now.": "デバイスを移動しました。新しい拠点と顧客のポリシーが適用されます。",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "デバイスを削除しました。オンラインだったエージェントは自動でアンインストールされます。その他は手動でアンインストールしてください。",
+  "Export as CSV": "CSV でエクスポート"
 }

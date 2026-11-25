@@ -56,6 +56,10 @@ func httpClient(tc *tls.Config) *http.Client {
 
 // Enroll registers this machine with the server using an enrollment token.
 func Enroll(ctx context.Context, dir, serverURL, fingerprint, token string) (*Config, error) {
+	return enroll(ctx, dir, serverURL, fingerprint, token, "")
+}
+
+func enroll(ctx context.Context, dir, serverURL, fingerprint, token, name string) (*Config, error) {
 	serverURL, err := CheckServerURL(serverURL)
 	if err != nil {
 		return nil, err
@@ -81,7 +85,7 @@ func Enroll(ctx context.Context, dir, serverURL, fingerprint, token string) (*Co
 	}
 	host, _ := os.Hostname()
 	si := basicInfo()
-	body, _ := json.Marshal(proto.EnrollRequest{Protocol: proto.Version, Token: token, Hostname: host, OS: si.OS, AgentVersion: Version})
+	body, _ := json.Marshal(proto.EnrollRequest{Protocol: proto.Version, Token: token, Hostname: host, Name: strings.TrimSpace(name), OS: si.OS, AgentVersion: Version})
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, serverURL+proto.PathEnroll, bytes.NewReader(body))
 	if err != nil {
 		return nil, err

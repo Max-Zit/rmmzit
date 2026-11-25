@@ -39,8 +39,8 @@ func (s *Store) ReportAlerts(ctx context.Context, devices []int64, since time.Ti
 	if st.ByKind, err = s.counted(ctx, `SELECT kind, count(*) FROM alerts WHERE device_id = ANY($1) AND opened_at >= $2 GROUP BY kind ORDER BY 2 DESC, 1`, devices, since); err != nil {
 		return nil, err
 	}
-	st.ByDevice, err = s.counted(ctx, `SELECT d.hostname, count(*) FROM alerts a JOIN devices d ON d.id=a.device_id
-		WHERE a.device_id = ANY($1) AND a.opened_at >= $2 GROUP BY d.hostname ORDER BY 2 DESC, 1 LIMIT 10`, devices, since)
+	st.ByDevice, err = s.counted(ctx, `SELECT COALESCE(NULLIF(d.name, ''), d.hostname), count(*) FROM alerts a JOIN devices d ON d.id=a.device_id
+		WHERE a.device_id = ANY($1) AND a.opened_at >= $2 GROUP BY COALESCE(NULLIF(d.name, ''), d.hostname) ORDER BY 2 DESC, 1 LIMIT 10`, devices, since)
 	return st, err
 }
 

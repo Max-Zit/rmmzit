@@ -1735,7 +1735,7 @@
   "Update channel": "Канал обновлений",
   "Official releases": "Официальные версии",
   "Testing (release candidates, for test consoles)": "Тестовый (кандидаты в релиз, для тестовых консолей)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Кандидаты в релиз выходят раньше официальной версии, чтобы их можно было проверить на тестовой консоли. Рабочие консоли держите на официальных версиях.",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Кандидаты в релиз выходят раньше официальной версии, чтобы их можно было проверить на тестовой консоли. Рабочие консоли держите на официальных версиях.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Эта консоль работает в контейнере. Обновляйте её на хосте Docker; перед тем как новая версия изменит базу данных, консоль делает её резервную копию:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "О каких выпусках сообщает эта страница. Что запущено, определяет тег образа: latest для официальных выпусков, testing для кандидатов.",
   "Source code (GNU AGPLv3)": "Исходный код (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "Введите имя метки (от 1 до 40 символов, без запятых).",
   "Type the name of the group (1 to 40 characters, no commas).": "Введите имя группы (от 1 до 40 символов, без запятых).",
   "a name has 1 to 40 characters, without commas or line breaks": "имя содержит от 1 до 40 символов, без запятых и переносов строк",
-  "assigned to a tag of the device": "назначена метке устройства"
+  "assigned to a tag of the device": "назначена метке устройства",
+  "%d chosen": "Выбрано: %d",
+  "%d other devices report the same hostname": "Ещё %d устройств сообщают то же имя компьютера",
+  "Display name": "Отображаемое имя",
+  "Hostname": "Имя компьютера",
+  "Move": "Переместить",
+  "Move this device? The policies of the new site and customer apply to it at once.": "Переместить это устройство? Политики новой площадки и клиента начнут действовать сразу.",
+  "Move to another site": "Переместить на другую площадку",
+  "Name and site": "Имя и площадка",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "Удалить выбранные устройства? Агенты в сети сами удалятся с компьютеров. Это нельзя отменить.",
+  "Same hostname": "То же имя компьютера",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "Консоль показывает это имя вместо имени компьютера. Агент никогда его не меняет; при установке его можно задать через DEVICENAME= (MSI) или --name (Linux).",
+  "empty = the hostname": "пусто = имя компьютера",
+  "Choose a site.": "Выберите площадку.",
+  "The device was moved. The policies of its new site and customer apply now.": "Устройство перемещено. Теперь действуют политики его новой площадки и клиента.",
+  "The devices were moved. The policies of their new site and customer apply now.": "Устройства перемещены. Теперь действуют политики их новой площадки и клиента.",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Устройства удалены. Агенты, которые были в сети, удалятся сами; остальные удалите вручную.",
+  "Export as CSV": "Экспорт в CSV"
 }

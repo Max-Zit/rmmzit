@@ -108,7 +108,7 @@ func (s *Store) Unassign(ctx context.Context, targetType string, targetID int64)
 }
 
 const assignmentCols = `a.target_type, a.target_id, a.policy_id, p.name,
-	COALESCE(c.name, x.name, d.hostname, t.name, ''), a.assigned_by, a.assigned_at`
+	COALESCE(c.name, x.name, COALESCE(NULLIF(d.name, ''), d.hostname), t.name, ''), a.assigned_by, a.assigned_at`
 
 const assignmentJoins = ` FROM policy_assignments a JOIN policies p ON p.id=a.policy_id
 	LEFT JOIN customers c ON a.target_type='customer' AND c.id=a.target_id
@@ -154,7 +154,7 @@ type DeviceScope struct {
 
 // DeviceScopes lists every device with its site and customer.
 func (s *Store) DeviceScopes(ctx context.Context) ([]DeviceScope, error) {
-	rows, err := s.db.Query(ctx, `SELECT d.id, d.site_id, x.customer_id, d.hostname, COALESCE(d.os, '') FROM devices d JOIN sites x ON x.id=d.site_id`)
+	rows, err := s.db.Query(ctx, `SELECT d.id, d.site_id, x.customer_id, COALESCE(NULLIF(d.name, ''), d.hostname), COALESCE(d.os, '') FROM devices d JOIN sites x ON x.id=d.site_id`)
 	if err != nil {
 		return nil, err
 	}

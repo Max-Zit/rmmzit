@@ -91,7 +91,7 @@ func (s *Store) MonitorStates(ctx context.Context, def LoadWindow, windows map[i
 		d AS (SELECT d.*, $1::timestamptz - make_interval(mins => COALESCE(w.cpu, $5)) AS cpu_from,
 			$1::timestamptz - make_interval(mins => COALESCE(w.mem, $6)) AS mem_from
 			FROM devices d LEFT JOIN w ON w.id=d.id)
-		SELECT d.id, x.customer_id, d.hostname, c.name, x.name, d.connected, d.last_seen_at, d.boot_time,
+		SELECT d.id, x.customer_id, COALESCE(NULLIF(d.name, ''), d.hostname), c.name, x.name, d.connected, d.last_seen_at, d.boot_time,
 		d.metrics, d.security, d.stopped_auto, COALESCE(l.cpu, 0), COALESCE(l.n, 0), COALESCE(l.mem, 0)
 		FROM d JOIN sites x ON x.id=d.site_id JOIN customers c ON c.id=x.customer_id
 		LEFT JOIN LATERAL (SELECT avg(cpu) FILTER (WHERE at > d.cpu_from) AS cpu, count(*) FILTER (WHERE at > d.cpu_from) AS n,
@@ -222,7 +222,7 @@ func (s *Store) Alerts(ctx context.Context, u *User, f AlertFilter) ([]Alert, er
 	if f.Limit <= 0 || f.Limit > 1000 {
 		f.Limit = 200
 	}
-	rows, err := s.db.Query(ctx, `SELECT a.id, a.device_id, d.hostname, x.customer_id, c.name, x.name, a.kind, a.key, a.severity, a.message,
+	rows, err := s.db.Query(ctx, `SELECT a.id, a.device_id, COALESCE(NULLIF(d.name, ''), d.hostname), x.customer_id, c.name, x.name, a.kind, a.key, a.severity, a.message,
 		a.opened_at, a.last_seen, a.resolved_at, a.acked_by, a.acked_at
 		FROM alerts a JOIN devices d ON d.id=a.device_id JOIN sites x ON x.id=d.site_id JOIN customers c ON c.id=x.customer_id
 		WHERE ($1 OR x.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2))

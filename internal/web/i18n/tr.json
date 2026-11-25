@@ -1735,7 +1735,7 @@
   "Update channel": "Güncelleme kanalı",
   "Official releases": "Resmi sürümler",
   "Testing (release candidates, for test consoles)": "Test (sürüm adayları, test konsolları için)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Sürüm adayları, bir test konsolunda denenebilmeleri için resmi sürümden önce gelir. Üretim konsollarını resmi sürümlerde tutun.",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Sürüm adayları, bir test konsolunda denenebilmeleri için resmi sürümden önce gelir. Üretim konsollarını resmi sürümlerde tutun.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Bu konsol bir kapsayıcıda çalışıyor. Docker ana makinesinde güncelleyin; yeni sürüm veritabanını değiştirmeden önce konsol onu yedekler:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Bu sayfanın bildirdiği sürümler. Neyin çalışacağını imaj etiketi belirler: resmi sürümler için latest, sürüm adayları için testing.",
   "Source code (GNU AGPLv3)": "Kaynak kod (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "Bir etiket adı yazın (1 ila 40 karakter, virgülsüz).",
   "Type the name of the group (1 to 40 characters, no commas).": "Grubun adını yazın (1 ila 40 karakter, virgülsüz).",
   "a name has 1 to 40 characters, without commas or line breaks": "bir ad 1 ila 40 karakterdir, virgül veya satır sonu içermez",
-  "assigned to a tag of the device": "cihazın bir etiketine atandı"
+  "assigned to a tag of the device": "cihazın bir etiketine atandı",
+  "%d chosen": "%d seçildi",
+  "%d other devices report the same hostname": "%d aygıt daha aynı bilgisayar adını bildiriyor",
+  "Display name": "Görünen ad",
+  "Hostname": "Bilgisayar adı",
+  "Move": "Taşı",
+  "Move this device? The policies of the new site and customer apply to it at once.": "Bu aygıt taşınsın mı? Yeni konumun ve müşterinin ilkeleri hemen uygulanır.",
+  "Move to another site": "Başka bir konuma taşı",
+  "Name and site": "Ad ve konum",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "Seçilen aygıtlar kaldırılsın mı? Çevrimiçi aracılar bilgisayarlarından kendilerini kaldırır. Bu geri alınamaz.",
+  "Same hostname": "Aynı bilgisayar adı",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "Konsol bilgisayar adı yerine bu adı gösterir. Aracı onu asla değiştirmez; kurulumda DEVICENAME= (MSI) veya --name (Linux) ile verilebilir.",
+  "empty = the hostname": "boş = bilgisayar adı",
+  "Choose a site.": "Bir konum seçin.",
+  "The device was moved. The policies of its new site and customer apply now.": "Aygıt taşındı. Artık yeni konumunun ve müşterisinin ilkeleri uygulanıyor.",
+  "The devices were moved. The policies of their new site and customer apply now.": "Aygıtlar taşındı. Artık yeni konumlarının ve müşterilerinin ilkeleri uygulanıyor.",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Aygıtlar kaldırıldı. Çevrimiçi olan aracılar kendilerini kaldırır; diğerlerini elle kaldırın.",
+  "Export as CSV": "CSV olarak dışa aktar"
 }

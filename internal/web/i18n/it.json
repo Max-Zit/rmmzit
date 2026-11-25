@@ -1735,7 +1735,7 @@
   "Update channel": "Canale di aggiornamento",
   "Official releases": "Versioni ufficiali",
   "Testing (release candidates, for test consoles)": "Test (release candidate, per console di prova)",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Le release candidate arrivano prima di una versione ufficiale per poterle provare su una console di prova. Tieni le console di produzione sulle versioni ufficiali.",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "Le release candidate arrivano prima di una versione ufficiale per poterle provare su una console di prova. Tieni le console di produzione sulle versioni ufficiali.",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "Questa console è in esecuzione in un container. Aggiornatela sull'host Docker; esegue il backup del database prima che la nuova versione lo modifichi:",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "Quali versioni segnala questa pagina. Cosa è in esecuzione lo decide il tag dell'immagine: latest per le versioni ufficiali, testing per le release candidate.",
   "Source code (GNU AGPLv3)": "Codice sorgente (GNU AGPLv3)",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "Scrivi il nome di un tag (da 1 a 40 caratteri, senza virgole).",
   "Type the name of the group (1 to 40 characters, no commas).": "Scrivi il nome del gruppo (da 1 a 40 caratteri, senza virgole).",
   "a name has 1 to 40 characters, without commas or line breaks": "un nome ha da 1 a 40 caratteri, senza virgole né a capo",
-  "assigned to a tag of the device": "assegnato a un tag del dispositivo"
+  "assigned to a tag of the device": "assegnato a un tag del dispositivo",
+  "%d chosen": "%d scelti",
+  "%d other devices report the same hostname": "Altri %d dispositivi riportano lo stesso nome host",
+  "Display name": "Nome visualizzato",
+  "Hostname": "Nome host",
+  "Move": "Sposta",
+  "Move this device? The policies of the new site and customer apply to it at once.": "Spostare questo dispositivo? I criteri della nuova sede e del nuovo cliente si applicano subito.",
+  "Move to another site": "Sposta in un'altra sede",
+  "Name and site": "Nome e sede",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "Rimuovere i dispositivi scelti? Gli agenti online si disinstallano da soli dai loro computer. Non si può annullare.",
+  "Same hostname": "Stesso nome host",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "La console mostra questo nome al posto del nome host. L'agente non lo cambia mai; all'installazione si può indicare con DEVICENAME= (MSI) o --name (Linux).",
+  "empty = the hostname": "vuoto = il nome host",
+  "Choose a site.": "Scegli una sede.",
+  "The device was moved. The policies of its new site and customer apply now.": "Il dispositivo è stato spostato. Ora si applicano i criteri della sua nuova sede e del nuovo cliente.",
+  "The devices were moved. The policies of their new site and customer apply now.": "I dispositivi sono stati spostati. Ora si applicano i criteri della loro nuova sede e del nuovo cliente.",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Dispositivi rimossi. Gli agenti che erano online si disinstallano da soli; disinstalla gli altri a mano.",
+  "Export as CSV": "Esporta come CSV"
 }

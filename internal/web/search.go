@@ -64,6 +64,8 @@ func (s *Server) handleSearch(w http.ResponseWriter, r *http.Request) {
 		hit := searchHit{Device: x}
 		switch {
 		case has(x.Hostname):
+		case has(x.RealHostname):
+			hit.Why = x.RealHostname
 		case has(x.LastUser):
 			hit.Why = x.LastUser
 		case has(x.OS):

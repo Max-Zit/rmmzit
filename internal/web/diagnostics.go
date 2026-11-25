@@ -207,9 +207,9 @@ func (s *Server) diagDevices(ctx context.Context, w io.Writer) error {
 		return err
 	}
 	c := csv.NewWriter(w)
-	_ = c.Write([]string{"id", "customer", "site", "hostname", "os", "agent", "online", "last_seen", "enrolled"})
+	_ = c.Write([]string{"id", "customer", "site", "hostname", "name", "os", "agent", "online", "last_seen", "enrolled"})
 	for _, d := range list {
-		_ = c.Write([]string{strconv.FormatInt(d.ID, 10), d.Customer, d.Site, d.Hostname, d.OS, d.AgentVersion, strconv.FormatBool(s.Connected(d.ID)),
+		_ = c.Write([]string{strconv.FormatInt(d.ID, 10), d.Customer, d.Site, d.RealHostname, d.Name, d.OS, d.AgentVersion, strconv.FormatBool(s.Connected(d.ID)),
 			fmtTime(d.LastSeenAt), d.EnrolledAt.Format(time.RFC3339)})
 	}
 	c.Flush()

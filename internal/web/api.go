@@ -120,6 +120,7 @@ func (s *Server) APIHandler() http.Handler {
 	read("GET /api/v1/devices/{id}/tasks", s.apiDeviceTasks)
 	write("POST /api/v1/devices/{id}/tasks", s.apiTaskCreate)
 	write("PUT /api/v1/devices/{id}/fields", s.apiDeviceFields)
+	write("PUT /api/v1/devices/{id}/name", s.apiDeviceName)
 	read("GET /api/v1/tasks/{id}", s.apiTask)
 	write("POST /api/v1/tasks/{id}/cancel", s.apiTaskCancel)
 	read("GET /api/v1/alerts", s.apiAlerts)
@@ -139,7 +140,8 @@ func (s *Server) APIHandler() http.Handler {
 
 type apiDeviceJSON struct {
 	ID           int64             `json:"id"`
-	Hostname     string            `json:"hostname"`
+	Name         string            `json:"name"`     // as the console shows it: the display name, or the hostname
+	Hostname     string            `json:"hostname"` // as the agent reports it
 	CustomerID   int64             `json:"customer_id"`
 	Customer     string            `json:"customer"`
 	SiteID       int64             `json:"site_id"`
@@ -153,7 +155,7 @@ type apiDeviceJSON struct {
 }
 
 func (s *Server) deviceJSON(d *store.Device) apiDeviceJSON {
-	return apiDeviceJSON{ID: d.ID, Hostname: d.Hostname, CustomerID: d.CustomerID, Customer: d.Customer, SiteID: d.SiteID, Site: d.Site,
+	return apiDeviceJSON{ID: d.ID, Name: d.Hostname, Hostname: d.RealHostname, CustomerID: d.CustomerID, Customer: d.Customer, SiteID: d.SiteID, Site: d.Site,
 		OS: d.OS, OSVersion: d.OSVersion, AgentVersion: d.AgentVersion, Online: s.Connected(d.ID), LastSeen: d.LastSeenAt}
 }
 

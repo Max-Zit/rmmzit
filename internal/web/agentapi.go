@@ -254,7 +254,7 @@ func (s *Server) handleAgentEnroll(w http.ResponseWriter, r *http.Request) {
 		agentError(w, http.StatusBadRequest, "unsupported protocol version")
 		return
 	}
-	d, err := s.store.EnrollDevice(r.Context(), req.Token, pub, req.Hostname, req.OS, req.AgentVersion, ip)
+	d, err := s.store.EnrollDevice(r.Context(), req.Token, pub, req.Hostname, req.Name, req.OS, req.AgentVersion, ip)
 	switch {
 	case errors.Is(err, store.ErrTokenInvalid):
 		s.guard.fail(r.Context(), ip, "", "enrollment token")

@@ -31,7 +31,8 @@ func TestDeviceListSearchReport(t *testing.T) {
 	fid := fieldIDs(admin.get("/settings/fields").body)[0]
 	admin.post("/devices/"+itoa(win.ID)+"/fields", "f"+fid, "INV-0042")
 
-	list := func(query string) string { return admin.get("/devices?" + query).body }
+	// The table only: the bar above it lists the sites (named after the devices here).
+	list := func(query string) string { return deviceTable(admin.get("/devices?" + query).body) }
 	if b := list("os=linux"); !strings.Contains(b, "deb-web") || strings.Contains(b, "PC-SALES") {
 		t.Fatal("system filter")
 	}

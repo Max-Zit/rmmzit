@@ -30,7 +30,7 @@ func TestWakeOnLAN(t *testing.T) {
 
 	// The sleeping computer: enrolled, offline, with a network card.
 	tok, _ := e.st.CreateEnrollToken(ctx, site, "", "admin", time.Hour, 2)
-	pc, err := e.st.EnrollDevice(ctx, tok, []byte(strings.Repeat("w", 32)), "sleepy", "Windows", "0.14.0", "10.0.0.9")
+	pc, err := e.st.EnrollDevice(ctx, tok, []byte(strings.Repeat("w", 32)), "sleepy", "", "Windows", "0.14.0", "10.0.0.9")
 	if err != nil {
 		t.Fatal(err)
 	}

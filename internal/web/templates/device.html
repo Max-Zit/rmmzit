@@ -8,6 +8,7 @@
       <h1>{{$d.Hostname}} {{if .Data.Online}}<span class="badge ok"><i></i>{{.T "Online"}}</span>{{else}}<span class="badge bad"><i></i>{{.T "Offline"}}</span>{{end}}</h1>
       {{if .User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/refresh"><button class="iconbtn" title="{{.T "Refresh inventory"}}" aria-label="{{.T "Refresh inventory"}}" {{if not .Data.Online}}disabled{{end}}>{{template "icon" "refresh"}}</button></form>{{end}}
     </div>
+    {{if $d.Name}}<p class="small muted">{{.T "Hostname"}}: <span class="mono">{{$d.RealHostname}}</span></p>{{end}}
     <div class="tags" aria-label="{{.T "Tags"}}">
       {{range .Data.Tags}}<span class="tag"><a href="/devices?tag={{.ID}}">{{.Name}}</a>{{if $.User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/tags/{{.ID}}/remove"><button class="tag-x" title="{{$.T "Remove the tag %s" .Name}}" aria-label="{{$.T "Remove the tag %s" .Name}}">×</button></form>{{end}}</span>{{end}}
       {{if .User.CanWrite}}<form method="post" action="/devices/{{$d.ID}}/tags" class="tag-add"><input name="name" list="alltags" maxlength="40" required placeholder="{{.T "Add a tag"}}" aria-label="{{.T "Add a tag"}}"><datalist id="alltags">{{range .Data.AllTags}}<option value="{{.Name}}"></option>{{end}}</datalist><button class="ghost sm">{{template "icon" "plus"}}</button></form>{{end}}
@@ -169,6 +170,18 @@
 
 {{if .User.CanWrite}}
 {{template "fieldspanel" (fieldsctx . (printf "/devices/%d/fields" .Data.D.ID) .Data.Fields)}}
+<section class="panel">
+  <h2>{{.T "Name and site"}}</h2>
+  <form method="post" action="/devices/{{$d.ID}}/name" class="row">
+    <label>{{.T "Display name"}} <small>{{.T "empty = the hostname"}}</small><input name="name" value="{{$d.Name}}" maxlength="100" placeholder="{{$d.RealHostname}}"></label>
+    <button class="secondary">{{.T "Save"}}</button>
+  </form>
+  <p class="small muted">{{.T "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux)."}}</p>
+  {{if .Data.Sites}}<form method="post" action="/devices/{{$d.ID}}/move" class="row mt" data-confirm="{{.T "Move this device? The policies of the new site and customer apply to it at once."}}">
+    <label>{{.T "Site"}}<select name="site" required>{{range .Data.Sites}}<option value="{{.ID}}"{{if eq .ID $d.SiteID}} selected{{end}}>{{.Customer}} / {{.Name}}</option>{{end}}</select></label>
+    <button class="secondary">{{.T "Move"}}</button>
+  </form>{{end}}
+</section>
 <section class="panel">
   <h2>{{.T "Remove device"}}</h2>
   <p class="small muted">{{.T "If the computer is online, its agent uninstalls itself and Windows Update gets its own settings back. An offline computer can no longer connect; uninstall the agent there by hand."}}</p>

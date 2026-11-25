@@ -162,6 +162,27 @@ func (s *Store) Sites(ctx context.Context, customerID int64) ([]Site, error) {
 	return out, rows.Err()
 }
 
+// SitesFor lists the sites of the customers the user may see, by customer
+// and site name (one query; nil = all).
+func (s *Store) SitesFor(ctx context.Context, u *User) ([]Site, error) {
+	rows, err := s.db.Query(ctx, `SELECT `+siteCols+` FROM sites s JOIN customers c ON c.id=s.customer_id
+		WHERE $1 OR s.customer_id IN (SELECT customer_id FROM user_customers WHERE user_id=$2)
+		ORDER BY lower(c.name), lower(s.name)`, u == nil || u.IsAdmin() || u.AllCustomers, userID(u))
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []Site
+	for rows.Next() {
+		x, err := scanSite(rows)
+		if err != nil {
+			return nil, err
+		}
+		out = append(out, x)
+	}
+	return out, rows.Err()
+}
+
 // Site loads one site.
 func (s *Store) Site(ctx context.Context, id int64) (*Site, error) {
 	x, err := scanSite(s.db.QueryRow(ctx, `SELECT `+siteCols+` FROM sites s JOIN customers c ON c.id=s.customer_id WHERE s.id=$1`, id))

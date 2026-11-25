@@ -504,7 +504,7 @@ func (e *env) device(t *testing.T, hostname, osName string) *store.Device {
 	}
 	pub := bytes.Repeat([]byte{byte(len(hostname))}, 32)
 	copy(pub, hostname)
-	d, err := e.st.EnrollDevice(ctx, tok, pub, hostname, osName, "0.8.0", "127.0.0.1")
+	d, err := e.st.EnrollDevice(ctx, tok, pub, hostname, "", osName, "0.8.0", "127.0.0.1")
 	if err != nil {
 		t.Fatal(err)
 	}

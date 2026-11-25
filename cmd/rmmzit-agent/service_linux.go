@@ -82,7 +82,7 @@ func copySelf() error {
 	return os.Rename(tmp, linuxBin)
 }
 
-func installService(code string) error {
+func installService(code, name string) error {
 	if os.Geteuid() != 0 {
 		return errors.New("run it as root (sudo)")
 	}
@@ -101,6 +101,7 @@ func installService(code string) error {
 			if err != nil {
 				return err
 			}
+			d.Name = name
 			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 			c, err := agent.EnrollWith(ctx, dir, d)
 			cancel()

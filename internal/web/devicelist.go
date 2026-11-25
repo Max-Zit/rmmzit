@@ -79,6 +79,9 @@ type devicesData struct {
 	DevTags   map[int64][]store.Tag
 	Groups    []store.DeviceGroup
 	Group     *store.DeviceGroup // the group shown, if any
+	Sites     []store.Site       // to move the chosen devices into
+	Same      map[int64]int      // other devices with the same hostname
+	CSV       string             // this list as CSV
 }
 
 // MayDeleteGroup: administrators and the group's creator.
@@ -121,8 +124,10 @@ func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	d.Fields, _ = s.store.CustomFields(ctx, "device")
+	d.Same, _ = s.store.SameHostname(ctx, u)
 	if u.CanWrite() {
 		d.Scripts, _ = s.store.LibScripts(ctx)
+		d.Sites, _ = s.sitesFor(ctx, u)
 		all, _ := s.store.Policies(ctx)
 		for i := range all {
 			if canManagePolicy(u, &all[i]) {
@@ -190,6 +195,14 @@ func (s *Server) handleDevices(w http.ResponseWriter, r *http.Request) {
 			d.Devices = append(d.Devices, x)
 		}
 	}
+	if r.FormValue("format") == "csv" {
+		s.deviceCSV(w, r, d)
+		return
+	}
+	q2 := r.URL.Query()
+	q2.Del("format")
+	q2.Set("format", "csv")
+	d.CSV = "/devices?" + q2.Encode()
 	s.render(w, r, http.StatusOK, "devices", &Page{Title: "Devices", Nav: "devices", Data: d})
 }
 
@@ -222,6 +235,9 @@ func (s *Server) handleDevicesBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	action := r.FormValue("action")
+	if r.FormValue("do") == "delete" { // the Remove button, apart from the actions
+		action = "delete"
+	}
 	if action == "script" {
 		sid, _ := strconv.ParseInt(r.FormValue("script"), 10, 64)
 		x, err := s.store.LibScript(ctx, sid)
@@ -271,6 +287,23 @@ func (s *Server) handleDevicesBulk(w http.ResponseWriter, r *http.Request) {
 		verb := map[bool]string{true: "added to", false: "removed from"}[action == "tag-add"]
 		s.audit(r, "device.tag", "tag:"+strconv.FormatInt(t.ID, 10), "tag %q %s %d devices (device list)", t.Name, verb, len(ids))
 		s.redirect(w, r, back, "Saved.")
+		return
+	}
+	switch action {
+	case "move":
+		x := s.targetSite(ctx, u, r.FormValue("site"))
+		if x == nil {
+			s.redirect(w, r, back, "Choose a site.")
+			return
+		}
+		n := s.bulkMove(r, devs, x)
+		s.audit(r, "devices.bulk", "devices", "move to site %q of %q: %d of %d chosen devices (device list)", x.Name, x.Customer, n, len(devs))
+		s.redirect(w, r, back, "The devices were moved. The policies of their new site and customer apply now.")
+		return
+	case "delete":
+		n := s.bulkRemove(r, devs)
+		s.audit(r, "devices.bulk", "devices", "removed %d of %d chosen devices (device list)", n, len(devs))
+		s.redirect(w, r, back, "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.")
 		return
 	}
 	queued := 0

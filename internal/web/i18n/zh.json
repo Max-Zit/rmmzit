@@ -1735,7 +1735,7 @@
   "Update channel": "更新通道",
   "Official releases": "正式版本",
   "Testing (release candidates, for test consoles)": "测试（候选版本，用于测试控制台）",
-  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "候选版本会先于正式版本发布，以便在测试控制台上试用。生产控制台请保持使用正式版本。",
+  "Release candidates come before an official release so they can be tried on a test console. Keep production consoles on official releases.": "候选版本会先于正式版本发布，以便在测试控制台上试用。生产控制台请保持使用正式版本。",
   "This console runs in a container. Update it on the Docker host; it backs up its database before the new version changes it:": "此控制台在容器中运行。请在 Docker 主机上更新；在新版本更改数据库之前，控制台会先备份数据库：",
   "Which releases this page reports. The image tag decides what runs: latest for official releases, testing for release candidates.": "此页面报告哪些版本。实际运行的版本由镜像标签决定：latest 表示正式版本，testing 表示候选版本。",
   "Source code (GNU AGPLv3)": "源代码（GNU AGPLv3）",
@@ -1782,5 +1782,22 @@
   "Type the name of a tag (1 to 40 characters, no commas).": "请输入标签名称（1 到 40 个字符，不含逗号）。",
   "Type the name of the group (1 to 40 characters, no commas).": "请输入组名（1 到 40 个字符，不含逗号）。",
   "a name has 1 to 40 characters, without commas or line breaks": "名称为 1 到 40 个字符，不能包含逗号或换行",
-  "assigned to a tag of the device": "分配给设备的标签"
+  "assigned to a tag of the device": "分配给设备的标签",
+  "%d chosen": "已选择 %d 台",
+  "%d other devices report the same hostname": "另有 %d 台设备报告相同的主机名",
+  "Display name": "显示名称",
+  "Hostname": "主机名",
+  "Move": "移动",
+  "Move this device? The policies of the new site and customer apply to it at once.": "移动此设备？新站点和新客户的策略会立即生效。",
+  "Move to another site": "移动到其他站点",
+  "Name and site": "名称和站点",
+  "Remove the chosen devices? Online agents uninstall themselves from their computers. This cannot be undone.": "删除所选设备？在线的代理会从计算机上自行卸载。此操作无法撤销。",
+  "Same hostname": "主机名相同",
+  "The console shows this name instead of the hostname. The agent never changes it; at installation it can be given with DEVICENAME= (MSI) or --name (Linux).": "控制台显示此名称而不是主机名。代理从不更改它；安装时可通过 DEVICENAME=（MSI）或 --name（Linux）指定。",
+  "empty = the hostname": "空 = 主机名",
+  "Choose a site.": "请选择一个站点。",
+  "The device was moved. The policies of its new site and customer apply now.": "设备已移动。现在适用其新站点和客户的策略。",
+  "The devices were moved. The policies of their new site and customer apply now.": "设备已移动。现在适用其新站点和客户的策略。",
+  "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "设备已删除。在线的代理会自行卸载；其余的请手动卸载。",
+  "Export as CSV": "导出为 CSV"
 }

@@ -39,7 +39,7 @@ func TestInventoryWithNUL(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	d, err := st.EnrollDevice(ctx, tok, []byte(strings.Repeat("k", 32)), "srv", "Windows", "0.13.7", "10.0.0.1")
+	d, err := st.EnrollDevice(ctx, tok, []byte(strings.Repeat("k", 32)), "srv", "", "Windows", "0.13.7", "10.0.0.1")
 	if err != nil {
 		t.Fatal(err)
 	}
