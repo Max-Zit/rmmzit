@@ -13,6 +13,8 @@
 <p><b>Filters</b> narrow the list down by customer, state (online, offline), operating system, open alerts, fixable vulnerabilities, policy or a custom field. Technicians choose devices with the boxes in front of them (or all at once) and start an action on all of them: a library script (as a job), searching for and installing the security updates, updating programs with winget, refreshing the inventory or a restart in 5 minutes. Offline devices get the action when they connect; each device's <b>Activity</b> shows how it goes.</p>
 <p>The <b>search</b> in the header (<b>Ctrl+K</b> or <b>/</b>) finds devices by name, user, system, serial number, IP or MAC address, customers, installed programs (with the devices that have them) and vulnerabilities by their ID.</p>
 
+<p>The bar with the actions is above the list and shows how many devices are chosen. It also moves the chosen devices to another site, and <b>Remove</b> removes them (online agents uninstall themselves). A device that reports the same hostname as another device you see is marked <b>Same hostname</b>, usually a cloned or reinstalled computer: give it a display name or remove the old one.</p>
+<p><b>Export as CSV</b> downloads the list as it is shown (search, filters or group) for a spreadsheet, with the name, hostname, customer, site, system, agent, state, user and tags of each device.</p>
 <h2 id="page">The device page</h2>
 <p>A device's page has tabs for everything you can do with it:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Activity</td><td>What the console is doing on the device: running and waiting tasks, which can be stopped or cancelled, and the history, see <a href="/docs/devices#activity">Activity</a>.</td></tr>
 </table>
 
+<h2 id="name">Display name and site</h2>
+<p>Under <b>Name and site</b> on the device page, technicians give a device a <b>display name</b>, for example <i>SERVER-MADRID-01</i>. The console shows it instead of the hostname in lists, search, alerts and reports, with the hostname next to it. The agent never changes the name; an empty name shows the hostname again. A name can also be given at installation, see <a href="/docs/agents#name">Installing agents</a>.</p>
+<p><b>Move</b> puts the device into another site, also of another customer you may see. The policies of the new site and customer apply at once; the device keeps its own policy, its tags and fields, and nothing changes on the computer.</p>
 <h2 id="tags">Tags and groups</h2>
 <p><b>Tags</b> are short names on devices, for example <i>Servers</i> or <i>Reception</i>. Technicians add them on the device page or, for many devices at once, with <b>Add a tag</b> in the device list; the list shows them and filters by them. Scripts can run on the devices of a tag, and administrators can assign a policy to a tag (see <a href="/docs/policies#assign">Policies</a>). Administrators rename and delete tags under <a href="/settings/tags">Settings → Tags</a>.</p>
 <p>A <b>group</b> is a saved search: search or filter the device list, then <b>Save this search as a group</b>. The group's button above the list shows the devices that match now, so devices that get the tag or the state later appear by themselves. Its creator or an administrator deletes it.</p>

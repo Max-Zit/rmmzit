@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>atribuir uma política a customer:ID, site:ID ou device:ID (administrador)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>remover a política de um cliente, local ou dispositivo (administrador)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>define os campos personalizados do dispositivo por nome (um objeto JSON; um valor vazio remove um) e os retorna; os dispositivos nas respostas trazem seus campos em <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>define o nome de exibição (<code>{"name": "SERVER-MADRID-01"}</code>; um nome vazio volta a mostrar o nome de host) e devolve o dispositivo; os dispositivos nas respostas trazem <code>name</code> (como a consola o mostra) e <code>hostname</code> (como o agente o informa)</td></tr>
 </table>
 
 <h2 id="tasks">Tarefas</h2>

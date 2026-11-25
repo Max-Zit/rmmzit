@@ -13,6 +13,8 @@
 <p>Os <b>filtros</b> restringem a lista por cliente, estado (online, offline), sistema operacional, alertas abertos, vulnerabilidades com correção, política ou campo personalizado. Os técnicos escolhem dispositivos com as caixas à frente deles (ou todos de uma vez) e iniciam uma ação em todos: um script da biblioteca (como tarefa), procurar e instalar as atualizações de segurança, atualizar programas com o winget, atualizar o inventário ou reiniciar em 5 minutos. Dispositivos offline recebem a ação quando se conectam; a <b>Atividade</b> de cada dispositivo mostra o andamento.</p>
 <p>A <b>pesquisa</b> do cabeçalho (<b>Ctrl+K</b> ou <b>/</b>) encontra dispositivos por nome, usuário, sistema, número de série, endereço IP ou MAC, clientes, programas instalados (com os dispositivos que os têm) e vulnerabilidades pelo ID.</p>
 
+<p>A barra de ações fica acima da lista e mostra quantos dispositivos estão escolhidos. Também move os dispositivos escolhidos para outro local, e <b>Remover</b> remove-os (os agentes online desinstalam-se sozinhos). Um dispositivo que informa o mesmo nome de host que outro dispositivo que vê é marcado com <b>Mesmo nome de host</b>, normalmente um computador clonado ou reinstalado: dê-lhe um nome de exibição ou remova o antigo.</p>
+<p><b>Exportar como CSV</b> transfere a lista tal como é mostrada (pesquisa, filtros ou grupo) para uma folha de cálculo, com o nome, nome de host, cliente, local, sistema, agente, estado, utilizador e etiquetas de cada dispositivo.</p>
 <h2 id="page">A página do dispositivo</h2>
 <p>A página de um dispositivo tem separadores para tudo o que pode fazer com ele:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Atividade</td><td>O que o console está fazendo no dispositivo: tarefas em andamento e aguardando, que podem ser interrompidas ou canceladas, e o histórico, veja <a href="/docs/devices#activity">Atividade</a>.</td></tr>
 </table>
 
+<h2 id="name">Nome de exibição e local</h2>
+<p>Em <b>Nome e local</b> na página do dispositivo, os técnicos dão ao dispositivo um <b>nome de exibição</b>, por exemplo <i>SERVER-MADRID-01</i>. A consola mostra-o em vez do nome de host em listas, pesquisa, alertas e relatórios, com o nome de host ao lado. O agente nunca altera o nome; um nome vazio volta a mostrar o nome de host. Também pode dar um nome na instalação, veja <a href="/docs/agents#name">Instalar agentes</a>.</p>
+<p><b>Mover</b> coloca o dispositivo noutro local, também de outro cliente que possa ver. As políticas do novo local e cliente aplicam-se de imediato; o dispositivo mantém a sua própria política, as etiquetas e os campos, e nada muda no computador.</p>
 <h2 id="tags">Etiquetas e grupos</h2>
 <p>As <b>etiquetas</b> são nomes curtos nos dispositivos, por exemplo <i>Servidores</i> ou <i>Receção</i>. Os técnicos adicionam-nas na página do dispositivo ou, para muitos dispositivos de uma vez, com <b>Adicionar etiqueta</b> na lista de dispositivos; a lista mostra-as e filtra por elas. Os scripts podem correr nos dispositivos de uma etiqueta, e os administradores podem atribuir uma política a uma etiqueta (consulte <a href="/docs/policies#assign">Políticas</a>). Os administradores mudam o nome das etiquetas e eliminam-nas em <a href="/settings/tags">Definições → Etiquetas</a>.</p>
 <p>Um <b>grupo</b> é uma pesquisa guardada: pesquise ou filtre a lista de dispositivos e escolha <b>Guardar esta pesquisa como grupo</b>. O botão do grupo acima da lista mostra os dispositivos que correspondem agora; os que recebem a etiqueta ou o estado mais tarde aparecem sozinhos. Elimina-o quem o criou ou um administrador.</p>

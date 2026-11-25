@@ -13,6 +13,8 @@
 <p><b>Filter</b> grenzen die Liste nach Kunde, Zustand (online, offline), Betriebssystem, offenen Alarmen, behebbaren Schwachstellen, Richtlinie oder einem eigenen Feld ein. Techniker wählen Geräte mit den Kästchen davor (oder alle auf einmal) und starten eine Aktion auf allen: ein Bibliotheksskript (als Auftrag), Suche nach und Installation der Sicherheitsupdates, Programm-Updates mit winget, Aktualisieren des Inventars oder einen Neustart in 5 Minuten. Offline-Geräte erhalten die Aktion, sobald sie sich verbinden; die <b>Aktivität</b> jedes Geräts zeigt den Verlauf.</p>
 <p>Die <b>Suche</b> in der Kopfzeile (<b>Strg+K</b> oder <b>/</b>) findet Geräte nach Name, Benutzer, System, Seriennummer, IP- oder MAC-Adresse, Kunden, installierte Programme (mit den Geräten, die sie haben) und Schwachstellen nach ihrer ID.</p>
 
+<p>Die Leiste mit den Aktionen steht über der Liste und zeigt, wie viele Geräte ausgewählt sind. Sie verschiebt die ausgewählten Geräte auch an einen anderen Standort, und <b>Entfernen</b> entfernt sie (Online-Agenten deinstallieren sich selbst). Ein Gerät, das denselben Hostnamen meldet wie ein anderes Gerät, das Sie sehen, ist mit <b>Gleicher Hostname</b> markiert, meist ein geklonter oder neu installierter Computer: Geben Sie ihm einen Anzeigenamen oder entfernen Sie das alte.</p>
+<p><b>Als CSV exportieren</b> lädt die Liste so herunter, wie sie angezeigt wird (Suche, Filter oder Gruppe), für eine Tabellenkalkulation, mit Name, Hostname, Kunde, Standort, System, Agent, Zustand, Benutzer und Tags jedes Geräts.</p>
 <h2 id="page">Die Geräteseite</h2>
 <p>Die Seite eines Geräts hat Registerkarten für alles, was Sie damit tun können:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Aktivität</td><td>Was die Konsole auf dem Gerät tut: laufende und wartende Aufgaben, die angehalten oder abgebrochen werden können, und der Verlauf, siehe <a href="/docs/devices#activity">Aktivität</a>.</td></tr>
 </table>
 
+<h2 id="name">Anzeigename und Standort</h2>
+<p>Unter <b>Name und Standort</b> auf der Geräteseite geben Techniker einem Gerät einen <b>Anzeigenamen</b>, zum Beispiel <i>SERVER-MADRID-01</i>. Die Konsole zeigt ihn statt des Hostnamens in Listen, Suche, Alarmen und Berichten, mit dem Hostnamen daneben. Der Agent ändert den Namen nie; ein leerer Name zeigt wieder den Hostnamen. Ein Name kann auch bei der Installation angegeben werden, siehe <a href="/docs/agents#name">Agents installieren</a>.</p>
+<p><b>Verschieben</b> setzt das Gerät an einen anderen Standort, auch eines anderen Kunden, den Sie sehen dürfen. Die Richtlinien des neuen Standorts und Kunden gelten sofort; das Gerät behält seine eigene Richtlinie, seine Tags und Felder, und auf dem Computer ändert sich nichts.</p>
 <h2 id="tags">Tags und Gruppen</h2>
 <p><b>Tags</b> sind kurze Namen an Geräten, zum Beispiel <i>Server</i> oder <i>Empfang</i>. Techniker fügen sie auf der Geräteseite hinzu oder für viele Geräte auf einmal mit <b>Tag hinzufügen</b> in der Geräteliste; die Liste zeigt sie und filtert danach. Skripte können auf den Geräten eines Tags laufen, und Administratoren können einem Tag eine Richtlinie zuweisen (siehe <a href="/docs/policies#assign">Richtlinien</a>). Administratoren benennen Tags unter <a href="/settings/tags">Einstellungen → Tags</a> um und löschen sie.</p>
 <p>Eine <b>Gruppe</b> ist eine gespeicherte Suche: Durchsuchen oder filtern Sie die Geräteliste und wählen Sie dann <b>Diese Suche als Gruppe speichern</b>. Die Schaltfläche der Gruppe über der Liste zeigt die Geräte, die jetzt passen; Geräte, die das Tag oder den Zustand später bekommen, erscheinen von selbst. Ihr Ersteller oder ein Administrator löscht sie.</p>

@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>przypisanie zasady do customer:ID, site:ID lub device:ID (administrator)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>usunięcie zasady klienta, lokalizacji lub urządzenia (administrator)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>ustawia pola własne urządzenia według nazwy (obiekt JSON; pusta wartość usuwa pole) i je zwraca; urządzenia w odpowiedziach mają swoje pola w <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>ustawia nazwę wyświetlaną (<code>{"name": "SERVER-MADRID-01"}</code>; pusta nazwa znowu pokazuje nazwę komputera) i zwraca urządzenie; urządzenia w odpowiedziach mają <code>name</code> (jak pokazuje je konsola) i <code>hostname</code> (jak zgłasza je agent)</td></tr>
 </table>
 
 <h2 id="tasks">Zadania</h2>

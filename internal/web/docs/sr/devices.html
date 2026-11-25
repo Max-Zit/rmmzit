@@ -13,6 +13,8 @@
 <p><b>Filteri</b> sužavaju listu po klijentu, stanju (na mreži, van mreže), operativnom sistemu, otvorenim alarmima, ranjivostima sa ispravkom, polisi ili prilagođenom polju. Tehničari biraju uređaje kvadratićima ispred njih (ili sve odjednom) i pokreću radnju na svima: skriptu iz biblioteke (kao posao), traženje i instalaciju bezbednosnih ažuriranja, ažuriranje programa preko winget-a, osvežavanje inventara ili restart za 5 minuta. Uređaji van mreže dobijaju radnju kada se povežu; <b>Aktivnost</b> svakog uređaja pokazuje kako ide.</p>
 <p><b>Pretraga</b> u zaglavlju (<b>Ctrl+K</b> ili <b>/</b>) pronalazi uređaje po imenu, korisniku, sistemu, serijskom broju, IP ili MAC adresi, klijente, instalirane programe (sa uređajima koji ih imaju) i ranjivosti po njihovom ID-u.</p>
 
+<p>Traka sa radnjama je iznad liste i pokazuje koliko je uređaja izabrano. Ona i premešta izabrane uređaje na drugu lokaciju, a <b>Ukloni</b> ih uklanja (agenti na mreži se sami deinstaliraju). Uređaj koji prijavljuje isto ime računara kao neki drugi uređaj koji vidite označen je sa <b>Isto ime računara</b>; obično je to klonirani ili ponovo instalirani računar: dajte mu prikazno ime ili uklonite stari.</p>
+<p><b>Izvezi kao CSV</b> preuzima listu onako kako je prikazana (pretraga, filteri ili grupa) za tabelu, sa imenom, imenom računara, klijentom, lokacijom, sistemom, agentom, stanjem, korisnikom i tagovima svakog uređaja.</p>
 <h2 id="page">Stranica uređaja</h2>
 <p>Stranica uređaja ima kartice za sve što s njim možete da radite:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Aktivnosti</td><td>Šta konzola radi na uređaju: zadaci u toku i na čekanju, koji mogu da se zaustave ili otkažu, i istorija, vidi <a href="/docs/devices#activity">Aktivnosti</a>.</td></tr>
 </table>
 
+<h2 id="name">Prikazno ime i lokacija</h2>
+<p>Pod <b>Ime i lokacija</b> na stranici uređaja tehničari daju uređaju <b>prikazno ime</b>, na primer <i>SERVER-MADRID-01</i>. Konzola ga prikazuje umesto imena računara u listama, pretrazi, alarmima i izveštajima, a ime računara stoji pored njega. Agent nikad ne menja to ime; prazno ime ponovo prikazuje ime računara. Ime se može zadati i pri instalaciji, vidite <a href="/docs/agents#name">Instalacija agenata</a>.</p>
+<p><b>Premesti</b> stavlja uređaj na drugu lokaciju, i drugog klijenta kojeg smete da vidite. Polise nove lokacije i klijenta važe odmah; uređaj zadržava svoju polisu, tagove i polja, a na računaru se ništa ne menja.</p>
 <h2 id="tags">Tagovi i grupe</h2>
 <p><b>Tagovi</b> su kratka imena na uređajima, na primer <i>Serveri</i> ili <i>Recepcija</i>. Tehničari ih dodaju na stranici uređaja ili, za više uređaja odjednom, sa <b>Dodaj tag</b> u listi uređaja; lista ih prikazuje i filtrira po njima. Skripte mogu da se pokrenu na uređajima sa tagom, a administratori mogu tagu da dodele polisu (vidi <a href="/docs/policies#assign">Polise</a>). Administratori preimenuju i brišu tagove u <a href="/settings/tags">Podešavanja → Tagovi</a>.</p>
 <p><b>Grupa</b> je sačuvana pretraga: pretražite ili filtrirajte listu uređaja, pa izaberite <b>Sačuvaj ovu pretragu kao grupu</b>. Dugme grupe iznad liste prikazuje uređaje koji sada odgovaraju; uređaji koji tag ili stanje dobiju kasnije pojavljuju se sami. Briše je njen autor ili administrator.</p>

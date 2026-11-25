@@ -13,6 +13,8 @@
 <p><b>Filters</b> beperken de lijst op klant, status (online, offline), besturingssysteem, open waarschuwingen, op te lossen kwetsbaarheden, beleid of een eigen veld. Technici kiezen apparaten met de vakjes ervoor (of alles tegelijk) en starten een actie op allemaal: een bibliotheekscript (als taak), zoeken naar en installeren van de beveiligingsupdates, programma's bijwerken met winget, de inventaris vernieuwen of een herstart over 5 minuten. Offline apparaten krijgen de actie zodra ze verbinden; de <b>Activiteit</b> van elk apparaat toont het verloop.</p>
 <p>De <b>zoekfunctie</b> in de kop (<b>Ctrl+K</b> of <b>/</b>) vindt apparaten op naam, gebruiker, systeem, serienummer, IP- of MAC-adres, klanten, geïnstalleerde programma's (met de apparaten die ze hebben) en kwetsbaarheden op hun ID.</p>
 
+<p>De balk met de acties staat boven de lijst en toont hoeveel apparaten gekozen zijn. Hij verplaatst de gekozen apparaten ook naar een andere locatie, en <b>Verwijderen</b> verwijdert ze (online agents verwijderen zichzelf). Een apparaat dat dezelfde hostnaam meldt als een ander apparaat dat u ziet, krijgt het kenmerk <b>Zelfde hostnaam</b>, meestal een gekloonde of opnieuw geïnstalleerde computer: geef het een weergavenaam of verwijder het oude.</p>
+<p><b>Exporteren als CSV</b> downloadt de lijst zoals hij wordt getoond (zoeken, filters of groep) voor een spreadsheet, met naam, hostnaam, klant, locatie, systeem, agent, status, gebruiker en tags van elk apparaat.</p>
 <h2 id="page">De apparaatpagina</h2>
 <p>De pagina van een apparaat heeft tabbladen voor alles wat u ermee kunt doen:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Activiteit</td><td>Wat de console op het apparaat doet: lopende en wachtende taken, die gestopt of geannuleerd kunnen worden, en de geschiedenis, zie <a href="/docs/devices#activity">Activiteit</a>.</td></tr>
 </table>
 
+<h2 id="name">Weergavenaam en locatie</h2>
+<p>Onder <b>Naam en locatie</b> op de apparaatpagina geven technici een apparaat een <b>weergavenaam</b>, bijvoorbeeld <i>SERVER-MADRID-01</i>. De console toont die in plaats van de hostnaam in lijsten, zoeken, meldingen en rapporten, met de hostnaam ernaast. De agent wijzigt de naam nooit; een lege naam toont weer de hostnaam. Een naam kan ook bij de installatie worden opgegeven, zie <a href="/docs/agents#name">Agents installeren</a>.</p>
+<p><b>Verplaatsen</b> zet het apparaat in een andere locatie, ook van een andere klant die u mag zien. Het beleid van de nieuwe locatie en klant geldt meteen; het apparaat houdt zijn eigen beleid, tags en velden, en op de computer verandert niets.</p>
 <h2 id="tags">Tags en groepen</h2>
 <p><b>Tags</b> zijn korte namen op apparaten, bijvoorbeeld <i>Servers</i> of <i>Receptie</i>. Technici voegen ze toe op de apparaatpagina of, voor veel apparaten tegelijk, met <b>Tag toevoegen</b> in de apparatenlijst; de lijst toont ze en filtert erop. Scripts kunnen op de apparaten van een tag draaien, en beheerders kunnen een beleid aan een tag toewijzen (zie <a href="/docs/policies#assign">Beleid</a>). Beheerders hernoemen en verwijderen tags onder <a href="/settings/tags">Instellingen → Tags</a>.</p>
 <p>Een <b>groep</b> is een opgeslagen zoekopdracht: zoek of filter de apparatenlijst en kies dan <b>Deze zoekopdracht als groep opslaan</b>. De knop van de groep boven de lijst toont de apparaten die nu voldoen; apparaten die de tag of toestand later krijgen, verschijnen vanzelf. De maker of een beheerder verwijdert hem.</p>

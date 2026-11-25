@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>Zkopíruje se do <code>/usr/local/bin/rmmzit-agent</code>, zaregistruje se a spustí službu systemd <code>rmmzit-agent</code>.</p>
 
+<h2 id="name">Zobrazovaný název při instalaci</h2>
+<p>Když se mnoho počítačů instaluje automaticky, každý si může přinést vlastní název pro konzoli:</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>Název se použije jen při registraci počítače (agent i server 0.15 nebo novější). Aktualizace a reinstalace registrovaného agenta ho nemění, takže název změněný v konzoli zůstane. Viz <a href="/docs/devices#name">Zobrazovaný název a pobočka</a>.</p>
 <h2 id="updates">Aktualizace agentů</h2>
 <p>Server obsahuje instalátory agenta své vlastní verze. V <a href="/settings/agents">Nastavení → Aktualizace agentů</a> vidíte, kteří agenti jsou zastaralí, aktualizujete je všechny najednou, nebo necháte zastaralé agenty aktualizovat se samy při připojení. Jednotlivého agenta aktualizujete na stránce zařízení. Agent stáhne instalátor přes vlastní šifrované spojení a nainstaluje jej, jen pokud odpovídá SHA-256 v podepsaném příkazu k aktualizaci. Můžete tam také nahrát jiný instalátor (MSI nebo agenta pro Linux).</p>
 

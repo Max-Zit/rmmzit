@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>Er kopiert sich nach <code>/usr/local/bin/rmmzit-agent</code>, registriert sich und startet den systemd-Dienst <code>rmmzit-agent</code>.</p>
 
+<h2 id="name">Ein Anzeigename bei der Installation</h2>
+<p>Wenn viele Computer automatisch installiert werden, kann jeder seinen eigenen Namen für die Konsole mitbringen:</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>Der Name wird nur bei der Registrierung des Computers verwendet (Agent und Server 0.15 oder neuer). Updates und Neuinstallationen eines registrierten Agenten ändern ihn nicht, ein in der Konsole geänderter Name bleibt also. Siehe <a href="/docs/devices#name">Anzeigename und Standort</a>.</p>
 <h2 id="updates">Agent-Updates</h2>
 <p>Der Server bringt die Agent-Installationsprogramme seiner eigenen Version mit. Unter <a href="/settings/agents">Einstellungen → Agent-Updates</a> sehen Sie, welche Agents veraltet sind, aktualisieren alle auf einmal oder lassen veraltete Agents sich beim Verbinden selbst aktualisieren. Ein einzelner Agent wird auf seiner Geräteseite aktualisiert. Der Agent lädt das Installationsprogramm über seine eigene verschlüsselte Verbindung und installiert es nur, wenn es zum SHA-256 im signierten Update-Befehl passt. Dort können Sie auch ein anderes Installationsprogramm hochladen (ein MSI oder einen Linux-Agent).</p>
 

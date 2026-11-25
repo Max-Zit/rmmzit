@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>自身を <code>/usr/local/bin/rmmzit-agent</code> にコピーし、登録して systemd サービス <code>rmmzit-agent</code> を開始します。</p>
 
+<h2 id="name">インストール時の表示名</h2>
+<p>多数のコンピューターを自動でインストールするとき、それぞれがコンソール用の名前を持ち込めます:</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>名前はコンピューターの登録時にだけ使われます（エージェントとサーバーが 0.15 以降）。登録済みエージェントの更新や再インストールでは変わらないため、コンソールで変更した名前はそのまま残ります。<a href="/docs/devices#name">表示名と拠点</a>を参照してください。</p>
 <h2 id="updates">エージェントの更新</h2>
 <p>サーバーは自身と同じバージョンのエージェントインストーラーを保持しています。<a href="/settings/agents">設定 → エージェントの更新</a>で古いエージェントを確認し、すべてを一度に更新するか、古いエージェントが接続時に自動更新されるようにできます。個別のエージェントはデバイスページで更新します。エージェントは自身の暗号化接続でインストーラーをダウンロードし、署名付き更新コマンドの SHA-256 と一致する場合にのみインストールします。ここで別のインストーラー（MSI または Linux エージェント）をアップロードすることもできます。</p>
 

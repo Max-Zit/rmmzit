@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>attribuer une stratégie à customer:ID, site:ID ou device:ID (administrateur)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>retirer la stratégie d'un client, d'un site ou d'un appareil (administrateur)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>définit les champs personnalisés de l'appareil par nom (un objet JSON ; une valeur vide en supprime un) et les renvoie ; les appareils des réponses portent leurs champs dans <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>définit le nom affiché (<code>{"name": "SERVER-MADRID-01"}</code> ; un nom vide affiche de nouveau le nom d'hôte) et renvoie le périphérique ; les périphériques des réponses portent <code>name</code> (tel que la console l'affiche) et <code>hostname</code> (tel que l'agent le signale)</td></tr>
 </table>
 
 <h2 id="tasks">Tâches</h2>

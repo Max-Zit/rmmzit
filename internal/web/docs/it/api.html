@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>assegnare un criterio a customer:ID, site:ID o device:ID (amministratore)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>rimuovere il criterio di un cliente, una sede o un dispositivo (amministratore)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>imposta i campi personalizzati del dispositivo per nome (un oggetto JSON; un valore vuoto ne rimuove uno) e li restituisce; i dispositivi nelle risposte riportano i loro campi in <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>imposta il nome visualizzato (<code>{"name": "SERVER-MADRID-01"}</code>; un nome vuoto mostra di nuovo il nome host) e restituisce il dispositivo; i dispositivi nelle risposte portano <code>name</code> (come lo mostra la console) e <code>hostname</code> (come lo riporta l'agente)</td></tr>
 </table>
 
 <h2 id="tasks">Attività</h2>

@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>eine Richtlinie customer:ID, site:ID oder device:ID zuweisen (Administrator)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>die Richtlinie eines Kunden, Standorts oder Geräts entfernen (Administrator)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>setzt eigene Felder des Geräts nach Namen (ein JSON-Objekt; ein leerer Wert entfernt eines) und gibt sie zurück; Geräte in den Antworten tragen ihre Felder als <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>setzt den Anzeigenamen (<code>{"name": "SERVER-MADRID-01"}</code>; ein leerer Name zeigt wieder den Hostnamen) und gibt das Gerät zurück; Geräte in den Antworten tragen <code>name</code> (wie die Konsole ihn zeigt) und <code>hostname</code> (wie der Agent ihn meldet)</td></tr>
 </table>
 
 <h2 id="tasks">Aufgaben</h2>

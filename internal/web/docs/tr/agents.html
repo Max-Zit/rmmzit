@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>Kendini <code>/usr/local/bin/rmmzit-agent</code> konumuna kopyalar, kaydolur ve <code>rmmzit-agent</code> systemd hizmetini başlatır.</p>
 
+<h2 id="name">Kurulumda görünen ad</h2>
+<p>Çok sayıda bilgisayar otomatik olarak kurulduğunda her biri konsol için kendi adını getirebilir:</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>Ad yalnızca bilgisayar kaydolurken kullanılır (aracı ve sunucu 0.15 veya üstü). Kayıtlı bir aracının güncellemeleri ve yeniden kurulumları onu değiştirmez; bu yüzden konsolda değiştirilen ad kalır. Bkz. <a href="/docs/devices#name">Görünen ad ve konum</a>.</p>
 <h2 id="updates">Ajan güncellemeleri</h2>
 <p>Sunucu kendi sürümünün ajan yükleyicilerini taşır. <a href="/settings/agents">Ayarlar → Ajan güncellemeleri</a> altında hangi ajanların eski olduğunu görür, hepsini tek seferde günceller veya eski ajanların bağlandıklarında kendilerini güncellemesine izin verirsiniz. Tek bir ajan cihaz sayfasında güncellenir. Ajan yükleyiciyi kendi şifreli bağlantısı üzerinden indirir ve yalnızca imzalı güncelleme komutundaki SHA-256 ile eşleşirse kurar. Orada başka bir yükleyici de yükleyebilirsiniz (bir MSI veya bir Linux ajanı).</p>
 

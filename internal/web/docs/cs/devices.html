@@ -13,6 +13,8 @@
 <p><b>Filtry</b> zužují seznam podle zákazníka, stavu (online, offline), operačního systému, otevřených upozornění, opravitelných zranitelností, zásady nebo vlastního pole. Technici vybírají zařízení zaškrtávacími políčky před nimi (nebo všechna najednou) a spustí akci na všech: skript z knihovny (jako úlohu), vyhledání a instalaci bezpečnostních aktualizací, aktualizaci programů přes winget, obnovení inventáře nebo restart za 5 minut. Zařízení offline dostanou akci, až se připojí; <b>Aktivita</b> každého zařízení ukazuje průběh.</p>
 <p><b>Hledání</b> v záhlaví (<b>Ctrl+K</b> nebo <b>/</b>) najde zařízení podle názvu, uživatele, systému, sériového čísla, IP nebo MAC adresy, zákazníky, nainstalované programy (se zařízeními, která je mají) a zranitelnosti podle ID.</p>
 
+<p>Lišta s akcemi je nad seznamem a ukazuje, kolik zařízení je vybráno. Také přesouvá vybraná zařízení na jinou pobočku a <b>Odebrat</b> je odebere (agenti online se sami odinstalují). Zařízení, které hlásí stejný název počítače jako jiné zařízení, které vidíte, je označeno <b>Stejný název počítače</b>; obvykle jde o klonovaný nebo znovu nainstalovaný počítač: dejte mu zobrazovaný název nebo odeberte to staré.</p>
+<p><b>Exportovat jako CSV</b> stáhne seznam tak, jak je zobrazen (hledání, filtry nebo skupina), pro tabulkový procesor, s názvem, názvem počítače, zákazníkem, pobočkou, systémem, agentem, stavem, uživatelem a štítky každého zařízení.</p>
 <h2 id="page">Stránka zařízení</h2>
 <p>Stránka zařízení má karty pro vše, co s ním můžete dělat:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Aktivita</td><td>Co konzole na zařízení dělá: běžící a čekající úlohy, které lze zastavit nebo zrušit, a historie, viz <a href="/docs/devices#activity">Aktivita</a>.</td></tr>
 </table>
 
+<h2 id="name">Zobrazovaný název a pobočka</h2>
+<p>V části <b>Název a pobočka</b> na stránce zařízení dávají technici zařízení <b>zobrazovaný název</b>, například <i>SERVER-MADRID-01</i>. Konzole ho zobrazuje místo názvu počítače v seznamech, hledání, výstrahách a sestavách, s názvem počítače vedle něj. Agent název nikdy nemění; prázdný název opět zobrazí název počítače. Název lze zadat i při instalaci, viz <a href="/docs/agents#name">Instalace agentů</a>.</p>
+<p><b>Přesunout</b> dá zařízení na jinou pobočku, i jiného zákazníka, kterého smíte vidět. Zásady nové pobočky a zákazníka platí okamžitě; zařízení si ponechá vlastní zásady, štítky a pole a na počítači se nic nemění.</p>
 <h2 id="tags">Štítky a skupiny</h2>
 <p><b>Štítky</b> jsou krátké názvy na zařízeních, například <i>Servery</i> nebo <i>Recepce</i>. Technici je přidávají na stránce zařízení nebo pro více zařízení najednou pomocí <b>Přidat štítek</b> v seznamu zařízení; seznam je ukazuje a filtruje podle nich. Skripty mohou běžet na zařízeních se štítkem a správci mohou štítku přiřadit zásadu (viz <a href="/docs/policies#assign">Zásady</a>). Správci štítky přejmenovávají a mažou v <a href="/settings/tags">Nastavení → Štítky</a>.</p>
 <p><b>Skupina</b> je uložené hledání: vyhledejte nebo vyfiltrujte seznam zařízení a zvolte <b>Uložit toto hledání jako skupinu</b>. Tlačítko skupiny nad seznamem ukazuje zařízení, která nyní odpovídají; zařízení, která štítek nebo stav dostanou později, se objeví sama. Maže ji její autor nebo správce.</p>

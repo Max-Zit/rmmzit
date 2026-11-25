@@ -13,6 +13,8 @@
 <p>Los <b>filtros</b> reducen la lista por cliente, estado (en línea, desconectado), sistema operativo, alertas abiertas, vulnerabilidades con corrección, directiva o campo personalizado. Los técnicos eligen dispositivos con las casillas delante (o todos a la vez) e inician una acción en todos: un script de la biblioteca (como trabajo), buscar e instalar las actualizaciones de seguridad, actualizar programas con winget, actualizar el inventario o reiniciar en 5 minutos. Los dispositivos desconectados reciben la acción al conectarse; la <b>Actividad</b> de cada dispositivo muestra cómo va.</p>
 <p>La <b>búsqueda</b> del encabezado (<b>Ctrl+K</b> o <b>/</b>) encuentra dispositivos por nombre, usuario, sistema, número de serie, dirección IP o MAC, clientes, programas instalados (con los dispositivos que los tienen) y vulnerabilidades por su ID.</p>
 
+<p>La barra de acciones está encima de la lista y muestra cuántos dispositivos están elegidos. También mueve los dispositivos elegidos a otra sede, y <b>Quitar</b> los quita (los agentes en línea se desinstalan solos). Un dispositivo que informa el mismo nombre de equipo que otro dispositivo que usted ve se marca con <b>Mismo nombre de equipo</b>; suele ser un equipo clonado o reinstalado: dele un nombre para mostrar o quite el antiguo.</p>
+<p><b>Exportar como CSV</b> descarga la lista tal como se muestra (búsqueda, filtros o grupo) para una hoja de cálculo, con el nombre, nombre de equipo, cliente, sede, sistema, agente, estado, usuario y etiquetas de cada dispositivo.</p>
 <h2 id="page">La página del dispositivo</h2>
 <p>La página de un dispositivo tiene pestañas para todo lo que puede hacer con él:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Actividad</td><td>Lo que la consola hace en el dispositivo: tareas en curso y en espera, que se pueden detener o cancelar, y el historial, vea <a href="/docs/devices#activity">Actividad</a>.</td></tr>
 </table>
 
+<h2 id="name">Nombre para mostrar y sede</h2>
+<p>En <b>Nombre y sede</b> de la página del dispositivo, los técnicos dan al dispositivo un <b>nombre para mostrar</b>, por ejemplo <i>SERVER-MADRID-01</i>. La consola lo muestra en lugar del nombre de equipo en listas, búsqueda, alertas e informes, con el nombre de equipo al lado. El agente nunca cambia el nombre; un nombre vacío vuelve a mostrar el nombre de equipo. También se puede dar un nombre en la instalación, vea <a href="/docs/agents#name">Instalar agentes</a>.</p>
+<p><b>Mover</b> pone el dispositivo en otra sede, también de otro cliente que usted pueda ver. Las directivas de la nueva sede y del nuevo cliente se aplican de inmediato; el dispositivo conserva su propia directiva, sus etiquetas y campos, y en el equipo no cambia nada.</p>
 <h2 id="tags">Etiquetas y grupos</h2>
 <p>Las <b>etiquetas</b> son nombres cortos en los dispositivos, por ejemplo <i>Servidores</i> o <i>Recepción</i>. Los técnicos las añaden en la página del dispositivo o, para muchos dispositivos a la vez, con <b>Añadir etiqueta</b> en la lista de dispositivos; la lista las muestra y filtra por ellas. Los scripts pueden ejecutarse en los dispositivos de una etiqueta, y los administradores pueden asignar una directiva a una etiqueta (consulte <a href="/docs/policies#assign">Directivas</a>). Los administradores cambian el nombre de las etiquetas y las eliminan en <a href="/settings/tags">Configuración → Etiquetas</a>.</p>
 <p>Un <b>grupo</b> es una búsqueda guardada: busque o filtre la lista de dispositivos y luego elija <b>Guardar esta búsqueda como grupo</b>. El botón del grupo encima de la lista muestra los dispositivos que coinciden ahora; los que reciban la etiqueta o el estado más tarde aparecen solos. Lo elimina su creador o un administrador.</p>

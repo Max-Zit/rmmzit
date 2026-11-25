@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>Kopira se u <code>/usr/local/bin/rmmzit-agent</code>, prijavi se i pokrene systemd servis <code>rmmzit-agent</code>.</p>
 
+<h2 id="name">Prikazno ime pri instalaciji</h2>
+<p>Kada se mnogo računara instalira automatski, svaki može doneti svoje ime za konzolu:</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>Ime se koristi samo kada se računar prijavljuje (agent i server 0.15 ili noviji). Ažuriranja i ponovne instalacije prijavljenog agenta ga ne menjaju, pa ime promenjeno u konzoli ostaje. Vidite <a href="/docs/devices#name">Prikazno ime i lokacija</a>.</p>
 <h2 id="updates">Ažuriranje agenata</h2>
 <p>Server nosi instalacije agenata svoje verzije. U <a href="/settings/agents">Podešavanja → Ažuriranje agenata</a> vidite koji su agenti zastareli, ažurirate ih sve odjednom ili pustite da se zastareli agenti sami ažuriraju kad se povežu. Pojedinačni agent se ažurira na stranici uređaja. Agent preuzima instalaciju preko svoje šifrovane veze i instalira je samo ako se poklapa sa SHA-256 iz potpisane komande. Tu možete otpremiti i drugu instalaciju (MSI ili Linux agenta).</p>
 

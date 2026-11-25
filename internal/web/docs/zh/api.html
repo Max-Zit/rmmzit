@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>将策略分配给 customer:ID、site:ID 或 device:ID（管理员）</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>移除客户、站点或设备的策略（管理员）</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>按名称设置设备的自定义字段（JSON 对象；空值会删除字段）并返回；响应中的设备在 <code>custom_fields</code> 中包含其字段</td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>设置显示名称（<code>{"name": "SERVER-MADRID-01"}</code>；名称为空时重新显示主机名）并返回设备；响应中的设备带有 <code>name</code>（控制台显示的名称）和 <code>hostname</code>（代理报告的主机名）</td></tr>
 </table>
 
 <h2 id="tasks">任务</h2>

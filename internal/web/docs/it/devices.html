@@ -13,6 +13,8 @@
 <p>I <b>filtri</b> restringono l'elenco per cliente, stato (online, offline), sistema operativo, avvisi aperti, vulnerabilità correggibili, criterio o campo personalizzato. I tecnici scelgono i dispositivi con le caselle davanti (o tutti insieme) e avviano un'azione su tutti: uno script della libreria (come processo), ricerca e installazione degli aggiornamenti di sicurezza, aggiornamento dei programmi con winget, aggiornamento dell'inventario o un riavvio tra 5 minuti. I dispositivi offline ricevono l'azione quando si connettono; l'<b>Attività</b> di ogni dispositivo mostra l'andamento.</p>
 <p>La <b>ricerca</b> nell'intestazione (<b>Ctrl+K</b> o <b>/</b>) trova dispositivi per nome, utente, sistema, numero di serie, indirizzo IP o MAC, clienti, programmi installati (con i dispositivi che li hanno) e vulnerabilità per ID.</p>
 
+<p>La barra delle azioni si trova sopra l'elenco e mostra quanti dispositivi sono scelti. Sposta anche i dispositivi scelti in un'altra sede, e <b>Rimuovi</b> li rimuove (gli agenti online si disinstallano da soli). Un dispositivo che riporta lo stesso nome host di un altro dispositivo che vedi è segnato con <b>Stesso nome host</b>, di solito un computer clonato o reinstallato: dagli un nome visualizzato o rimuovi quello vecchio.</p>
+<p><b>Esporta come CSV</b> scarica l'elenco così come è mostrato (ricerca, filtri o gruppo) per un foglio di calcolo, con nome, nome host, cliente, sede, sistema, agente, stato, utente e tag di ogni dispositivo.</p>
 <h2 id="page">La pagina del dispositivo</h2>
 <p>La pagina di un dispositivo ha schede per tutto ciò che puoi farci:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Attività</td><td>Ciò che la console sta facendo sul dispositivo: attività in corso e in attesa, che possono essere fermate o annullate, e la cronologia, vedi <a href="/docs/devices#activity">Attività</a>.</td></tr>
 </table>
 
+<h2 id="name">Nome visualizzato e sede</h2>
+<p>In <b>Nome e sede</b> nella pagina del dispositivo i tecnici danno al dispositivo un <b>nome visualizzato</b>, per esempio <i>SERVER-MADRID-01</i>. La console lo mostra al posto del nome host in elenchi, ricerca, avvisi e report, con il nome host accanto. L'agente non cambia mai il nome; un nome vuoto mostra di nuovo il nome host. Un nome si può dare anche all'installazione, vedi <a href="/docs/agents#name">Installare gli agent</a>.</p>
+<p><b>Sposta</b> mette il dispositivo in un'altra sede, anche di un altro cliente che puoi vedere. I criteri della nuova sede e del nuovo cliente si applicano subito; il dispositivo mantiene il proprio criterio, i tag e i campi, e sul computer non cambia nulla.</p>
 <h2 id="tags">Tag e gruppi</h2>
 <p>I <b>tag</b> sono nomi brevi sui dispositivi, per esempio <i>Server</i> o <i>Reception</i>. I tecnici li aggiungono nella pagina del dispositivo o, per molti dispositivi insieme, con <b>Aggiungi tag</b> nell'elenco dei dispositivi; l'elenco li mostra e filtra per tag. Gli script possono essere eseguiti sui dispositivi di un tag e gli amministratori possono assegnare un criterio a un tag (vedi <a href="/docs/policies#assign">Criteri</a>). Gli amministratori rinominano ed eliminano i tag in <a href="/settings/tags">Impostazioni → Tag</a>.</p>
 <p>Un <b>gruppo</b> è una ricerca salvata: cerchi o filtri l'elenco dei dispositivi, poi scelga <b>Salva questa ricerca come gruppo</b>. Il pulsante del gruppo sopra l'elenco mostra i dispositivi che corrispondono ora; i dispositivi che ricevono il tag o lo stato più tardi compaiono da soli. Lo elimina il suo autore o un amministratore.</p>

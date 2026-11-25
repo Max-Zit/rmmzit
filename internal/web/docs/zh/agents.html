@@ -26,6 +26,11 @@
 sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…"</pre>
 <p>它会将自身复制到 <code>/usr/local/bin/rmmzit-agent</code>，完成注册并启动 systemd 服务 <code>rmmzit-agent</code>。</p>
 
+<h2 id="name">安装时的显示名称</h2>
+<p>自动安装大量计算机时，每台计算机都可以带上自己在控制台中的名称：</p>
+<pre>msiexec /i rmmzit-agent-x64.msi /qn ENROLLCODE="RZ1-…" DEVICENAME="SERVER-MADRID-01"
+sudo ./rmmzit-agent-linux-amd64 install --code "RZ1-…" --name SERVER-MADRID-01</pre>
+<p>名称只在计算机注册时使用（代理和服务器均为 0.15 或更高版本）。已注册代理的更新和重装不会更改它，因此在控制台中更改的名称会保留。请参阅<a href="/docs/devices#name">显示名称和站点</a>。</p>
 <h2 id="updates">代理更新</h2>
 <p>服务器自带与其版本相同的代理安装程序。在<a href="/settings/agents">设置 → 代理更新</a>中，您可以查看哪些代理已过时、一次性全部更新，或让过时的代理在连接时自动更新。单个代理可在其设备页面上更新。代理通过自己的加密连接下载安装程序，并且只有在与已签名更新命令中的 SHA-256 一致时才会安装。您也可以在那里上传其他安装程序（MSI 或 Linux 代理）。</p>
 

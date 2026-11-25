@@ -13,6 +13,8 @@
 <p><b>Filtreler</b> listeyi müşteriye, duruma (çevrimiçi, çevrimdışı), işletim sistemine, açık uyarılara, düzeltilebilir güvenlik açıklarına, ilkeye veya bir özel alana göre daraltır. Teknisyenler önlerindeki kutularla cihazları (veya hepsini birden) seçer ve hepsinde bir işlem başlatır: kitaplıktan bir betik (iş olarak), güvenlik güncellemelerini arama ve kurma, programları winget ile güncelleme, envanteri yenileme veya 5 dakika içinde yeniden başlatma. Çevrimdışı cihazlar işlemi bağlandıklarında alır; her cihazın <b>Etkinlik</b> sekmesi gidişatı gösterir.</p>
 <p>Başlıktaki <b>arama</b> (<b>Ctrl+K</b> veya <b>/</b>) cihazları ada, kullanıcıya, sisteme, seri numarasına, IP veya MAC adresine göre; müşterileri, kurulu programları (onlara sahip cihazlarla) ve güvenlik açıklarını kimliklerine göre bulur.</p>
 
+<p>Eylem çubuğu listenin üstündedir ve kaç aygıtın seçildiğini gösterir. Seçilen aygıtları başka bir konuma da taşır, <b>Kaldır</b> ise onları kaldırır (çevrimiçi aracılar kendilerini kaldırır). Gördüğünüz başka bir aygıtla aynı bilgisayar adını bildiren aygıt <b>Aynı bilgisayar adı</b> ile işaretlenir; bu genellikle kopyalanmış veya yeniden kurulmuş bir bilgisayardır: ona bir görünen ad verin veya eskisini kaldırın.</p>
+<p><b>CSV olarak dışa aktar</b>, listeyi gösterildiği gibi (arama, filtreler veya grup) bir elektronik tablo için indirir; her aygıtın adı, bilgisayar adı, müşterisi, konumu, sistemi, aracısı, durumu, kullanıcısı ve etiketleriyle.</p>
 <h2 id="page">Cihaz sayfası</h2>
 <p>Bir cihazın sayfasında onunla yapabileceğiniz her şey için sekmeler vardır:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Etkinlik</td><td>Konsolun cihazda yaptıkları: durdurulabilen veya iptal edilebilen çalışan ve bekleyen görevler ile geçmiş, bkz. <a href="/docs/devices#activity">Etkinlik</a>.</td></tr>
 </table>
 
+<h2 id="name">Görünen ad ve konum</h2>
+<p>Aygıt sayfasındaki <b>Ad ve konum</b> bölümünde teknisyenler aygıta bir <b>görünen ad</b> verir, örneğin <i>SERVER-MADRID-01</i>. Konsol bunu listelerde, aramada, uyarılarda ve raporlarda bilgisayar adı yerine, bilgisayar adı yanında olacak şekilde gösterir. Aracı bu adı asla değiştirmez; boş bir ad yeniden bilgisayar adını gösterir. Ad kurulumda da verilebilir, bkz. <a href="/docs/agents#name">Ajanları kurma</a>.</p>
+<p><b>Taşı</b> aygıtı başka bir konuma koyar; görebildiğiniz başka bir müşterinin konumuna da. Yeni konumun ve müşterinin ilkeleri hemen uygulanır; aygıt kendi ilkesini, etiketlerini ve alanlarını korur ve bilgisayarda hiçbir şey değişmez.</p>
 <h2 id="tags">Etiketler ve gruplar</h2>
 <p><b>Etiketler</b> cihazlardaki kısa adlardır, örneğin <i>Sunucular</i> veya <i>Resepsiyon</i>. Teknisyenler bunları cihaz sayfasında ya da birçok cihaz için aynı anda cihaz listesindeki <b>Etiket ekle</b> ile ekler; liste bunları gösterir ve onlara göre filtreler. Betikler bir etiketin cihazlarında çalışabilir, yöneticiler bir etikete ilke atayabilir (bkz. <a href="/docs/policies#assign">İlkeler</a>). Yöneticiler etiketleri <a href="/settings/tags">Ayarlar → Etiketler</a> altında yeniden adlandırır ve siler.</p>
 <p>Bir <b>grup</b>, kaydedilmiş bir aramadır: cihaz listesini arayın veya filtreleyin, ardından <b>Bu aramayı grup olarak kaydet</b>'i seçin. Listenin üstündeki grup düğmesi şu anda eşleşen cihazları gösterir; etiketi veya durumu sonradan alan cihazlar kendiliğinden görünür. Onu oluşturan kişi veya bir yönetici siler.</p>

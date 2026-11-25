@@ -24,6 +24,7 @@
   <tr><td><code>POST /api/v1/policies/{id}/assign</code></td><td>přiřazení zásady k customer:ID, site:ID nebo device:ID (správce)</td></tr>
   <tr><td><code>POST /api/v1/policies/unassign</code></td><td>odebrání zásady zákazníka, lokality nebo zařízení (správce)</td></tr>
   <tr><td><code>PUT /api/v1/devices/{id}/fields</code></td><td>nastaví vlastní pole zařízení podle názvu (objekt JSON; prázdná hodnota pole odebere) a vrátí je; zařízení v odpovědích nesou svá pole v <code>custom_fields</code></td></tr>
+  <tr><td><code>PUT /api/v1/devices/{id}/name</code></td><td>nastaví zobrazovaný název (<code>{"name": "SERVER-MADRID-01"}</code>; prázdný název opět zobrazí název počítače) a vrátí zařízení; zařízení v odpovědích nesou <code>name</code> (jak ho zobrazuje konzole) a <code>hostname</code> (jak ho hlásí agent)</td></tr>
 </table>
 
 <h2 id="tasks">Úlohy</h2>

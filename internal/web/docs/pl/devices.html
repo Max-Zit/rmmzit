@@ -13,6 +13,8 @@
 <p><b>Filtry</b> zawężają listę według klienta, stanu (online, offline), systemu operacyjnego, otwartych alertów, luk z poprawką, zasady lub pola własnego. Technicy wybierają urządzenia polami wyboru przed nimi (lub wszystkie naraz) i uruchamiają akcję na wszystkich: skrypt z biblioteki (jako zadanie), wyszukanie i instalację aktualizacji zabezpieczeń, aktualizację programów przez winget, odświeżenie inwentarza lub ponowne uruchomienie za 5 minut. Urządzenia offline otrzymują akcję po połączeniu; <b>Aktywność</b> każdego urządzenia pokazuje postęp.</p>
 <p><b>Wyszukiwanie</b> w nagłówku (<b>Ctrl+K</b> lub <b>/</b>) znajduje urządzenia po nazwie, użytkowniku, systemie, numerze seryjnym, adresie IP lub MAC, klientów, zainstalowane programy (z urządzeniami, które je mają) i luki po ich identyfikatorze.</p>
 
+<p>Pasek z akcjami jest nad listą i pokazuje, ile urządzeń wybrano. Przenosi też wybrane urządzenia do innej lokalizacji, a <b>Usuń</b> je usuwa (agenci online sami się odinstalowują). Urządzenie, które zgłasza tę samą nazwę komputera co inne widoczne dla Ciebie urządzenie, jest oznaczone jako <b>Ta sama nazwa komputera</b>; zwykle to sklonowany lub ponownie zainstalowany komputer: nadaj mu nazwę wyświetlaną albo usuń stare.</p>
+<p><b>Eksportuj jako CSV</b> pobiera listę tak, jak jest wyświetlana (wyszukiwanie, filtry lub grupa), do arkusza kalkulacyjnego, z nazwą, nazwą komputera, klientem, lokalizacją, systemem, agentem, stanem, użytkownikiem i tagami każdego urządzenia.</p>
 <h2 id="page">Strona urządzenia</h2>
 <p>Strona urządzenia ma karty dla wszystkiego, co możesz z nim zrobić:</p>
 <table>
@@ -27,6 +29,9 @@
   <tr><td>Aktywność</td><td>Co konsola robi na urządzeniu: zadania trwające i oczekujące, które można zatrzymać lub anulować, oraz historia, zobacz <a href="/docs/devices#activity">Aktywność</a>.</td></tr>
 </table>
 
+<h2 id="name">Nazwa wyświetlana i lokalizacja</h2>
+<p>W sekcji <b>Nazwa i lokalizacja</b> na stronie urządzenia technicy nadają urządzeniu <b>nazwę wyświetlaną</b>, na przykład <i>SERVER-MADRID-01</i>. Konsola pokazuje ją zamiast nazwy komputera na listach, w wyszukiwaniu, alertach i raportach, z nazwą komputera obok. Agent nigdy nie zmienia tej nazwy; pusta nazwa znowu pokazuje nazwę komputera. Nazwę można też podać przy instalacji, zobacz <a href="/docs/agents#name">Instalacja agentów</a>.</p>
+<p><b>Przenieś</b> umieszcza urządzenie w innej lokalizacji, także innego klienta, którego możesz widzieć. Zasady nowej lokalizacji i klienta obowiązują od razu; urządzenie zachowuje własne zasady, tagi i pola, a na komputerze nic się nie zmienia.</p>
 <h2 id="tags">Tagi i grupy</h2>
 <p><b>Tagi</b> to krótkie nazwy na urządzeniach, na przykład <i>Serwery</i> lub <i>Recepcja</i>. Technicy dodają je na stronie urządzenia lub, dla wielu urządzeń naraz, poleceniem <b>Dodaj tag</b> na liście urządzeń; lista je pokazuje i filtruje według nich. Skrypty mogą działać na urządzeniach z tagiem, a administratorzy mogą przypisać do tagu zasadę (zobacz <a href="/docs/policies#assign">Zasady</a>). Administratorzy zmieniają nazwy tagów i usuwają je w <a href="/settings/tags">Ustawienia → Tagi</a>.</p>
 <p><b>Grupa</b> to zapisane wyszukiwanie: wyszukaj lub przefiltruj listę urządzeń, a potem wybierz <b>Zapisz to wyszukiwanie jako grupę</b>. Przycisk grupy nad listą pokazuje urządzenia, które pasują teraz; urządzenia, które później dostaną tag lub stan, pojawiają się same. Usuwa ją jej twórca lub administrator.</p>
