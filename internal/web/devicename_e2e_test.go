@@ -196,7 +196,7 @@ func TestCleanDeviceName(t *testing.T) {
 	for in, want := range map[string]string{
 		"  Web  1 ":              "Web 1",
 		"a\tb\nc":                "a b c",
-		"evil\u202eexe.txt":           "evil exe.txt",
+		"evil\u202eexe.txt":      "evil exe.txt",
 		"\x00":                   "",
 		"Šabac-01 čćžšđ":         "Šabac-01 čćžšđ",
 		"bad\xffutf8":            "badutf8",
