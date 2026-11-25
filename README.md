@@ -74,7 +74,7 @@ Then open `https://<address>:8443`, enter the setup token, create the first admi
 | **BitLocker** | recovery keys collected and kept encrypted on the server, shown to administrators after a password check; switched on by policy |
 | **Vulnerabilities** | installed programs checked against NVD (common Windows programs) and OSV (Debian, Ubuntu packages); per device and fleet-wide, alerts for critical ones |
 | **Custom fields** | your own fields for devices and customers (asset number, warranty, contract), also through the API |
-| **Tags and groups** | tags on devices, with scripts and policies by tag; dynamic groups (saved searches of the device list); Wake-on-LAN through another device of the site |
+| **Devices, tags and groups** | display names (in the console, the API or at installation) next to the hostname, a mark for devices that report the same hostname, moving and removing many devices at once, the device list as CSV; tags on devices, with scripts and policies by tag; dynamic groups (saved searches of the device list); Wake-on-LAN through another device of the site |
 | **API** | REST API with personal tokens (role no higher than the user's), documented in the console |
 | **Users** | roles (administrator, technician, read-only) and per-customer access; two-factor sign-in with single-use recovery codes; Active Directory / LDAP and single sign-on (OpenID Connect, SAML) |
 | **Server** | Let's Encrypt or your own certificate, signed self-update (official or testing channel) with a notice for administrators when a new version is out, daily console backup (optionally encrypted, copied over SFTP) with restore, network and time zone from the console, diagnostics without secrets, tamper-evident audit log |
