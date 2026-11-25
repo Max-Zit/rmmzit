@@ -1,4 +1,3 @@
 # Vulnerabilities govulncheck reports in called code that are accepted for a
 # while, because no fixed release exists and RMMZit works around them.
 # "<ID> <until YYYY-MM-DD> <reason>" - read by tools/vulngate in CI.
-GO-2026-6909 2026-12-06 crewjam/saml: RMMZit uses v0.6.3 (2026-11-08), which contains the upstream fix (PR 679), but the Go vulnerability database lists no fixed version yet, so govulncheck still reports it. internal/web/samlcheck.go also checks every SAML response before the library reads it. Remove this line when the database names a fixed version.
