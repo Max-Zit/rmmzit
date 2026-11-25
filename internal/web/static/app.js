@@ -1,4 +1,4 @@
-if (document.getElementById("rd") || document.getElementById("term")) window.location.href = url.split("?")[0].replace(//(rd|terminal)$/, "");// RMMZit console: small progressive enhancements (the console works
+// RMMZit console: small progressive enhancements (the console works
 // without JavaScript). No inline scripts: the CSP allows only this file.
 (function () {
   "use strict";

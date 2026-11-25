@@ -27,6 +27,8 @@ jobs:
           go-version-file: go.mod
       - name: gofmt
         run: test -z "$(gofmt -l cmd internal tools)" || (gofmt -l cmd internal tools; exit 1)
+      - name: console scripts parse (node --check; a syntax error disables all of the console's JavaScript)
+        run: for f in internal/web/static/*.js; do node --check "$f" || exit 1; done
       - name: build (Linux and Windows)
         run: |
           go build ./...
