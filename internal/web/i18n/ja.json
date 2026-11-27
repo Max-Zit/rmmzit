@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "デバイスを移動しました。新しい拠点と顧客のポリシーが適用されます。",
   "The devices were moved. The policies of their new site and customer apply now.": "デバイスを移動しました。新しい拠点と顧客のポリシーが適用されます。",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "デバイスを削除しました。オンラインだったエージェントは自動でアンインストールされます。その他は手動でアンインストールしてください。",
-  "Export as CSV": "CSV でエクスポート"
+  "Export as CSV": "CSV でエクスポート",
+  "Script failed": "スクリプトの失敗",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "ジョブまたはスケジュールでライブラリのスクリプトが失敗したときに警告する（終了コードが 0 以外、時間制限、またはエラー）",
+  "Failed runs in a row before the alert": "警告までの連続失敗回数",
+  "Count runs that expired because the device stayed offline as failed": "デバイスがオフラインのままで期限切れになった実行も失敗として数える",
+  "the failed runs in a row must be 1–20": "連続失敗回数は 1～20 にしてください",
+  "Run again where it failed (%d)": "失敗した所で再実行（%d）",
+  "Run it again on the %d devices where it failed or expired?": "失敗または期限切れになった %d 台のデバイスで再実行しますか？",
+  "No device of this job failed or expired.": "このジョブで失敗または期限切れになったデバイスはありません。"
 }

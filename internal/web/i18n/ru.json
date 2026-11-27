@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "Устройство перемещено. Теперь действуют политики его новой площадки и клиента.",
   "The devices were moved. The policies of their new site and customer apply now.": "Устройства перемещены. Теперь действуют политики их новой площадки и клиента.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Устройства удалены. Агенты, которые были в сети, удалятся сами; остальные удалите вручную.",
-  "Export as CSV": "Экспорт в CSV"
+  "Export as CSV": "Экспорт в CSV",
+  "Script failed": "Сбой скрипта",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Предупреждать, когда скрипт из библиотеки завершается неудачно в задании или расписании (код выхода не 0, превышено время или ошибка)",
+  "Failed runs in a row before the alert": "Неудачных запусков подряд до предупреждения",
+  "Count runs that expired because the device stayed offline as failed": "Считать неудачными запуски, истёкшие из-за того, что устройство оставалось не в сети",
+  "the failed runs in a row must be 1–20": "число неудачных запусков подряд должно быть 1–20",
+  "Run again where it failed (%d)": "Запустить снова там, где не удалось (%d)",
+  "Run it again on the %d devices where it failed or expired?": "Запустить снова на %d устройствах, где не удалось или истекло?",
+  "No device of this job failed or expired.": "Ни на одном устройстве этого задания не было сбоя или истечения."
 }

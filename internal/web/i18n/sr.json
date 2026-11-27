@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "Uređaj je premešten. Sada važe polise njegove nove lokacije i klijenta.",
   "The devices were moved. The policies of their new site and customer apply now.": "Uređaji su premešteni. Sada važe polise njihove nove lokacije i klijenta.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Uređaji su uklonjeni. Agenti koji su bili na mreži sami se deinstaliraju; ostale deinstalirajte ručno.",
-  "Export as CSV": "Izvezi kao CSV"
+  "Export as CSV": "Izvezi kao CSV",
+  "Script failed": "Skripta nije uspela",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Upozori kada skripta iz biblioteke ne uspe u poslu ili rasporedu (izlazni kod različit od 0, isteklo vreme ili greška)",
+  "Failed runs in a row before the alert": "Neuspelih pokretanja zaredom pre upozorenja",
+  "Count runs that expired because the device stayed offline as failed": "Računaj kao neuspela i pokretanja koja su istekla jer je uređaj ostao van mreže",
+  "the failed runs in a row must be 1–20": "broj neuspelih pokretanja zaredom mora biti 1–20",
+  "Run again where it failed (%d)": "Pokreni ponovo gde nije uspela (%d)",
+  "Run it again on the %d devices where it failed or expired?": "Pokrenuti ponovo na %d uređaja gde nije uspela ili je istekla?",
+  "No device of this job failed or expired.": "Ni na jednom uređaju ovog posla nije bilo neuspeha ni isteka."
 }

@@ -274,7 +274,27 @@ func (s *Store) ClaimJobRuns(ctx context.Context, devices []int64, limit int) ([
 
 // FinishJobRun records the outcome of a claimed run.
 func (s *Store) FinishJobRun(ctx context.Context, jobID, deviceID int64, status string, runID *int64) error {
-	_, err := s.db.Exec(ctx, `UPDATE script_job_devices SET status=$3, run_id=$4, updated_at=$5 WHERE job_id=$1 AND device_id=$2`, jobID, deviceID, status, runID, s.now())
+	now := s.now()
+	if _, err := s.db.Exec(ctx, `UPDATE script_job_devices SET status=$3, run_id=$4, updated_at=$5 WHERE job_id=$1 AND device_id=$2`, jobID, deviceID, status, runID, now); err != nil {
+		return err
+	}
+	if status != "done" && status != "failed" {
+		return nil // a cancelled run says nothing about the script
+	}
+	bad := 0
+	if status == "failed" {
+		bad = 1
+	}
+	// The streak of this library script on this device (package installs
+	// and runs without a library script have none).
+	_, err := s.db.Exec(ctx, `INSERT INTO script_streaks(device_id, script_id, name, failed, missed, last_status, job_id, run_id, updated_at)
+		SELECT $2, j.script_id, j.name, $4, $4, $3, j.id, $5, $6 FROM script_jobs j
+		WHERE j.id=$1 AND j.script_id IS NOT NULL AND j.shell <> 'package' AND EXISTS (SELECT 1 FROM devices WHERE id=$2)
+		ON CONFLICT (device_id, script_id) DO UPDATE SET name=EXCLUDED.name,
+			failed = CASE WHEN $4 = 0 THEN 0 ELSE script_streaks.failed+1 END,
+			missed = CASE WHEN $4 = 0 THEN 0 ELSE script_streaks.missed+1 END,
+			last_status=$3, job_id=EXCLUDED.job_id, run_id=EXCLUDED.run_id, updated_at=EXCLUDED.updated_at`,
+		jobID, deviceID, status, bad, runID, now)
 	return err
 }
 
@@ -282,8 +302,18 @@ func (s *Store) FinishJobRun(ctx context.Context, jobID, deviceID int64, status 
 // also ends runs that were in flight.
 func (s *Store) ExpireJobs(ctx context.Context, failRunning bool) error {
 	now := s.now()
-	if _, err := s.db.Exec(ctx, `UPDATE script_job_devices jd SET status='expired', updated_at=$1 FROM script_jobs j
-		WHERE j.id=jd.job_id AND jd.status='pending' AND j.expires_at <= $1`, now); err != nil {
+	// An expired run counts as missed in the streak of its library script.
+	if _, err := s.db.Exec(ctx, `WITH e AS (
+			UPDATE script_job_devices jd SET status='expired', updated_at=$1 FROM script_jobs j
+			WHERE j.id=jd.job_id AND jd.status='pending' AND j.expires_at <= $1
+			RETURNING jd.device_id, j.id AS job_id, j.script_id, j.name, j.shell),
+		g AS (SELECT device_id, script_id, count(*) AS n, max(job_id) AS job_id, (array_agg(name ORDER BY job_id DESC))[1] AS name
+			FROM e WHERE script_id IS NOT NULL AND shell <> 'package' GROUP BY device_id, script_id)
+		INSERT INTO script_streaks(device_id, script_id, name, failed, missed, last_status, job_id, updated_at)
+		SELECT g.device_id, g.script_id, g.name, 0, g.n, 'expired', g.job_id, $1 FROM g
+			WHERE EXISTS (SELECT 1 FROM scripts WHERE id=g.script_id)
+		ON CONFLICT (device_id, script_id) DO UPDATE SET name=EXCLUDED.name, missed=script_streaks.missed+EXCLUDED.missed,
+			last_status='expired', job_id=EXCLUDED.job_id, updated_at=EXCLUDED.updated_at`, now); err != nil {
 		return err
 	}
 	if failRunning {
@@ -365,4 +395,44 @@ func (s *Store) MarkScheduleFired(ctx context.Context, id int64, at time.Time) (
 		return false, err
 	}
 	return tag.RowsAffected() == 1, nil
+}
+
+// ScriptStreak is the recent outcome of a library script on a device that
+// did not end well last time.
+type ScriptStreak struct {
+	DeviceID   int64
+	ScriptID   int64
+	Name       string
+	Failed     int // failed runs since the last good one
+	Missed     int // failed and expired runs since the last good one
+	LastStatus string
+	JobID      int64
+	// The last failed run (none when only expired runs are missed).
+	ExitCode *int
+	TimedOut bool
+	Error    string
+	Output   string // its end
+}
+
+// ScriptStreaks lists the scripts whose last runs on a device failed or
+// expired.
+func (s *Store) ScriptStreaks(ctx context.Context) ([]ScriptStreak, error) {
+	rows, err := s.db.Query(ctx, `SELECT st.device_id, st.script_id, st.name, st.failed, st.missed, st.last_status, COALESCE(st.job_id, 0),
+		r.exit_code, COALESCE(r.timed_out, false), COALESCE(r.error, ''), right(COALESCE(r.output, ''), 400)
+		FROM script_streaks st LEFT JOIN script_runs r ON r.id=st.run_id AND st.failed > 0
+		WHERE st.missed > 0`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var out []ScriptStreak
+	for rows.Next() {
+		var x ScriptStreak
+		if err := rows.Scan(&x.DeviceID, &x.ScriptID, &x.Name, &x.Failed, &x.Missed, &x.LastStatus, &x.JobID,
+			&x.ExitCode, &x.TimedOut, &x.Error, &x.Output); err != nil {
+			return nil, err
+		}
+		out = append(out, x)
+	}
+	return out, rows.Err()
 }

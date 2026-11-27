@@ -390,6 +390,7 @@ func (s *Server) Handler() http.Handler {
 	app("GET /scripts/{sid}/run", s.handleJobNew)
 	app("POST /scripts/{sid}/run", s.handleJobCreate)
 	app("GET /jobs/{jid}", s.handleJob)
+	app("POST /jobs/{jid}/rerun", s.handleJobRerun)
 	app("GET /policies", s.handlePolicies)
 	app("GET /policies/new", s.handlePolicy)
 	app("POST /policies/new", s.handlePolicySave)

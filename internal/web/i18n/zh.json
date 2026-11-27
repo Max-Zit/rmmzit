@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "设备已移动。现在适用其新站点和客户的策略。",
   "The devices were moved. The policies of their new site and customer apply now.": "设备已移动。现在适用其新站点和客户的策略。",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "设备已删除。在线的代理会自行卸载；其余的请手动卸载。",
-  "Export as CSV": "导出为 CSV"
+  "Export as CSV": "导出为 CSV",
+  "Script failed": "脚本失败",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "当库中的脚本在作业或计划中失败时发出警报（退出代码非 0、超出时间限制或出错）",
+  "Failed runs in a row before the alert": "警报前的连续失败次数",
+  "Count runs that expired because the device stayed offline as failed": "将因设备一直离线而过期的运行也计为失败",
+  "the failed runs in a row must be 1–20": "连续失败次数必须为 1–20",
+  "Run again where it failed (%d)": "在失败的设备上重新运行（%d）",
+  "Run it again on the %d devices where it failed or expired?": "在失败或过期的 %d 台设备上重新运行？",
+  "No device of this job failed or expired.": "此作业没有失败或过期的设备。"
 }

@@ -391,35 +391,56 @@ type jobData struct {
 	J       *store.ScriptJob
 	Devices []store.JobDevice
 	Active  bool
+	Retry   int // devices that failed or expired
 }
 
-func (s *Server) handleJob(w http.ResponseWriter, r *http.Request) {
+// jobFor is the job of the path for a user who may write and see it (the
+// administrators, and the user who started it); nil when it answered.
+func (s *Server) jobFor(w http.ResponseWriter, r *http.Request) *store.ScriptJob {
 	u := userFrom(r)
 	if !u.CanWrite() {
 		s.forbidden(w, r)
-		return
+		return nil
 	}
 	id, ok := pathID(r, "jid")
 	if !ok {
 		s.notFound(w, r)
-		return
+		return nil
 	}
 	j, err := s.store.Job(r.Context(), id)
 	if errors.Is(err, store.ErrNotFound) || err == nil && !u.IsAdmin() && j.CreatedBy != u.Username {
 		s.notFound(w, r)
-		return
+		return nil
 	}
 	if err != nil {
 		s.serverError(w, r, err)
+		return nil
+	}
+	return j
+}
+
+func (s *Server) handleJob(w http.ResponseWriter, r *http.Request) {
+	j := s.jobFor(w, r)
+	if j == nil {
 		return
 	}
-	devs, err := s.store.JobDevices(r.Context(), id)
+	devs, err := s.store.JobDevices(r.Context(), j.ID)
 	if err != nil {
 		s.serverError(w, r, err)
 		return
 	}
 	sort.SliceStable(devs, func(a, b int) bool { return statusOrder(devs[a].Status) < statusOrder(devs[b].Status) })
-	s.render(w, r, http.StatusOK, "job", &Page{Title: j.Name, Nav: "scripts", Data: &jobData{J: j, Devices: devs, Active: j.Pending+j.Running > 0}})
+	if r.URL.Query().Get("format") == "csv" {
+		s.jobCSV(w, r, j, devs)
+		return
+	}
+	retry := 0
+	for _, d := range devs {
+		if d.Status == "failed" || d.Status == "expired" {
+			retry++
+		}
+	}
+	s.render(w, r, http.StatusOK, "job", &Page{Title: j.Name, Nav: "scripts", Data: &jobData{J: j, Devices: devs, Active: j.Pending+j.Running > 0, Retry: retry}})
 }
 
 func statusOrder(st string) int {

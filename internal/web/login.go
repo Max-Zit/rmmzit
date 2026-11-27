@@ -126,15 +126,26 @@ func (s *Server) requireAdmin(next http.HandlerFunc) http.HandlerFunc {
 
 // safeNext keeps only local paths (no open redirects).
 func safeNext(p string) string {
-	// Browsers drop tabs and newlines from URLs, so "/<TAB>/evil.example"
-	// would become "//evil.example": refuse every control character.
-	if strings.IndexFunc(p, func(r rune) bool { return r < 0x20 || r == 0x7f }) >= 0 {
-		return "/"
-	}
-	if !strings.HasPrefix(p, "/") || strings.HasPrefix(p, "//") || strings.HasPrefix(p, "/\\") {
+	if !isLocalURL(p) {
 		return "/"
 	}
 	return p
+}
+
+// isLocalURL reports whether p is a path on this console: it starts with
+// one "/" and names no scheme or host, also not the way a browser would
+// read it ("/\evil.example" is "//evil.example" to some).
+func isLocalURL(p string) bool {
+	// Browsers drop tabs and newlines from URLs, so "/<TAB>/evil.example"
+	// would become "//evil.example": refuse every control character.
+	if strings.IndexFunc(p, func(r rune) bool { return r < 0x20 || r == 0x7f }) >= 0 {
+		return false
+	}
+	if !strings.HasPrefix(p, "/") || strings.HasPrefix(p, "//") || strings.HasPrefix(p, "/\\") {
+		return false
+	}
+	u, err := url.Parse(p)
+	return err == nil && u.Scheme == "" && u.Hostname() == "" && u.User == nil
 }
 
 // ---- first-run setup

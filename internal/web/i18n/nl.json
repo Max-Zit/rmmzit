@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "Het apparaat is verplaatst. Nu geldt het beleid van de nieuwe locatie en klant.",
   "The devices were moved. The policies of their new site and customer apply now.": "De apparaten zijn verplaatst. Nu geldt het beleid van hun nieuwe locatie en klant.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Apparaten verwijderd. Agents die online waren, verwijderen zichzelf; verwijder de andere met de hand.",
-  "Export as CSV": "Exporteren als CSV"
+  "Export as CSV": "Exporteren als CSV",
+  "Script failed": "Script mislukt",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Waarschuwen wanneer een bibliotheekscript mislukt in een taak of planning (afsluitcode anders dan 0, tijdslimiet of fout)",
+  "Failed runs in a row before the alert": "Mislukte uitvoeringen op rij vóór de waarschuwing",
+  "Count runs that expired because the device stayed offline as failed": "Uitvoeringen die verliepen omdat het apparaat offline bleef als mislukt tellen",
+  "the failed runs in a row must be 1–20": "het aantal mislukte uitvoeringen op rij moet 1–20 zijn",
+  "Run again where it failed (%d)": "Opnieuw uitvoeren waar het mislukte (%d)",
+  "Run it again on the %d devices where it failed or expired?": "Opnieuw uitvoeren op de %d apparaten waar het mislukte of verliep?",
+  "No device of this job failed or expired.": "Op geen enkel apparaat van deze taak is het mislukt of verlopen."
 }

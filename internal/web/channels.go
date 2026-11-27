@@ -98,14 +98,14 @@ func payload(kind string, events []alertEvent) ([]byte, error) {
 	case ChannelSlack:
 		var b strings.Builder
 		for _, e := range events {
-			b.WriteString(e.line() + "\n")
+			b.WriteString(slackText(e.line()) + "\n")
 		}
 		return json.Marshal(map[string]string{"text": strings.TrimSpace(b.String())})
 	case ChannelTeams:
 		// A Teams workflow "when a webhook request is received" posts this card.
 		var body []map[string]any
 		for _, e := range events {
-			body = append(body, map[string]any{"type": "TextBlock", "text": e.line(), "wrap": true})
+			body = append(body, map[string]any{"type": "TextBlock", "text": teamsText(e.line()), "wrap": true})
 		}
 		return json.Marshal(map[string]any{"type": "message", "attachments": []map[string]any{{
 			"contentType": "application/vnd.microsoft.card.adaptive",
@@ -300,4 +300,15 @@ func (s *Server) channelRows(ctx context.Context) []map[string]string {
 			"Critical": strconv.FormatBool(c.Critical), "OnResolve": strconv.FormatBool(c.OnResolve), "Signed": strconv.FormatBool(c.Secret != "")})
 	}
 	return out
+}
+
+// slackText escapes what Slack reads as markup (<!channel>, <url|text>):
+// alert messages carry text from devices, like the end of a script's output.
+func slackText(s string) string {
+	return strings.NewReplacer("&", "&amp;", "<", "&lt;", ">", "&gt;").Replace(s)
+}
+
+// teamsText breaks Markdown links in a Teams card for the same reason.
+func teamsText(s string) string {
+	return strings.ReplaceAll(s, "](", "] (")
 }

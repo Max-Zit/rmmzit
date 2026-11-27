@@ -75,13 +75,16 @@ type AlertRules struct {
 	DiskHealthOff  bool     `json:"disk_health_off,omitempty"` // no alerts for disk and RAID problems
 	VulnAlerts     bool     `json:"vuln_alerts,omitempty"`     // alert on critical vulnerabilities
 	DiskFullDays   int      `json:"disk_full_days,omitempty"`  // alert when a disk will be full within this many days
+	ScriptFailed   bool     `json:"script_failed,omitempty"`   // alert when a library script fails on a device
+	ScriptRuns     int      `json:"script_runs,omitempty"`     // ... only after this many failed runs in a row (0 = 1)
+	ScriptExpired  bool     `json:"script_expired,omitempty"`  // ... counting runs that expired (device offline) as failed
 }
 
 func alertRulesOf(m MonitoringSettings) AlertRules {
 	return AlertRules{CPUPercent: m.CPUPercent, CPUMinutes: m.CPUMinutes, MemPercent: m.MemPercent, MemMinutes: m.MemMinutes,
 		DiskPercent: m.DiskPercent, DiskMinFreeGB: m.DiskMinFreeGB, OfflineMinutes: m.OfflineMinutes, RebootDays: m.RebootDays,
 		DefenderOff: m.DefenderOff, FirewallOff: m.FirewallOff, WatchServices: m.WatchServices, DiskHealthOff: m.DiskHealthOff, VulnAlerts: m.VulnAlerts,
-		DiskFullDays: m.DiskFullDays}
+		DiskFullDays: m.DiskFullDays, ScriptFailed: m.ScriptFailed, ScriptRuns: m.ScriptRuns, ScriptExpired: m.ScriptExpired}
 }
 
 // apply puts the thresholds into the server's monitoring settings.
@@ -90,6 +93,7 @@ func (a AlertRules) apply(m MonitoringSettings) MonitoringSettings {
 	m.DiskPercent, m.DiskMinFreeGB, m.OfflineMinutes, m.RebootDays = a.DiskPercent, a.DiskMinFreeGB, a.OfflineMinutes, a.RebootDays
 	m.DefenderOff, m.FirewallOff, m.WatchServices, m.DiskHealthOff, m.VulnAlerts = a.DefenderOff, a.FirewallOff, a.WatchServices, a.DiskHealthOff, a.VulnAlerts
 	m.DiskFullDays = a.DiskFullDays
+	m.ScriptFailed, m.ScriptRuns, m.ScriptExpired = a.ScriptFailed, a.ScriptRuns, a.ScriptExpired
 	return m
 }
 

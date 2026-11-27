@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "Zařízení bylo přesunuto. Nyní platí zásady jeho nové pobočky a zákazníka.",
   "The devices were moved. The policies of their new site and customer apply now.": "Zařízení byla přesunuta. Nyní platí zásady jejich nové pobočky a zákazníka.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Zařízení odebrána. Agenti, kteří byli online, se sami odinstalují; ostatní odinstalujte ručně.",
-  "Export as CSV": "Exportovat jako CSV"
+  "Export as CSV": "Exportovat jako CSV",
+  "Script failed": "Skript selhal",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Upozornit, když skript z knihovny selže v úloze nebo plánu (návratový kód jiný než 0, časový limit nebo chyba)",
+  "Failed runs in a row before the alert": "Neúspěšných běhů za sebou před upozorněním",
+  "Count runs that expired because the device stayed offline as failed": "Počítat jako neúspěšné i běhy, které vypršely, protože zařízení zůstalo offline",
+  "the failed runs in a row must be 1–20": "počet neúspěšných běhů za sebou musí být 1–20",
+  "Run again where it failed (%d)": "Spustit znovu tam, kde selhal (%d)",
+  "Run it again on the %d devices where it failed or expired?": "Spustit znovu na %d zařízeních, kde selhal nebo vypršel?",
+  "No device of this job failed or expired.": "Na žádném zařízení této úlohy neselhal ani nevypršel."
 }

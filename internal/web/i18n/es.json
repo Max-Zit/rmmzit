@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "El dispositivo se movió. Ahora se aplican las directivas de su nueva sede y cliente.",
   "The devices were moved. The policies of their new site and customer apply now.": "Los dispositivos se movieron. Ahora se aplican las directivas de su nueva sede y cliente.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Dispositivos quitados. Los agentes que estaban en línea se desinstalan solos; desinstale los demás a mano.",
-  "Export as CSV": "Exportar como CSV"
+  "Export as CSV": "Exportar como CSV",
+  "Script failed": "El script falló",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Avisar cuando un script de la biblioteca falle en un trabajo o una programación (código de salida distinto de 0, límite de tiempo o error)",
+  "Failed runs in a row before the alert": "Ejecuciones fallidas seguidas antes del aviso",
+  "Count runs that expired because the device stayed offline as failed": "Contar como fallidas las ejecuciones que caducaron porque el dispositivo siguió sin conexión",
+  "the failed runs in a row must be 1–20": "las ejecuciones fallidas seguidas deben ser 1–20",
+  "Run again where it failed (%d)": "Volver a ejecutar donde falló (%d)",
+  "Run it again on the %d devices where it failed or expired?": "¿Volver a ejecutarlo en los %d dispositivos donde falló o caducó?",
+  "No device of this job failed or expired.": "En ningún dispositivo de este trabajo falló ni caducó."
 }

@@ -113,6 +113,11 @@
       <label class="check"><input type="checkbox" name="firewall_off" value="1" {{if $m.FirewallOff}}checked{{end}}>{{.T "Alert when a Windows Firewall profile is off"}}</label>
       <label class="check"><input type="checkbox" name="disk_health" value="1" {{if not $m.DiskHealthOff}}checked{{end}}>{{.T "Alert when a disk reports a problem (SMART) or a RAID array is degraded"}}</label>
       <label class="check"><input type="checkbox" name="vuln_alerts" value="1" {{if $m.VulnAlerts}}checked{{end}}>{{.T "Alert when a program has a critical vulnerability (CVSS 9 or more; the vulnerability scan must be on)"}}</label>
+      <label class="check"><input type="checkbox" name="script_failed" value="1" {{if $m.ScriptFailed}}checked{{end}}>{{.T "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)"}}</label>
+      <div class="cols">
+        <label>{{.T "Failed runs in a row before the alert"}}<input type="number" name="script_runs" value="{{if $m.ScriptRuns}}{{$m.ScriptRuns}}{{else}}1{{end}}" min="1" max="20"></label>
+      </div>
+      <label class="check"><input type="checkbox" name="script_expired" value="1" {{if $m.ScriptExpired}}checked{{end}}>{{.T "Count runs that expired because the device stayed offline as failed"}}</label>
       <label>{{.T "Services that must run"}} <small>{{.T "optional"}}</small><textarea name="watch_services" rows="3" spellcheck="false" placeholder="Spooler&#10;MSSQLSERVER">{{.Data.Services}}</textarea></label>
       <p class="small muted">{{.T "Alert emails and chat channels stay those of Settings → Monitoring and alerts."}}</p>
     </div>

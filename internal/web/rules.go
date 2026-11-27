@@ -29,6 +29,9 @@ type MonitoringSettings struct {
 	DiskHealthOff  bool     `json:"disk_health_off,omitempty"`
 	VulnAlerts     bool     `json:"vuln_alerts,omitempty"`
 	DiskFullDays   int      `json:"disk_full_days,omitempty"` // alert when a disk will be full within this many days (0 = off)
+	ScriptFailed   bool     `json:"script_failed,omitempty"`
+	ScriptRuns     int      `json:"script_runs,omitempty"` // failed runs in a row before the alert (0 = 1)
+	ScriptExpired  bool     `json:"script_expired,omitempty"`
 	EmailOnOpen    bool     `json:"email_on_open"`
 	EmailOnResolve bool     `json:"email_on_resolve"`
 	Recipients     []string `json:"recipients"`
@@ -52,6 +55,8 @@ func (m *MonitoringSettings) Validate() error {
 		return errors.New("the offline time must be 3–10080 minutes")
 	case m.DiskFullDays < 0 || m.DiskFullDays > 365:
 		return errors.New("the disk-full forecast must be 0–365 days")
+	case m.ScriptRuns < 0 || m.ScriptRuns > 20:
+		return errors.New("the failed runs in a row must be 1–20")
 	case m.RebootDays < 0 || m.RebootDays > 365:
 		return errors.New("the restart days must be 0–365")
 	case len(m.WatchServices) > 100 || len(m.Recipients) > 50:

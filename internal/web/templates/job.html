@@ -10,6 +10,10 @@
   <div class="stat"><span class="si">{{template "icon" "clock"}}</span><b>{{$j.Pending}} / {{$j.Running}}</b><span>{{.T "waiting / running"}}</span></div>
   {{if $j.Expired}}<div class="stat"><span class="si">{{template "icon" "clock"}}</span><b>{{$j.Expired}}</b><span>{{.T "expired (stayed offline)"}}</span></div>{{end}}
 </div>
+<div class="toolbar mt">
+  {{if .Data.Retry}}<form method="post" action="/jobs/{{$j.ID}}/rerun" data-confirm="{{.T "Run it again on the %d devices where it failed or expired?" .Data.Retry}}"><button class="primary sm">{{template "icon" "refresh"}}{{.T "Run again where it failed (%d)" .Data.Retry}}</button></form>{{end}}
+  <a class="btn secondary sm" href="/jobs/{{$j.ID}}?format=csv" download>{{template "icon" "download"}}{{.T "Export as CSV"}}</a>
+</div>
 <section class="panel" {{if .Data.Active}}data-autorefresh{{end}}>
   <div class="table-wrap"><table>
     <thead><tr><th>{{.T "Device"}}</th><th class="hide-sm">{{.T "Customer"}}</th><th>{{.T "Status"}}</th><th>{{.T "Result"}}</th></tr></thead>

@@ -200,6 +200,7 @@ func (s *Server) evaluatePolicies(ctx context.Context, m MonitoringSettings) ([]
 	conds = append(conds, s.healthConditions(ctx, pr, rules)...)
 	conds = append(conds, s.blockedConditions(ctx, pr)...)
 	conds = append(conds, s.vulnConditions(ctx, rules)...)
+	conds = append(conds, s.scriptConditions(ctx, rules)...)
 	conds = append(conds, s.forecastConditions(rules, m)...)
 	conds = append(conds, s.monitorConditions(ctx, pr)...)
 	// Devices in a quiet maintenance window open no new alerts; their open

@@ -1799,5 +1799,13 @@
   "The device was moved. The policies of its new site and customer apply now.": "Aygıt taşındı. Artık yeni konumunun ve müşterisinin ilkeleri uygulanıyor.",
   "The devices were moved. The policies of their new site and customer apply now.": "Aygıtlar taşındı. Artık yeni konumlarının ve müşterilerinin ilkeleri uygulanıyor.",
   "Devices removed. Agents that were online uninstall themselves; uninstall the others by hand.": "Aygıtlar kaldırıldı. Çevrimiçi olan aracılar kendilerini kaldırır; diğerlerini elle kaldırın.",
-  "Export as CSV": "CSV olarak dışa aktar"
+  "Export as CSV": "CSV olarak dışa aktar",
+  "Script failed": "Betik başarısız oldu",
+  "Alert when a library script fails in a job or schedule (exit code other than 0, time limit or error)": "Bir kitaplık betiği bir işte veya zamanlamada başarısız olduğunda uyar (0 dışında çıkış kodu, zaman sınırı veya hata)",
+  "Failed runs in a row before the alert": "Uyarıdan önce art arda başarısız çalıştırma",
+  "Count runs that expired because the device stayed offline as failed": "Aygıt çevrimdışı kaldığı için süresi dolan çalıştırmaları da başarısız say",
+  "the failed runs in a row must be 1–20": "art arda başarısız çalıştırma sayısı 1–20 olmalıdır",
+  "Run again where it failed (%d)": "Başarısız olduğu yerde yeniden çalıştır (%d)",
+  "Run it again on the %d devices where it failed or expired?": "Başarısız olduğu veya süresi dolduğu %d aygıtta yeniden çalıştırılsın mı?",
+  "No device of this job failed or expired.": "Bu işin hiçbir aygıtında başarısızlık veya süre dolması olmadı."
 }
