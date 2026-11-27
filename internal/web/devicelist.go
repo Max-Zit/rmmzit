@@ -217,7 +217,7 @@ func (s *Server) handleDevicesBulk(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	_ = r.ParseForm()
 	back := "/devices"
-	if ref := r.FormValue("back"); strings.HasPrefix(ref, "/devices") && !strings.HasPrefix(ref, "//") {
+	if ref := r.FormValue("back"); strings.HasPrefix(ref, "/devices") && isLocalURL(ref) {
 		back = ref
 	}
 	var devs []*store.Device
