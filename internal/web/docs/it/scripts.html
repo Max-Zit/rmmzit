@@ -11,6 +11,7 @@
 <p>Eseguire uno script della libreria su più dispositivi crea un <b>processo</b>. La pagina del processo mostra ogni dispositivo con il suo stato (in attesa, in esecuzione, riuscito, non riuscito, scaduto) e l'output. Il codice di uscita 0 conta come successo. I dispositivi offline eseguono lo script quando si connettono, entro 24 ore; dopo vengono considerati scaduti. Al massimo 32 script dei job vengono eseguiti contemporaneamente; gli altri dispositivi mostrano <b>in attesa</b> finché non si libera un posto.</p>
 
 <p>Oltre a dispositivi, sedi e clienti può scegliere dei <b>tag</b>: il processo viene eseguito sui dispositivi che li hanno. Anche così i tecnici raggiungono solo i dispositivi dei loro clienti.</p>
+<p><b>Esegui di nuovo dove non è riuscito</b> crea un nuovo processo sui dispositivi dove il processo non è riuscito o è scaduto, con la versione attuale dello script della libreria. <b>Esporta come CSV</b> scarica il risultato di ogni dispositivo. Per sapere quando uno script non riesce, attiva nel criterio la regola di avviso <a href="/docs/monitoring#rules">Script non riuscito</a>.</p>
 <h2 id="schedules">Pianificazioni</h2>
 <p>Uno script della libreria può essere eseguito secondo una pianificazione: nei giorni della settimana scelti a un'ora (ora del server), su singoli dispositivi, su tutti i dispositivi di alcuni clienti o su tutti i dispositivi (anche nuovi). Una pianificazione si può sospendere e riprendere. I dispositivi offline in quel momento eseguono lo script quando si connettono, entro 24 ore.</p>
 

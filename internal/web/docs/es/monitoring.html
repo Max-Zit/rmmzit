@@ -14,6 +14,7 @@
   <tr><td>Cortafuegos desactivado</td><td>un perfil del Firewall de Windows está desactivado (opcional)</td></tr>
   <tr><td>Servicio detenido</td><td>un servicio de su lista (nombres de servicio, no nombres para mostrar) está en inicio automático pero no se ejecuta</td></tr>
   <tr><td>Disco lleno pronto</td><td>según el crecimiento del espacio usado en los últimos 14 días, un disco se llenará dentro de los días indicados (0 = desactivado)</td></tr>
+  <tr><td>El script falló</td><td>un script de la biblioteca falla en un trabajo o una programación (código de salida distinto de 0, límite de tiempo o error), tras el número elegido de ejecuciones fallidas seguidas; si lo desea, también cuentan las ejecuciones que caducaron porque el dispositivo siguió sin conexión. La alerta muestra el script, el código de salida y el final de la salida, y se cierra cuando el script vuelve a ejecutarse bien en ese dispositivo</td></tr>
 </table>
 <p>Las alertas son <b>Advertencia</b> o <b>Crítica</b> (crítica: dispositivos sin conexión, servicios detenidos, Defender desactivado y discos con menos de 1 GB libre o 98 % usado). <a href="/alerts">Alertas</a> muestra las abiertas (y, si lo desea, las resueltas); un técnico puede <b>confirmar</b> una alerta para que otros vean que alguien se ocupa. El número de alertas abiertas aparece en el menú.</p>
 

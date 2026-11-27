@@ -14,6 +14,7 @@
   <tr><td>Pare-feu désactivé</td><td>un profil du pare-feu Windows est désactivé (facultatif)</td></tr>
   <tr><td>Service arrêté</td><td>un service de votre liste (noms de service, pas noms d'affichage) est en démarrage automatique mais ne tourne pas</td></tr>
   <tr><td>Disque bientôt plein</td><td>d'après la croissance de l'espace utilisé sur les 14 derniers jours, un disque sera plein d'ici le nombre de jours indiqué (0 = désactivé)</td></tr>
+  <tr><td>Échec du script</td><td>un script de la bibliothèque échoue dans une tâche ou une planification (code de sortie différent de 0, délai dépassé ou erreur), après le nombre choisi d’exécutions en échec d’affilée ; si vous le souhaitez, les exécutions expirées parce que le périphérique est resté hors ligne comptent aussi. L’alerte montre le script, le code de sortie et la fin de la sortie, et se ferme quand le script réussit de nouveau sur ce périphérique</td></tr>
 </table>
 <p>Les alertes sont <b>Avertissement</b> ou <b>Critique</b> (critique : appareils hors ligne, services arrêtés, Defender désactivé, et disques avec moins de 1 Go libre ou 98 % utilisés). <a href="/alerts">Alertes</a> liste les alertes ouvertes (et, si vous le souhaitez, les résolues) ; un technicien peut <b>acquitter</b> une alerte pour que les autres voient que quelqu'un s'en occupe. Le nombre d'alertes ouvertes s'affiche dans le menu.</p>
 

@@ -14,6 +14,7 @@
   <tr><td>Firewall off</td><td>a Windows Firewall profile is off (optional)</td></tr>
   <tr><td>Service stopped</td><td>a service from your list (service names, not display names) is set to start automatically but is not running</td></tr>
   <tr><td>Disk full soon</td><td>by the growth of its used space over the last 14 days, a disk will be full within the given days (0 = off)</td></tr>
+  <tr><td>Script failed</td><td>a library script fails in a job or schedule (exit code other than 0, time limit or error), after the chosen number of failed runs in a row; optionally runs that expired because the device stayed offline count too. The alert shows the script, the exit code and the end of the output, and closes when the script runs well on that device again</td></tr>
 </table>
 <p>Alerts are a <b>Warning</b> or <b>Critical</b> (critical: offline devices, stopped services, Defender off, and disks with less than 1 GB free or 98 % used). <a href="/alerts">Alerts</a> lists the open ones (and, if you want, the resolved ones); a technician can <b>acknowledge</b> an alert so others see that someone is on it. The number of open alerts is shown in the menu.</p>
 
