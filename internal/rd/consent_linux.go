@@ -61,6 +61,8 @@ func AskConsent(ctx context.Context, technician string, viewOnly bool, timeout t
 		xproto.ImageText8(c, 4, xproto.Drawable(win), btn, deny.X+36, deny.Y+20, "Deny")
 		c.Sync()
 	}
+	title := "RMMZit remote desktop"
+	xproto.ChangeProperty(c, xproto.PropModeReplace, win, xproto.AtomWmName, xproto.AtomString, 8, uint32(len(title)), []byte(title)) // #nosec G115 -- constant
 	xproto.MapWindow(c, win)
 	draw()
 	in := func(r xproto.Rectangle, x, y int16) bool {

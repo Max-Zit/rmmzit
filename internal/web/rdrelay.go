@@ -171,7 +171,10 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 	// nothing is typed: NAT routers and firewalls drop idle connections
 	// after a few minutes.
 	go keepAlive(ctx, bws)
-	go keepAlive(ctx, aws)
+	// The helper answers pings only once it serves the screen: while it waits
+	// for the user's consent it reads nothing, so its pings start with the
+	// first screen frame.
+	var agentPings sync.Once
 	start := s.now()
 	s.audit(r, "rd.start", "device:"+strconv.FormatInt(d.ID, 10), "remote desktop session %s to %q started (view only: %v, notice on screen: %v, clipboard: %v, user asked: %v)", sess.id, d.Hostname, viewOnly, settings.ShowNotice, settings.Clipboard, consent)
 	s.log.Info("remote desktop session started", "device", d.ID, "user", u.Username, "session", sess.id)
@@ -187,6 +190,9 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			bytesDown.Add(int64(len(data)))
+			if typ == websocket.MessageBinary {
+				agentPings.Do(func() { go keepAlive(ctx, aws) })
+			}
 			if typ == websocket.MessageText && (bytes.Contains(data, []byte(`"t":"error"`)) || bytes.Contains(data, []byte(`"t":"wait"`))) {
 				switch {
 				case consent && bytes.Contains(data, []byte(msgConsentRefused)):
