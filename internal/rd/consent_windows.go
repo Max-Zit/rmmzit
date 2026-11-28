@@ -97,7 +97,7 @@ func (c *consentWin) paint(hwnd uintptr) {
 	var ps paintStruct
 	hdc, _, _ := pBeginPaint.Call(hwnd, uintptr(unsafe.Pointer(&ps))) // #nosec G103 -- Win32 struct
 	var rc rect
-	_, _, _ = pGetClientRect.Call(hwnd, uintptr(unsafe.Pointer(&rc))) // #nosec G103 -- Win32 struct
+	_, _, _ = pGetClientRect.Call(hwnd, uintptr(unsafe.Pointer(&rc)))                                           // #nosec G103 -- Win32 struct
 	fill := func(r rect, col uint32) { _, _, _ = pFillRect.Call(hdc, uintptr(unsafe.Pointer(&r)), brush(col)) } // #nosec G103 -- Win32 struct
 	fill(rc, colBorder)
 	inner := rect{rc.Left + 1, rc.Top + 1, rc.Right - 1, rc.Bottom - 1}

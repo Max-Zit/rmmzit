@@ -79,7 +79,7 @@ func AskConsent(ctx context.Context, technician string, viewOnly bool, timeout t
 	deny := xproto.Rectangle{X: allow.X - 12 - btnW, Y: int16(by), Width: btnW, Height: btnH}    // #nosec G115 -- small sizes
 	left := max(int(timeout/time.Second), 1)
 	label := func(g xproto.Gcontext, r xproto.Rectangle, s string) {
-		tx := r.X + int16((int(r.Width)-len(s)*9)/2) // #nosec G115 -- 9 px glyphs of the bold font
+		tx := r.X + int16((int(r.Width)-len(s)*9)/2)                                                // #nosec G115 -- 9 px glyphs of the bold font
 		xproto.ImageText8(c, byte(len(s)), xproto.Drawable(win), g, tx, r.Y+int16(r.Height)/2+6, s) // #nosec G115 -- button labels and sizes are small
 	}
 	countdown := func() {
