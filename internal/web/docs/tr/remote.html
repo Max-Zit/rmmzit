@@ -22,6 +22,8 @@
 <h3 id="linux-rd">Linux</h3>
 <p>Uzak masaüstü X11 (Xorg) kullanan Linux masaüstlerinde çalışır. Wayland bir arka plan hizmetinin ekranı görmesine veya denetlemesine izin vermez: orada bir X11 oturumuyla giriş yapın veya terminali kullanın. Grafik masaüstü yoksa terminali kullanın.</p>
 
+<h2 id="consent">Kullanıcı onayı</h2>
+<p>Bir <a href="/docs/policies#parts">ilkenin</a> <b>Uzak masaüstü</b> bölümüyle (yöneticiler ayarlar) oturum açmış kullanıcı, yalnızca izleme dahil her uzak masaüstü oturumuna izin vermelidir. Aygıttaki bir pencere teknisyenin adını gösterir ve <b>Allow</b> ile <b>Deny</b> sunar; teknisyen <i>Kullanıcının izin vermesi bekleniyor…</i> görür. Bir dakika içinde yanıt yoksa ya da Deny seçilirse oturum başlamaz ve denetim günlüğü bunu kaydeder. Kimse oturum açmamışsa veya ekran kilitliyse oturum sormadan başlar: teknisyen yalnızca oturum açma ekranını görür. Bölümü iş istasyonlarının ilkesine atayın (örneğin bir etiketle), gözetimsiz çalışan sunucular için kapalı bırakın. Aracı 0.17 veya üstü gerekir; eski aracılı bir aygıt, ilkesi onay istediği sürece oturum almaz. Soru İngilizcedir.</p>
 <h2 id="terminal">Terminal (Linux, Windows)</h2>
 <p><b>Terminal</b>, cihazın root kabuğunu tarayıcıda açar. Yazmak için içine tıklayın; metni seçerek kopyalayın, <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> veya <b>Metin gönder</b> ile yapıştırın. Oturumun başlangıcı ve sonu denetim günlüğüne yazılır.</p>
 <p>Windows'ta (0.12 ve üstü ajanlar, Windows 10 1809 / Server 2019 ve üstü) terminal, sözde konsolda SYSTEM olarak çalışan Windows PowerShell'dir. Sayfadan ayrılmak kabuğu ve başlattığı tüm programları sonlandırır.</p>

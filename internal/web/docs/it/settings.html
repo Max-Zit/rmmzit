@@ -16,6 +16,8 @@
 <h3 id="timezone">Fuso orario</h3>
 <p>Le pianificazioni (aggiornamenti, script, report) e gli orari nella console usano il fuso orario del server. Sceglilo dall'elenco e fai clic su <b>Imposta</b>; la console si riavvia e torna in pochi secondi. Senza l'helper root (vedi sotto), impostalo sul server: <code>timedatectl set-timezone Europe/Rome</code>.</p>
 
+<h3 id="proxies">Proxy attendibili</h3>
+<p>Se la console funziona dietro un reverse proxy (Traefik, HAProxy, nginx), ogni richiesta sembra arrivare dal proxy. Indica l’indirizzo del proxy in <b>Proxy attendibili</b>: solo da questi indirizzi RMMZit prende l’indirizzo del client dal protocollo PROXY (v1 o v2, sulla porta della console e degli agenti) o da <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (console; l’indirizzo più a destra che non è un proxy attendibile). Le reti consentite, la protezione dell’accesso, le sessioni e il registro di controllo vedono allora il client, non il proxy. Da ogni altro indirizzo viene ignorato. Indica solo i proxy stessi, mai un’intera rete di client. Il proxy deve collegarsi alla console via HTTPS (o far passare il TLS con il protocollo PROXY) e mantenere l’intestazione <code>Host</code>.</p>
 <h2 id="certificate">Certificato (HTTPS)</h2>
 <p>In <a href="/settings/certificate">Impostazioni → Certificato</a> scegli il certificato che i browser vedono aprendo la console. Gli agent usano una porta e un certificato propri, quindi cambiarlo non li disconnette mai.</p>
 <ul>

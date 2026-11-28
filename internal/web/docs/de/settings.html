@@ -16,6 +16,8 @@
 <h3 id="timezone">Zeitzone</h3>
 <p>Zeitpläne (Updates, Skripte, Berichte) und die Zeiten in der Konsole verwenden die Zeitzone des Servers. Wählen Sie sie aus der Liste und klicken Sie auf <b>Festlegen</b>; die Konsole startet neu und ist in wenigen Sekunden zurück. Ohne Root-Helfer (siehe unten) stellen Sie sie auf dem Server ein: <code>timedatectl set-timezone Europe/Berlin</code>.</p>
 
+<h3 id="proxies">Vertrauenswürdige Proxys</h3>
+<p>Läuft die Konsole hinter einem Reverse-Proxy (Traefik, HAProxy, nginx), scheint jede Anfrage vom Proxy zu kommen. Tragen Sie die Adresse des Proxys unter <b>Vertrauenswürdige Proxys</b> ein: Nur von diesen Adressen übernimmt RMMZit die Adresse des Clients aus dem PROXY-Protokoll (v1 oder v2, am Konsolen- und Agent-Port) oder aus <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (Konsole; die Adresse ganz rechts, die kein vertrauenswürdiger Proxy ist). Die erlaubten Netze, der Anmeldeschutz, Sitzungen und das Prüfprotokoll sehen dann den Client, nicht den Proxy. Von allen anderen Adressen wird das ignoriert. Tragen Sie nur die Proxys selbst ein, nie ein ganzes Netz von Clients. Der Proxy muss sich über HTTPS mit der Konsole verbinden (oder TLS mit dem PROXY-Protokoll durchreichen) und den <code>Host</code>-Header beibehalten.</p>
 <h2 id="certificate">Zertifikat (HTTPS)</h2>
 <p>Unter <a href="/settings/certificate">Einstellungen → Zertifikat</a> wählen Sie das Zertifikat, das Browser beim Öffnen der Konsole sehen. Agents verwenden ihren eigenen Port und ihr eigenes Zertifikat, eine Änderung trennt sie daher nie.</p>
 <ul>

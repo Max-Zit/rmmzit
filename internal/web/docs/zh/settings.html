@@ -16,6 +16,8 @@
 <h3 id="timezone">时区</h3>
 <p>计划（更新、脚本、报告）以及控制台中的时间都使用服务器的时区。从列表中选择并点击<b>设置</b>；控制台会重启并在几秒后恢复。没有 root 助手（见下文）时，请在服务器上设置：<code>timedatectl set-timezone Asia/Shanghai</code>。</p>
 
+<h3 id="proxies">受信任的代理</h3>
+<p>如果控制台在反向代理（Traefik、HAProxy、nginx）后面运行，每个请求看起来都来自代理。请在 <b>受信任的代理</b> 中填写代理的地址：仅对来自这些地址的连接，RMMZit 才会从 PROXY 协议（v1 或 v2，控制台和代理端口）或 <code>X-Forwarded-For</code> / <code>X-Real-IP</code>（控制台；最右边且不是受信任代理的地址）中获取客户端地址。允许的网络、登录保护、会话和审计日志随后看到的是客户端而不是代理。来自其他地址的一律忽略。只填写代理本身，切勿填写整个客户端网络。代理必须通过 HTTPS 连接控制台（或通过 PROXY 协议直接转发 TLS），并保留 <code>Host</code> 标头。</p>
 <h2 id="certificate">证书（HTTPS）</h2>
 <p>在<a href="/settings/certificate">设置 → 证书</a>中选择浏览器打开控制台时看到的证书。代理使用自己的端口和证书，因此更改证书永远不会断开代理。</p>
 <ul>

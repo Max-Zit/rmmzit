@@ -16,6 +16,8 @@
 <h3 id="timezone">Vremenska zona</h3>
 <p>Rasporedi (ažuriranja, skripte, izveštaji) i vremena u konzoli koriste vremensku zonu servera. Izaberite je sa spiska i kliknite <b>Postavi</b>; konzola se restartuje i vraća za nekoliko sekundi. Bez root pomoćnika (vidi ispod) podesite je na serveru: <code>timedatectl set-timezone Europe/Belgrade</code>.</p>
 
+<h3 id="proxies">Pouzdani proxy serveri</h3>
+<p>Ako konzola radi iza reverse proxy-ja (Traefik, HAProxy, nginx), svaki zahtev izgleda kao da dolazi od proxy-ja. Upišite adresu proxy-ja pod <b>Pouzdani proxy serveri</b>: samo sa tih adresa RMMZit uzima adresu klijenta iz PROXY protokola (v1 ili v2, na portu konzole i agenata) ili iz <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (konzola; adresa najdalje desno koja nije pouzdani proxy). Dozvoljene mreže, zaštita prijave, sesije i dnevnik aktivnosti tada vide klijenta, a ne proxy. Sa svih ostalih adresa to se zanemaruje. Upišite samo same proxy servere, nikada celu mrežu klijenata. Proxy mora da se povezuje na konzolu preko HTTPS-a (ili da propusti TLS uz PROXY protokol) i da zadrži zaglavlje <code>Host</code>.</p>
 <h2 id="certificate">Sertifikat (HTTPS)</h2>
 <p>U <a href="/settings/certificate">Podešavanja → Sertifikat</a> birate sertifikat koji pregledači vide kad otvore konzolu. Agenti koriste svoj port i sertifikat, pa ih promena nikad ne prekida.</p>
 <ul>

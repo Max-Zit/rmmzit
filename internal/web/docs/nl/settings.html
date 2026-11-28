@@ -16,6 +16,8 @@
 <h3 id="timezone">Tijdzone</h3>
 <p>Schema's (updates, scripts, rapporten) en de tijden in de console gebruiken de tijdzone van de server. Kies hem uit de lijst en klik op <b>Instellen</b>; de console herstart en is binnen enkele seconden terug. Zonder de root-helper (zie hieronder) stelt u hem in op de server: <code>timedatectl set-timezone Europe/Amsterdam</code>.</p>
 
+<h3 id="proxies">Vertrouwde proxy's</h3>
+<p>Draait de console achter een reverse proxy (Traefik, HAProxy, nginx), dan lijkt elk verzoek van de proxy te komen. Vul het adres van de proxy in bij <b>Vertrouwde proxy's</b>: alleen vanaf deze adressen neemt RMMZit het adres van de client uit het PROXY-protocol (v1 of v2, op de console- en agentpoort) of uit <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (console; het meest rechtse adres dat geen vertrouwde proxy is). De toegestane netwerken, de aanmeldbeveiliging, sessies en het auditlogboek zien dan de client, niet de proxy. Vanaf elk ander adres wordt dit genegeerd. Vul alleen de proxy's zelf in, nooit een heel netwerk van clients. De proxy moet via HTTPS met de console verbinden (of TLS doorgeven met het PROXY-protocol) en de <code>Host</code>-header behouden.</p>
 <h2 id="certificate">Certificaat (HTTPS)</h2>
 <p>Kies onder <a href="/settings/certificate">Instellingen → Certificaat</a> het certificaat dat browsers zien als ze de console openen. Agents gebruiken hun eigen poort en certificaat, dus een wijziging verbreekt hun verbinding nooit.</p>
 <ul>

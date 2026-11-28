@@ -16,6 +16,8 @@
 <h3 id="timezone">Fuseau horaire</h3>
 <p>Les planifications (mises à jour, scripts, rapports) et les heures de la console utilisent le fuseau horaire du serveur. Choisissez-le dans la liste et cliquez sur <b>Définir</b> ; la console redémarre et revient en quelques secondes. Sans l'assistant root (voir ci-dessous), réglez-le sur le serveur : <code>timedatectl set-timezone Europe/Paris</code>.</p>
 
+<h3 id="proxies">Proxys de confiance</h3>
+<p>Si la console fonctionne derrière un proxy inverse (Traefik, HAProxy, nginx), chaque requête semble venir du proxy. Indiquez l’adresse du proxy sous <b>Proxys de confiance</b> : depuis ces adresses seulement, RMMZit prend l’adresse du client dans le protocole PROXY (v1 ou v2, sur le port de la console et des agents) ou dans <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (console ; l’adresse la plus à droite qui n’est pas un proxy de confiance). Les réseaux autorisés, la protection de la connexion, les sessions et le journal d’audit voient alors le client, pas le proxy. Depuis toute autre adresse, c’est ignoré. N’indiquez que les proxys eux-mêmes, jamais un réseau entier de clients. Le proxy doit se connecter à la console en HTTPS (ou transmettre le TLS avec le protocole PROXY) et conserver l’en-tête <code>Host</code>.</p>
 <h2 id="certificate">Certificat (HTTPS)</h2>
 <p>Dans <a href="/settings/certificate">Paramètres → Certificat</a>, choisissez le certificat que voient les navigateurs en ouvrant la console. Les agents utilisent leur propre port et leur propre certificat : le modifier ne les déconnecte jamais.</p>
 <ul>

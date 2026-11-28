@@ -16,6 +16,8 @@
 <h3 id="timezone">Časové pásmo</h3>
 <p>Plány (aktualizace, skripty, zprávy) a časy v konzoli používají časové pásmo serveru. Vyberte jej ze seznamu a klikněte na <b>Nastavit</b>; konzole se restartuje a za několik sekund je zpět. Bez root pomocníka (viz níže) jej nastavte na serveru: <code>timedatectl set-timezone Europe/Prague</code>.</p>
 
+<h3 id="proxies">Důvěryhodné proxy</h3>
+<p>Pokud konzole běží za reverzní proxy (Traefik, HAProxy, nginx), každý požadavek vypadá, jako by přišel od proxy. Zapište adresu proxy do <b>Důvěryhodné proxy</b>: jen z těchto adres převezme RMMZit adresu klienta z protokolu PROXY (v1 nebo v2, na portu konzole a agentů) nebo z <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (konzole; adresa nejvíce vpravo, která není důvěryhodná proxy). Povolené sítě, ochrana přihlášení, relace a protokol auditu pak vidí klienta, ne proxy. Ze všech ostatních adres se to ignoruje. Zapište jen samotné proxy, nikdy celou síť klientů. Proxy se musí ke konzoli připojovat přes HTTPS (nebo propustit TLS s protokolem PROXY) a zachovat hlavičku <code>Host</code>.</p>
 <h2 id="certificate">Certifikát (HTTPS)</h2>
 <p>V <a href="/settings/certificate">Nastavení → Certifikát</a> zvolte certifikát, který prohlížeče vidí při otevření konzole. Agenti používají vlastní port a certifikát, takže je změna nikdy neodpojí.</p>
 <ul>

@@ -22,6 +22,8 @@
 <h3 id="linux-rd">Linux</h3>
 <p>Remote desktop works on Linux desktops with X11 (Xorg). Wayland does not let a background service see or control the screen: sign in with an X11 session there, or use the terminal. Without a graphical desktop, use the terminal.</p>
 
+<h2 id="consent">User consent</h2>
+<p>With the part <b>Remote desktop</b> of a <a href="/docs/policies#parts">policy</a> (administrators set it), the signed-in user must allow each remote desktop session, also a view-only one. A window on the device names the technician and offers <b>Allow</b> and <b>Deny</b>; the technician sees <i>Waiting for the user…</i>. Without an answer within a minute, or after Deny, the session does not start, and the audit log records it. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Assign the part to the policy of workstations (for example by a tag), and leave it off for servers that run unattended. It needs the agent 0.17 or newer; a device with an older agent gets no session while its policy asks for consent. The question is in English.</p>
 <h2 id="terminal">Terminal (Linux, Windows)</h2>
 <p><b>Terminal</b> opens a root shell of the device in the browser. Click into it to type; copy by selecting text, paste with <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> or <b>Send text</b>. The start and the end of the session are written to the audit log.</p>
 <p>On Windows (agents 0.12 and newer, Windows 10 1809 / Server 2019 and later) the terminal is Windows PowerShell running as SYSTEM on a pseudo console. Leaving the page ends the shell and every program it started.</p>

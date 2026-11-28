@@ -16,6 +16,8 @@
 <h3 id="timezone">Time zone</h3>
 <p>Schedules (updates, scripts, reports) and the times in the console use the server's time zone. Choose it from the list and click <b>Set</b>; the console restarts and is back in a few seconds. Without the root helper (see below), set it on the server: <code>timedatectl set-timezone Europe/Berlin</code>.</p>
 
+<h3 id="proxies">Trusted proxies</h3>
+<p>If the console runs behind a reverse proxy (Traefik, HAProxy, nginx), every request seems to come from the proxy. List the proxy's address under <b>Trusted proxies</b>: from these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, on the console and the agent port) or from <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (console; the right-most address that is not a trusted proxy). The allowed networks, the sign-in protection, sessions and the audit log then see the client, not the proxy. From every other address these are ignored. List only the proxies themselves, never a whole network of clients. The proxy must connect to the console over HTTPS (or pass TLS through with the PROXY protocol) and keep the <code>Host</code> header.</p>
 <h2 id="certificate">Certificate (HTTPS)</h2>
 <p>Under <a href="/settings/certificate">Settings → Certificate</a> choose the certificate browsers see when they open the console. Agents use their own port and certificate, so changing it never disconnects them.</p>
 <ul>

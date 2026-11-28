@@ -22,6 +22,8 @@
 <h3 id="linux-rd">Linux</h3>
 <p>Vzdálená plocha funguje na linuxových plochách s X11 (Xorg). Wayland nedovolí službě na pozadí vidět obrazovku ani ji ovládat: přihlaste se tam do relace X11 nebo použijte terminál. Bez grafické plochy použijte terminál.</p>
 
+<h2 id="consent">Souhlas uživatele</h2>
+<p>S částí <b>Vzdálená plocha</b> v <a href="/docs/policies#parts">zásadách</a> (nastavují ji správci) musí přihlášený uživatel povolit každou relaci vzdálené plochy, i tu jen pro sledování. Okno na zařízení uvede technika a nabídne <b>Allow</b> a <b>Deny</b>; technik vidí <i>Čeká se, až uživatel povolí…</i>. Bez odpovědi do minuty nebo po Deny relace nezačne a protokol auditu to zaznamená. Když nikdo není přihlášen nebo je obrazovka zamčená, relace začne bez dotazu: technik pak vidí jen přihlašovací obrazovku. Přiřaďte tuto část zásadám pracovních stanic (například přes štítek) a u serverů běžících bez obsluhy ji nechte vypnutou. Vyžaduje agenta 0.17 nebo novějšího; zařízení se starším agentem relaci nedostane, dokud jeho zásady vyžadují souhlas. Dotaz je v angličtině.</p>
 <h2 id="terminal">Terminál (Linux, Windows)</h2>
 <p><b>Terminál</b> otevře root shell zařízení v prohlížeči. Klikněte do něj a pište; kopírujte výběrem textu, vkládejte pomocí <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> nebo <b>Odeslat text</b>. Začátek a konec relace se zapisují do auditního protokolu.</p>
 <p>Ve Windows (agenti 0.12 a novější, Windows 10 1809 / Server 2019 a novější) je terminálem Windows PowerShell běžící jako SYSTEM na pseudokonzoli. Opuštěním stránky skončí shell i všechny programy, které spustil.</p>

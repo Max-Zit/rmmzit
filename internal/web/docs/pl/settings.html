@@ -16,6 +16,8 @@
 <h3 id="timezone">Strefa czasowa</h3>
 <p>Harmonogramy (aktualizacje, skrypty, raporty) i czasy w konsoli używają strefy czasowej serwera. Wybierz ją z listy i kliknij <b>Ustaw</b>; konsola uruchamia się ponownie i wraca po kilku sekundach. Bez pomocnika root (patrz niżej) ustaw ją na serwerze: <code>timedatectl set-timezone Europe/Warsaw</code>.</p>
 
+<h3 id="proxies">Zaufane serwery proxy</h3>
+<p>Jeśli konsola działa za odwrotnym serwerem proxy (Traefik, HAProxy, nginx), każde żądanie wygląda, jakby przychodziło od proxy. Wpisz adres proxy w <b>Zaufane serwery proxy</b>: tylko z tych adresów RMMZit bierze adres klienta z protokołu PROXY (v1 lub v2, na porcie konsoli i agentów) albo z <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (konsola; adres najbardziej po prawej, który nie jest zaufanym proxy). Dozwolone sieci, ochrona logowania, sesje i dziennik audytu widzą wtedy klienta, a nie proxy. Z każdego innego adresu jest to ignorowane. Wpisuj tylko same serwery proxy, nigdy całej sieci klientów. Proxy musi łączyć się z konsolą przez HTTPS (lub przepuszczać TLS z protokołem PROXY) i zachować nagłówek <code>Host</code>.</p>
 <h2 id="certificate">Certyfikat (HTTPS)</h2>
 <p>W <a href="/settings/certificate">Ustawienia → Certyfikat</a> wybierz certyfikat, który widzą przeglądarki po otwarciu konsoli. Agenci używają własnego portu i certyfikatu, więc zmiana nigdy ich nie rozłącza.</p>
 <ul>

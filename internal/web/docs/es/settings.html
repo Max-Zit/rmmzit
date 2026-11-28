@@ -16,6 +16,8 @@
 <h3 id="timezone">Zona horaria</h3>
 <p>Las programaciones (actualizaciones, scripts, informes) y las horas de la consola usan la zona horaria del servidor. Elíjala de la lista y haga clic en <b>Establecer</b>; la consola se reinicia y vuelve en unos segundos. Sin el asistente root (ver abajo), configúrela en el servidor: <code>timedatectl set-timezone Europe/Madrid</code>.</p>
 
+<h3 id="proxies">Proxies de confianza</h3>
+<p>Si la consola funciona detrás de un proxy inverso (Traefik, HAProxy, nginx), cada solicitud parece venir del proxy. Indique la dirección del proxy en <b>Proxies de confianza</b>: solo desde estas direcciones RMMZit toma la dirección del cliente del protocolo PROXY (v1 o v2, en el puerto de la consola y de los agentes) o de <code>X-Forwarded-For</code> / <code>X-Real-IP</code> (consola; la dirección más a la derecha que no sea un proxy de confianza). Las redes permitidas, la protección del inicio de sesión, las sesiones y el registro de auditoría ven entonces al cliente, no al proxy. Desde cualquier otra dirección se ignora. Indique solo los proxies, nunca una red entera de clientes. El proxy debe conectarse a la consola por HTTPS (o pasar el TLS con el protocolo PROXY) y conservar la cabecera <code>Host</code>.</p>
 <h2 id="certificate">Certificado (HTTPS)</h2>
 <p>En <a href="/settings/certificate">Configuración → Certificado</a> elija el certificado que ven los navegadores al abrir la consola. Los agentes usan su propio puerto y certificado, así que cambiarlo nunca los desconecta.</p>
 <ul>

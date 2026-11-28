@@ -22,6 +22,8 @@
 <h3 id="linux-rd">Linux</h3>
 <p>Udaljena radna površina radi na Linux radnim površinama sa X11 (Xorg). Wayland ne dozvoljava pozadinskom servisu da vidi ili kontroliše ekran: tamo se prijavite u X11 sesiju ili koristite terminal. Bez grafičke radne površine koristite terminal.</p>
 
+<h2 id="consent">Pristanak korisnika</h2>
+<p>Sa delom <b>Udaljena radna površina</b> u <a href="/docs/policies#parts">smernici</a> (podešavaju ga administratori) prijavljeni korisnik mora da dozvoli svaku sesiju udaljene radne površine, i onu samo za gledanje. Prozor na uređaju navodi tehničara i nudi <b>Allow</b> i <b>Deny</b>; tehničar vidi <i>Čeka se da korisnik dozvoli…</i>. Bez odgovora u roku od minut, ili posle Deny, sesija ne počinje, a dnevnik aktivnosti to beleži. Kada niko nije prijavljen ili je ekran zaključan, sesija počinje bez pitanja: tehničar tada vidi samo ekran za prijavu. Dodelite ovaj deo smernici radnih stanica (na primer preko taga), a za servere koji rade bez nadzora ostavite ga isključenim. Potreban je agent 0.17 ili noviji; uređaj sa starijim agentom ne dobija sesiju dok njegova smernica traži pristanak. Pitanje je na engleskom.</p>
 <h2 id="terminal">Terminal (Linux, Windows)</h2>
 <p><b>Terminal</b> otvara root ljusku uređaja u pregledaču. Kliknite u njega da kucate; kopirajte označavanjem teksta, nalepite sa <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> ili <b>Pošalji tekst</b>. Početak i kraj sesije se upisuju u dnevnik izmena.</p>
 <p>Na Windows-u (agenti 0.12 i noviji, Windows 10 1809 / Server 2019 i noviji) terminal je Windows PowerShell koji radi kao SYSTEM na pseudo-konzoli. Napuštanje stranice završava shell i sve programe koje je pokrenuo.</p>
