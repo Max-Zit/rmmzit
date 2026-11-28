@@ -40,6 +40,7 @@
         var m = JSON.parse(ev.data);
         if (m.t === "error" && m.for && waiting[m.for]) { waiting[m.for].fail(m.text); delete waiting[m.for]; }
         else if (m.t === "error") setStatus(m.text, "err");
+        else if (m.t === "wait") setStatus(m.text, "");
         else if (waiting[m.t]) { waiting[m.t].ok(m); delete waiting[m.t]; }
         else if (m.t === "copied") remoteFiles(m.items || []);
       } catch (e) { /* ignore */ }

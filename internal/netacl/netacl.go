@@ -172,6 +172,10 @@ func AddrOf(hostport string) (netip.Addr, bool) {
 type Listener struct {
 	net.Listener
 	List *List
+	// Trusted proxies pass the listener check: the client behind them is
+	// checked per request (X-Forwarded-For) or was already named by a
+	// PROXY header (then RemoteAddr is the client).
+	Trusted *Trusted
 	// OnRefuse is called with the remote address of a refused connection.
 	OnRefuse func(remote string)
 }
@@ -183,7 +187,7 @@ func (l *Listener) Accept() (net.Conn, error) {
 		if err != nil {
 			return nil, err
 		}
-		if l.List.AllowsAddr(c.RemoteAddr().String()) {
+		if l.List.AllowsAddr(c.RemoteAddr().String()) || l.Trusted.HasAddr(c.RemoteAddr().String()) {
 			return c, nil
 		}
 		if l.OnRefuse != nil {

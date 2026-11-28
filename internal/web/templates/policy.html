@@ -175,6 +175,13 @@
       <p class="small muted">{{.T "On Windows devices with a ready TPM whose system drive is not encrypted, the server first has a recovery key added and stores it, and only then starts the encryption (TPM, XTS-AES 256, used space only). Devices without a TPM or with a Windows edition without BitLocker show the reason under Activity. Recovery keys of all devices with BitLocker are collected once a day."}}</p>
     </div>
   </section>
+  <section class="panel">
+    <h2><label class="check"><input type="checkbox" name="remote_set" value="1" {{if $s.Remote}}checked{{end}} data-part="pol-remote">{{template "icon" "screen"}}{{.T "Remote desktop"}}</label></h2>
+    <div id="pol-remote" class="policy-part">
+      <label class="check"><input type="checkbox" name="remote_consent" value="1" {{if $s.Remote}}{{if $s.Remote.Consent}}checked{{end}}{{end}}>{{.T "The signed-in user must allow each remote desktop session"}}</label>
+      <p class="small muted">{{.T "A window on the device asks the user to allow or deny the technician (also for view only); without an answer within a minute the session does not start. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Needs the agent 0.17 or newer. Assign this part to the policy of workstations, and leave it off for servers."}}</p>
+    </div>
+  </section>
   {{end}}
   <div><button class="primary">{{.T "Save"}}</button></div>
 </form>

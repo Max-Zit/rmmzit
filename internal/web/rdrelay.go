@@ -147,7 +147,14 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 	if !d.IsWindows() || viewOnly {
 		settings.Clipboard = false // not on Linux yet; never in view-only sessions
 	}
-	if err := s.call(ctx, d.ID, u.Username, proto.KindRDStart, proto.RDStart{Session: sess.id, Token: sess.token, Technician: name, NoNotice: !settings.ShowNotice, NoClipboard: !settings.Clipboard, ViewOnly: viewOnly}, nil, rdStartTimeout); err != nil {
+	// The device's policy may want the user to allow the session first;
+	// an older agent would not ask, so it gets no session at all.
+	consent, err := s.rdConsent(ctx, d)
+	if err != nil {
+		fail(s.errText(r, err))
+		return
+	}
+	if err := s.call(ctx, d.ID, u.Username, proto.KindRDStart, proto.RDStart{Session: sess.id, Token: sess.token, Technician: name, NoNotice: !settings.ShowNotice, NoClipboard: !settings.Clipboard, ViewOnly: viewOnly, Consent: consent}, nil, rdStartTimeout); err != nil {
 		s.log.Warn("remote desktop start failed", "device", d.ID, "err", err)
 		fail(err.Error())
 		return
@@ -166,7 +173,7 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 	go keepAlive(ctx, bws)
 	go keepAlive(ctx, aws)
 	start := s.now()
-	s.audit(r, "rd.start", "device:"+strconv.FormatInt(d.ID, 10), "remote desktop session %s to %q started (view only: %v, notice on screen: %v, clipboard: %v)", sess.id, d.Hostname, viewOnly, settings.ShowNotice, settings.Clipboard)
+	s.audit(r, "rd.start", "device:"+strconv.FormatInt(d.ID, 10), "remote desktop session %s to %q started (view only: %v, notice on screen: %v, clipboard: %v, user asked: %v)", sess.id, d.Hostname, viewOnly, settings.ShowNotice, settings.Clipboard, consent)
 	s.log.Info("remote desktop session started", "device", d.ID, "user", u.Username, "session", sess.id)
 
 	var bytesDown atomic.Int64
@@ -180,7 +187,13 @@ func (s *Server) handleRDSocket(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			bytesDown.Add(int64(len(data)))
-			if typ == websocket.MessageText && bytes.Contains(data, []byte(`"t":"error"`)) {
+			if typ == websocket.MessageText && (bytes.Contains(data, []byte(`"t":"error"`)) || bytes.Contains(data, []byte(`"t":"wait"`))) {
+				switch {
+				case consent && bytes.Contains(data, []byte(msgConsentRefused)):
+					s.audit(r, "rd.refused", "device:"+strconv.FormatInt(d.ID, 10), "the user of %q refused remote desktop session %s", d.Hostname, sess.id)
+				case consent && bytes.Contains(data, []byte(msgConsentTimeout)):
+					s.audit(r, "rd.unanswered", "device:"+strconv.FormatInt(d.ID, 10), "the user of %q did not answer remote desktop session %s", d.Hostname, sess.id)
+				}
 				data = translateReply(data, lang) // the helper writes English
 			}
 			if typ == websocket.MessageBinary && len(data) > 0 && data[0] == proto.RDClip {

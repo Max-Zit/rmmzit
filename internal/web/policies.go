@@ -31,6 +31,7 @@ type PolicySettings struct {
 	Maintenance *MaintenancePolicy `json:"maintenance,omitempty"`
 	NetChecks   *NetCheckPolicy    `json:"net_checks,omitempty"`
 	Monitors    *MonitorPolicy     `json:"monitors,omitempty"`
+	Remote      *RemotePolicy      `json:"remote,omitempty"`
 }
 
 // SoftwarePolicy lists the programs a device must have; missing ones are

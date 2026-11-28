@@ -79,6 +79,7 @@ func run(args []string) error {
 	noNotice := fs.Bool("no-notice", false, "do not show the notice on the screen (rdhelper; console setting)")
 	noClipboard := fs.Bool("no-clipboard", false, "no clipboard exchange (rdhelper; console setting)")
 	viewOnly := fs.Bool("view-only", false, "the technician only watches the screen (rdhelper)")
+	consent := fs.Bool("consent", false, "ask the signed-in user to allow the session first (rdhelper; policy)")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -171,7 +172,7 @@ func run(args []string) error {
 		// Started by the service in the console session; the token comes on stdin.
 		line, _ := bufio.NewReader(os.Stdin).ReadString('\n')
 		log := slog.New(slog.NewTextHandler(agent.OpenLog(*dir), nil)).With("helper", *session)
-		return agent.RunHelper(ctx, *dir, *session, *technician, line, !*noNotice, !*noClipboard, *viewOnly, log)
+		return agent.RunHelper(ctx, *dir, *session, *technician, line, agent.HelperOptions{Notice: !*noNotice, Clipboard: !*noClipboard, ViewOnly: *viewOnly, Consent: *consent}, log)
 	case "clipwatch":
 		// Started by a remote desktop helper as the signed-in user.
 		return rd.WatchFiles(ctx, os.Stdout)

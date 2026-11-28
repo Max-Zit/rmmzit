@@ -185,8 +185,8 @@ func (s *Server) diagInfo(ctx context.Context, w io.Writer, now time.Time) error
 		s.Version, now.Format(time.RFC3339), host, runtime.GOOS, runtime.GOARCH, runtime.Version(), now.Format("MST -07:00"), s.store.DBInfo(ctx))
 	fmt.Fprintf(w, "Console: %s (running), agents: %s (running)\r\nRoot helper: %v\r\nAppliance: %v\r\n", s.RunningMgmt, s.RunningAgent, s.helperOK(), helper.IsAppliance(""))
 	n, _ := s.Network(ctx)
-	fmt.Fprintf(w, "Allowed console networks: %s\r\nAllowed agent networks: %s\r\nPublic agent address: %s\r\n",
-		strings.Join(n.MgmtAllowed, " "), strings.Join(n.AgentAllowed, " "), n.PublicAgentURL)
+	fmt.Fprintf(w, "Allowed console networks: %s\r\nAllowed agent networks: %s\r\nPublic agent address: %s\r\nTrusted proxies: %s\r\n",
+		strings.Join(n.MgmtAllowed, " "), strings.Join(n.AgentAllowed, " "), n.PublicAgentURL, strings.Join(n.TrustedProxies, " "))
 	c := s.Cert(ctx)
 	fmt.Fprintf(w, "Certificate: %s %s (port 80: %v)\r\n", c.Mode, c.Hostname, c.HTTP80)
 	if i := s.TLS.Info(); i != nil {

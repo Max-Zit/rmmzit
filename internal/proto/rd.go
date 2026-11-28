@@ -32,6 +32,10 @@ type RDStart struct {
 	// ViewOnly: the technician only watches the screen; the helper takes
 	// no mouse, keyboard, clipboard or files (the server filters them too).
 	ViewOnly bool `json:"view_only,omitempty"`
+	// Consent: the person at the computer must allow the session first
+	// (policy; agents from 0.17.0). Without a user to ask (sign-in or
+	// locked screen) the session starts.
+	Consent bool `json:"consent,omitempty"`
 }
 
 // KindRDCAD sends Ctrl+Alt+Del (the secure attention sequence) to the

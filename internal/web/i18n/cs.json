@@ -1807,5 +1807,20 @@
   "the failed runs in a row must be 1–20": "počet neúspěšných běhů za sebou musí být 1–20",
   "Run again where it failed (%d)": "Spustit znovu tam, kde selhal (%d)",
   "Run it again on the %d devices where it failed or expired?": "Spustit znovu na %d zařízeních, kde selhal nebo vypršel?",
-  "No device of this job failed or expired.": "Na žádném zařízení této úlohy neselhal ani nevypršel."
+  "No device of this job failed or expired.": "Na žádném zařízení této úlohy neselhal ani nevypršel.",
+  "A window on the device asks the user to allow or deny the technician (also for view only); without an answer within a minute the session does not start. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Needs the agent 0.17 or newer. Assign this part to the policy of workstations, and leave it off for servers.": "Okno na zařízení se uživatele zeptá, zda technika povolí, nebo odmítne (i u pouhého sledování); bez odpovědi do minuty relace nezačne. Když nikdo není přihlášen nebo je obrazovka zamčená, relace začne bez dotazu: technik pak vidí jen přihlašovací obrazovku. Vyžaduje agenta 0.17 nebo novějšího. Přiřaďte tuto část zásadám pracovních stanic a u serverů ji nechte vypnutou.",
+  "Installed as an app of a platform (for example TrueNAS): update it there, in its list of apps.": "Nainstalováno jako aplikace platformy (například TrueNAS): aktualizujte ji tam, v seznamu aplikací.",
+  "One IP address or network per line. List only the proxies themselves: whoever is listed here can name any client address. The proxy must connect over HTTPS and keep the Host header.": "Jedna IP adresa nebo síť na řádek. Uveďte jen samotné proxy: kdo je zde uveden, může uvést libovolnou adresu klienta. Proxy se musí připojovat přes HTTPS a zachovat hlavičku Host.",
+  "Proxy addresses": "Adresy proxy",
+  "Pull the new image on the Docker host, or update the app where it was installed from (for example the TrueNAS apps).": "Stáhněte nový obraz na hostiteli Docker nebo aktualizujte aplikaci tam, odkud byla nainstalována (například aplikace TrueNAS).",
+  "Reverse proxies in front of RMMZit (for example Traefik, HAProxy or nginx). From these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, console and agent port) or from X-Forwarded-For and X-Real-IP (console), and uses it for the allowed networks, the sign-in protection, sessions and the audit log. From every other address these are ignored.": "Reverzní proxy před RMMZit (například Traefik, HAProxy nebo nginx). Jen z těchto adres převezme RMMZit adresu klienta z protokolu PROXY (v1 nebo v2, port konzole a agentů) nebo z X-Forwarded-For a X-Real-IP (konzole) a použije ji pro povolené sítě, ochranu přihlášení, relace a protokol auditu. Ze všech ostatních adres se to ignoruje.",
+  "The signed-in user must allow each remote desktop session": "Přihlášený uživatel musí povolit každou relaci vzdálené plochy",
+  "This device's policy asks the user to allow remote desktop sessions; its agent must be 0.17.0 or newer. Update the agent first.": "Zásady tohoto zařízení vyžadují, aby uživatel povolil relace vzdálené plochy; agent musí být 0.17.0 nebo novější. Nejprve aktualizujte agenta.",
+  "Trusted proxies": "Důvěryhodné proxy",
+  "empty = no proxy": "prázdné = bez proxy",
+  "You reach the console through the proxy %s; without it in the trusted proxies, the proxy must be in the allowed networks, otherwise saving would lock you out.": "Ke konzoli přistupujete přes proxy %s; bez něj mezi důvěryhodnými proxy musí být proxy v povolených sítích, jinak byste se uložením zablokovali.",
+  "Waiting for the user to allow the remote desktop session.": "Čeká se, až uživatel povolí relaci vzdálené plochy.",
+  "The user refused the remote desktop session.": "Uživatel relaci vzdálené plochy odmítl.",
+  "The user did not answer within a minute; the remote desktop session was not started.": "Uživatel neodpověděl do minuty; relace vzdálené plochy nebyla spuštěna.",
+  "This computer cannot ask its user, and its policy requires the user's consent.": "Tento počítač se nemůže zeptat svého uživatele a jeho zásady vyžadují souhlas uživatele."
 }

@@ -2,6 +2,7 @@ package web
 
 import (
 	"net/http"
+	"net/netip"
 	"strconv"
 	"strings"
 	"time"
@@ -20,6 +21,7 @@ type networkData struct {
 	Last         *helper.Result
 	MgmtText     string
 	AgentText    string
+	ProxyText    string
 	RunningMgmt  string
 	RunningAgent string
 	Restart      bool
@@ -39,7 +41,7 @@ func (s *Server) handleNetwork(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) showNetwork(w http.ResponseWriter, r *http.Request, status int, n NetworkSettings, errMsg string) {
 	d := &networkData{N: n, MgmtText: strings.Join(n.MgmtAllowed, "\n"), AgentText: strings.Join(n.AgentAllowed, "\n"),
-		RunningMgmt: s.RunningMgmt, RunningAgent: s.RunningAgent, ClientIP: clientIP(r), Fingerprint: s.AgentFingerprint}
+		ProxyText: strings.Join(n.TrustedProxies, "\n"), RunningMgmt: s.RunningMgmt, RunningAgent: s.RunningAgent, ClientIP: clientIP(r), Fingerprint: s.AgentFingerprint}
 	d.Override = s.ListenOverride
 	d.TimeZone, d.Zones, d.HelperOK, d.Server = helper.SystemTimeZone(""), timeZones(), s.helperOK(), readServerNetwork()
 	if res := s.lastHelperResult(); res != nil && res.Action != helper.ActionUpdate && s.now().Sub(res.Started) < time.Hour {
@@ -56,7 +58,7 @@ func (s *Server) showNetwork(w http.ResponseWriter, r *http.Request, status int,
 func (s *Server) handleNetworkSave(w http.ResponseWriter, r *http.Request) {
 	n := NetworkSettings{
 		MgmtListen: strings.TrimSpace(r.FormValue("mgmt_listen")), AgentListen: strings.TrimSpace(r.FormValue("agent_listen")),
-		MgmtAllowed: netacl.Split(r.FormValue("mgmt_allowed")), AgentAllowed: netacl.Split(r.FormValue("agent_allowed")),
+		MgmtAllowed: netacl.Split(r.FormValue("mgmt_allowed")), AgentAllowed: netacl.Split(r.FormValue("agent_allowed")), TrustedProxies: netacl.Split(r.FormValue("trusted_proxies")),
 		PublicAgentURL: strings.TrimRight(strings.TrimSpace(r.FormValue("public_agent_url")), "/"),
 	}
 	if err := n.Validate(); err != nil {
@@ -67,7 +69,15 @@ func (s *Server) handleNetworkSave(w http.ResponseWriter, r *http.Request) {
 	// who is saving it (loopback always works anyway).
 	mg, _ := netacl.Parse(n.MgmtAllowed)
 	ag, _ := netacl.Parse(n.AgentAllowed)
-	n.MgmtAllowed, n.AgentAllowed = netacl.Strings(mg), netacl.Strings(ag)
+	tp, _ := netacl.Parse(n.TrustedProxies)
+	n.MgmtAllowed, n.AgentAllowed, n.TrustedProxies = netacl.Strings(mg), netacl.Strings(ag), netacl.Strings(tp)
+	// Through a trusted proxy that this list drops, the request would then
+	// come from the proxy itself: it must be allowed.
+	if p, ok := r.Context().Value(proxyPeerKey{}).(netip.Addr); ok && !netacl.Contains(tp, p) && !p.IsLoopback() && !netacl.Contains(mg, p) {
+		s.showNetwork(w, r, http.StatusBadRequest, n, translate(s.lang(r, userFrom(r)),
+			"You reach the console through the proxy %s; without it in the trusted proxies, the proxy must be in the allowed networks, otherwise saving would lock you out.", p.String()))
+		return
+	}
 	if a, ok := netacl.AddrOf(r.RemoteAddr); ok && !a.IsLoopback() && !netacl.Contains(mg, a) {
 		s.showNetwork(w, r, http.StatusBadRequest, n, translate(s.lang(r, userFrom(r)),
 			"Your address %s is not in the list of networks allowed to reach the console; saving it would lock you out. Add it first.", a.String()))
@@ -78,8 +88,8 @@ func (s *Server) handleNetworkSave(w http.ResponseWriter, r *http.Request) {
 		s.serverError(w, r, err)
 		return
 	}
-	s.audit(r, "settings.network", "settings", "console %s allowed %v; agents %s allowed %v; public agent URL %q (was: console %s allowed %v; agents %s allowed %v)",
-		n.MgmtListen, n.MgmtAllowed, n.AgentListen, n.AgentAllowed, n.PublicAgentURL, old.MgmtListen, old.MgmtAllowed, old.AgentListen, old.AgentAllowed)
+	s.audit(r, "settings.network", "settings", "console %s allowed %v; agents %s allowed %v; public agent URL %q; trusted proxies %v (was: console %s allowed %v; agents %s allowed %v; trusted proxies %v)",
+		n.MgmtListen, n.MgmtAllowed, n.AgentListen, n.AgentAllowed, n.PublicAgentURL, n.TrustedProxies, old.MgmtListen, old.MgmtAllowed, old.AgentListen, old.AgentAllowed, old.TrustedProxies)
 	msg := "Saved. The allowed networks apply immediately."
 	if s.RunningMgmt != "" && !s.ListenOverride && (n.MgmtListen != s.RunningMgmt || n.AgentListen != s.RunningAgent) {
 		msg = "Saved. The allowed networks apply immediately; restart the RMMZit service to use the new ports."

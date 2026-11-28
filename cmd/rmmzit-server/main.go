@@ -267,7 +267,12 @@ func run() error {
 		if err != nil {
 			return fmt.Errorf("%s listener %s: %w", kind, addr, err)
 		}
-		l := tls.NewListener(&netacl.Listener{Listener: raw, List: list, OnRefuse: refused(kind)}, cfg)
+		// A trusted reverse proxy may name the client with a PROXY header
+		// first; the allow-list then checks the client.
+		pl := &netacl.ProxyListener{Listener: raw, Trusted: srv.Trusted, OnError: func(remote string, err error) {
+			log.Warn("broken PROXY header from a trusted proxy", "listener", kind, "remote", remote, "err", err)
+		}}
+		l := tls.NewListener(&netacl.Listener{Listener: pl, List: list, Trusted: srv.Trusted, OnRefuse: refused(kind)}, cfg)
 		hs := &http.Server{Handler: h, ReadHeaderTimeout: 10 * time.Second, ReadTimeout: 60 * time.Second, WriteTimeout: 120 * time.Second,
 			IdleTimeout: 120 * time.Second, MaxHeaderBytes: 64 << 10, ErrorLog: slog.NewLogLogger(log.Handler(), slog.LevelDebug)}
 		servers = append(servers, hs)

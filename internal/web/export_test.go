@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/max-zit/rmmzit/internal/store"
 	"github.com/max-zit/rmmzit/internal/update"
 )
 
@@ -40,4 +41,9 @@ func (s *Server) SetLatestForTest(version string) {
 	s.upd.mu.Lock()
 	defer s.upd.mu.Unlock()
 	s.upd.latest = &update.Manifest{Product: update.ManifestProduct, Version: version}
+}
+
+// RDConsentForTest exposes the remote desktop consent decision (tests).
+func (s *Server) RDConsentForTest(ctx context.Context, d *store.Device) (bool, error) {
+	return s.rdConsent(ctx, d)
 }

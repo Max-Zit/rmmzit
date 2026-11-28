@@ -1807,5 +1807,20 @@
   "the failed runs in a row must be 1–20": "连续失败次数必须为 1–20",
   "Run again where it failed (%d)": "在失败的设备上重新运行（%d）",
   "Run it again on the %d devices where it failed or expired?": "在失败或过期的 %d 台设备上重新运行？",
-  "No device of this job failed or expired.": "此作业没有失败或过期的设备。"
+  "No device of this job failed or expired.": "此作业没有失败或过期的设备。",
+  "A window on the device asks the user to allow or deny the technician (also for view only); without an answer within a minute the session does not start. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Needs the agent 0.17 or newer. Assign this part to the policy of workstations, and leave it off for servers.": "设备上的窗口会询问用户是允许还是拒绝技术员（仅查看时也会询问）；一分钟内没有回答，会话不会开始。没有人登录或屏幕已锁定时，会话不询问直接开始：技术员此时只能看到登录屏幕。需要 0.17 或更高版本的代理。请将此部分分配给工作站的策略，服务器则保持关闭。",
+  "Installed as an app of a platform (for example TrueNAS): update it there, in its list of apps.": "作为某个平台的应用安装（例如 TrueNAS）：请在该平台的应用列表中更新。",
+  "One IP address or network per line. List only the proxies themselves: whoever is listed here can name any client address. The proxy must connect over HTTPS and keep the Host header.": "每行一个 IP 地址或网络。只填写代理本身：列在这里的地址可以声明任何客户端地址。代理必须通过 HTTPS 连接并保留 Host 标头。",
+  "Proxy addresses": "代理地址",
+  "Pull the new image on the Docker host, or update the app where it was installed from (for example the TrueNAS apps).": "在 Docker 主机上拉取新镜像，或在安装来源处更新应用（例如 TrueNAS 应用）。",
+  "Reverse proxies in front of RMMZit (for example Traefik, HAProxy or nginx). From these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, console and agent port) or from X-Forwarded-For and X-Real-IP (console), and uses it for the allowed networks, the sign-in protection, sessions and the audit log. From every other address these are ignored.": "位于 RMMZit 前面的反向代理（例如 Traefik、HAProxy 或 nginx）。仅对来自这些地址的连接，RMMZit 才会从 PROXY 协议（v1 或 v2，控制台和代理端口）或 X-Forwarded-For 和 X-Real-IP（控制台）中获取客户端地址，并将其用于允许的网络、登录保护、会话和审计日志。来自其他地址的一律忽略。",
+  "The signed-in user must allow each remote desktop session": "已登录的用户必须允许每个远程桌面会话",
+  "This device's policy asks the user to allow remote desktop sessions; its agent must be 0.17.0 or newer. Update the agent first.": "此设备的策略要求用户允许远程桌面会话；代理必须是 0.17.0 或更高版本。请先更新代理。",
+  "Trusted proxies": "受信任的代理",
+  "empty = no proxy": "空 = 无代理",
+  "You reach the console through the proxy %s; without it in the trusted proxies, the proxy must be in the allowed networks, otherwise saving would lock you out.": "您通过代理 %s 访问控制台；如果它不在受信任的代理中，则该代理必须在允许的网络中，否则保存后您将无法访问。",
+  "Waiting for the user to allow the remote desktop session.": "正在等待用户允许远程桌面会话。",
+  "The user refused the remote desktop session.": "用户拒绝了远程桌面会话。",
+  "The user did not answer within a minute; the remote desktop session was not started.": "用户在一分钟内没有回答；远程桌面会话未开始。",
+  "This computer cannot ask its user, and its policy requires the user's consent.": "此计算机无法询问其用户，而其策略要求用户同意。"
 }

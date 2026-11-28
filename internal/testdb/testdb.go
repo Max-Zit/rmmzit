@@ -62,7 +62,12 @@ func start() error {
 		}
 		port = uint32(l.Addr().(*net.TCPAddr).Port) // #nosec G115 -- a TCP port fits
 		_ = l.Close()
-		db := embeddedpostgres.NewDatabase(embeddedpostgres.DefaultConfig().Port(port).
+		cfg := embeddedpostgres.DefaultConfig() // PostgreSQL 18
+		// RMMZIT_TEST_PG=17: the version of the appliance and the Docker image.
+		if os.Getenv("RMMZIT_TEST_PG") == "17" {
+			cfg = cfg.Version(embeddedpostgres.V17)
+		}
+		db := embeddedpostgres.NewDatabase(cfg.Port(port).
 			RuntimePath(filepath.Join(dir, "rt")).DataPath(filepath.Join(dir, "data")).Logger(io.Discard))
 		if err := db.Start(); err != nil {
 			return fmt.Errorf("start postgres: %w", err)

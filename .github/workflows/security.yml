@@ -58,6 +58,19 @@ jobs:
       - name: tests
         run: go test -count=1 ./...
 
+  postgres17:
+    name: Tests on PostgreSQL 17 (appliance and Docker; the others run on 18)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - name: Tests of the database and the console on PostgreSQL 17
+        env:
+          RMMZIT_TEST_PG: "17"
+        run: go test -count=1 ./internal/store/... ./internal/web/...
+
   race:
     name: Race detector (Linux)
     runs-on: ubuntu-latest

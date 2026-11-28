@@ -15,6 +15,11 @@
     <p class="small">{{.T "Your address:"}} <code>{{.Data.ClientIP}}</code> — {{.T "it must stay in the list, otherwise saving is refused."}}</p>
   </section>
   <section class="panel">
+    <h2>{{template "icon" "shield"}}{{.T "Trusted proxies"}} <small>{{.T "optional"}}</small></h2>
+    <p class="muted">{{.T "Reverse proxies in front of RMMZit (for example Traefik, HAProxy or nginx). From these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, console and agent port) or from X-Forwarded-For and X-Real-IP (console), and uses it for the allowed networks, the sign-in protection, sessions and the audit log. From every other address these are ignored."}}</p>
+    <label>{{.T "Proxy addresses"}}<textarea name="trusted_proxies" rows="3" spellcheck="false" placeholder="{{.T "empty = no proxy"}}">{{.Data.ProxyText}}</textarea><small>{{.T "One IP address or network per line. List only the proxies themselves: whoever is listed here can name any client address. The proxy must connect over HTTPS and keep the Host header."}}</small></label>
+  </section>
+  <section class="panel">
     <h2>{{template "icon" "network"}}{{.T "Agent endpoint"}}</h2>
     <p class="muted">{{.T "Agents connect here, outbound from the managed machines. It is a separate port, so you can open only this port on the firewall (for example for remote offices) and keep the console closed."}}</p>
     <label>{{.T "Listen address"}}<input name="agent_listen" value="{{.Data.N.AgentListen}}" required spellcheck="false" class="mono"><small>{{.T "Must use a different port than the console."}}</small></label>

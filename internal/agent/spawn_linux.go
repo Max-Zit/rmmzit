@@ -137,6 +137,9 @@ func startHelper(dir string, a proto.RDStart) error {
 	if a.ViewOnly {
 		args = append(args, "--view-only")
 	}
+	if a.Consent {
+		args = append(args, "--consent")
+	}
 	cmd := exec.Command(exe, args...) // #nosec G204 -- our own executable
 	env := []string{"DISPLAY=" + x.display, "HOME=/root", "PATH=/usr/sbin:/usr/bin:/sbin:/bin", "CZ_XSERVER_UID=" + strconv.Itoa(x.uid)}
 	if x.auth != "" {

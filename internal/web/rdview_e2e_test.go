@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/max-zit/rmmzit/internal/proto"
+	"github.com/max-zit/rmmzit/internal/store"
 )
 
 // signedIn makes a user with a role and signs it in from its own address.
@@ -90,5 +91,49 @@ func TestViewOnlyInput(t *testing.T) {
 		if proto.ViewOnlyInput(no) {
 			t.Errorf("%q allowed", no)
 		}
+	}
+}
+
+// Remote desktop consent (issue #20): a policy part, for administrators
+// only, that makes the agent ask the signed-in user; an agent too old to
+// ask gets no session at all.
+func TestRemoteConsent(t *testing.T) {
+	e := newEnv(t)
+	admin, _ := e.setupAdmin("192.168.1.10")
+	ctx := t.Context()
+	ws := e.device(t, "ws-consent", "Microsoft Windows 11 Pro")
+	other, _ := e.st.CreateCustomer(ctx, "Servers Ltd", "")
+	srv := e.deviceIn(t, other, "srv-unattended")
+	pid := customerPolicy(t, admin, ws.CustomerID, "name", "Workstations", "remote_set", "1", "remote_consent", "1")
+
+	seen := func(d *store.Device, v string) *store.Device {
+		t.Helper()
+		if err := e.st.AgentSeen(ctx, d.ID, &proto.Hello{AgentVersion: v, Hostname: d.Hostname, OS: "Microsoft Windows 11 Pro"}, "127.0.0.1"); err != nil {
+			t.Fatal(err)
+		}
+		x, _ := e.st.Device(ctx, d.ID)
+		return x
+	}
+	if ask, err := e.srv.RDConsentForTest(ctx, seen(ws, "0.16.0")); !ask || err == nil || !strings.Contains(err.Error(), "0.17.0 or newer") {
+		t.Fatalf("an old agent was not refused: %v %v", ask, err)
+	}
+	if ask, err := e.srv.RDConsentForTest(ctx, seen(ws, "0.17.0")); !ask || err != nil {
+		t.Fatalf("0.17 agent: %v %v", ask, err)
+	}
+	if ask, err := e.srv.RDConsentForTest(ctx, seen(srv, "0.16.0")); ask || err != nil {
+		t.Fatalf("a device without the part was asked: %v %v", ask, err)
+	}
+
+	// Technicians may edit the policy but not switch the consent off.
+	tech := e.signedIn(t, admin, "consenttech", "technician", "192.168.1.43")
+	if b := tech.get("/policies/" + pid).body; strings.Contains(b, `name="remote_consent"`) {
+		t.Fatal("a technician sees the consent setting")
+	}
+	tech.post("/policies/"+pid, "name", "Workstations")
+	if ask, _ := e.srv.RDConsentForTest(ctx, seen(ws, "0.17.0")); !ask {
+		t.Fatal("a technician's save switched the consent off")
+	}
+	if b := admin.get("/devices/" + itoa(ws.ID) + "/policy").body; !strings.Contains(b, "Remote desktop") {
+		t.Fatal("the device's policy page does not name the part")
 	}
 }

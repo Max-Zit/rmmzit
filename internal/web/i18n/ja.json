@@ -1807,5 +1807,20 @@
   "the failed runs in a row must be 1–20": "連続失敗回数は 1～20 にしてください",
   "Run again where it failed (%d)": "失敗した所で再実行（%d）",
   "Run it again on the %d devices where it failed or expired?": "失敗または期限切れになった %d 台のデバイスで再実行しますか？",
-  "No device of this job failed or expired.": "このジョブで失敗または期限切れになったデバイスはありません。"
+  "No device of this job failed or expired.": "このジョブで失敗または期限切れになったデバイスはありません。",
+  "A window on the device asks the user to allow or deny the technician (also for view only); without an answer within a minute the session does not start. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Needs the agent 0.17 or newer. Assign this part to the policy of workstations, and leave it off for servers.": "デバイス上のウィンドウで、技術者を許可するか拒否するかをユーザーに尋ねます（表示のみの場合も）。1 分以内に応答がなければセッションは開始されません。誰もサインインしていないか画面がロックされている場合は、尋ねずにセッションを開始します。このとき技術者に見えるのはサインイン画面だけです。エージェント 0.17 以降が必要です。この部分はワークステーションのポリシーに割り当て、サーバーではオフのままにしてください。",
+  "Installed as an app of a platform (for example TrueNAS): update it there, in its list of apps.": "プラットフォームのアプリとしてインストールした場合（たとえば TrueNAS）：そのアプリ一覧から更新してください。",
+  "One IP address or network per line. List only the proxies themselves: whoever is listed here can name any client address. The proxy must connect over HTTPS and keep the Host header.": "1 行に 1 つの IP アドレスまたはネットワーク。プロキシ自体だけを記載してください。ここに記載されたものは任意のクライアントアドレスを名乗れます。プロキシは HTTPS で接続し、Host ヘッダーを保持する必要があります。",
+  "Proxy addresses": "プロキシのアドレス",
+  "Pull the new image on the Docker host, or update the app where it was installed from (for example the TrueNAS apps).": "Docker ホストで新しいイメージを取得するか、インストール元（たとえば TrueNAS のアプリ）でアプリを更新してください。",
+  "Reverse proxies in front of RMMZit (for example Traefik, HAProxy or nginx). From these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, console and agent port) or from X-Forwarded-For and X-Real-IP (console), and uses it for the allowed networks, the sign-in protection, sessions and the audit log. From every other address these are ignored.": "RMMZit の前に置くリバースプロキシ（たとえば Traefik、HAProxy、nginx）。これらのアドレスからの場合に限り、RMMZit は PROXY プロトコル（v1 または v2、コンソールとエージェントのポート）または X-Forwarded-For と X-Real-IP（コンソール）からクライアントのアドレスを取り、許可するネットワーク、サインインの保護、セッション、監査ログに使います。その他のアドレスからは無視されます。",
+  "The signed-in user must allow each remote desktop session": "サインイン中のユーザーがリモートデスクトップの各セッションを許可する必要がある",
+  "This device's policy asks the user to allow remote desktop sessions; its agent must be 0.17.0 or newer. Update the agent first.": "このデバイスのポリシーでは、ユーザーがリモートデスクトップのセッションを許可する必要があります。エージェントは 0.17.0 以降である必要があります。先にエージェントを更新してください。",
+  "Trusted proxies": "信頼するプロキシ",
+  "empty = no proxy": "空 = プロキシなし",
+  "You reach the console through the proxy %s; without it in the trusted proxies, the proxy must be in the allowed networks, otherwise saving would lock you out.": "プロキシ %s 経由でコンソールにアクセスしています。信頼するプロキシに含めない場合、プロキシを許可するネットワークに含める必要があります。そうしないと保存でアクセスできなくなります。",
+  "Waiting for the user to allow the remote desktop session.": "ユーザーがリモートデスクトップのセッションを許可するのを待っています。",
+  "The user refused the remote desktop session.": "ユーザーがリモートデスクトップのセッションを拒否しました。",
+  "The user did not answer within a minute; the remote desktop session was not started.": "ユーザーが 1 分以内に応答しなかったため、リモートデスクトップのセッションは開始されませんでした。",
+  "This computer cannot ask its user, and its policy requires the user's consent.": "このコンピューターはユーザーに尋ねることができず、そのポリシーはユーザーの同意を必要とします。"
 }

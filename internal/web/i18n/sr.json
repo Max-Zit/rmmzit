@@ -1807,5 +1807,20 @@
   "the failed runs in a row must be 1–20": "broj neuspelih pokretanja zaredom mora biti 1–20",
   "Run again where it failed (%d)": "Pokreni ponovo gde nije uspela (%d)",
   "Run it again on the %d devices where it failed or expired?": "Pokrenuti ponovo na %d uređaja gde nije uspela ili je istekla?",
-  "No device of this job failed or expired.": "Ni na jednom uređaju ovog posla nije bilo neuspeha ni isteka."
+  "No device of this job failed or expired.": "Ni na jednom uređaju ovog posla nije bilo neuspeha ni isteka.",
+  "A window on the device asks the user to allow or deny the technician (also for view only); without an answer within a minute the session does not start. When nobody is signed in or the screen is locked, the session starts without asking: the technician then sees only the sign-in screen. Needs the agent 0.17 or newer. Assign this part to the policy of workstations, and leave it off for servers.": "Prozor na uređaju pita korisnika da dozvoli ili odbije tehničara (i za samo gledanje); bez odgovora u roku od minut sesija ne počinje. Kada niko nije prijavljen ili je ekran zaključan, sesija počinje bez pitanja: tehničar tada vidi samo ekran za prijavu. Potreban je agent 0.17 ili noviji. Dodelite ovaj deo smernici radnih stanica, a za servere ga ostavite isključenim.",
+  "Installed as an app of a platform (for example TrueNAS): update it there, in its list of apps.": "Instaliran kao aplikacija platforme (na primer TrueNAS): ažurirajte ga tamo, na spisku aplikacija.",
+  "One IP address or network per line. List only the proxies themselves: whoever is listed here can name any client address. The proxy must connect over HTTPS and keep the Host header.": "Jedna IP adresa ili mreža po redu. Navedite samo same proxy servere: ko je ovde naveden može da navede bilo koju adresu klijenta. Proxy mora da se povezuje preko HTTPS-a i da zadrži zaglavlje Host.",
+  "Proxy addresses": "Adrese proxy servera",
+  "Pull the new image on the Docker host, or update the app where it was installed from (for example the TrueNAS apps).": "Preuzmite novu sliku na Docker hostu ili ažurirajte aplikaciju tamo odakle je instalirana (na primer TrueNAS aplikacije).",
+  "Reverse proxies in front of RMMZit (for example Traefik, HAProxy or nginx). From these addresses only, RMMZit takes the client's address from the PROXY protocol (v1 or v2, console and agent port) or from X-Forwarded-For and X-Real-IP (console), and uses it for the allowed networks, the sign-in protection, sessions and the audit log. From every other address these are ignored.": "Reverse proxy serveri ispred RMMZit-a (na primer Traefik, HAProxy ili nginx). Samo sa ovih adresa RMMZit uzima adresu klijenta iz PROXY protokola (v1 ili v2, port konzole i agenata) ili iz X-Forwarded-For i X-Real-IP (konzola) i koristi je za dozvoljene mreže, zaštitu prijave, sesije i dnevnik aktivnosti. Sa svih ostalih adresa to se zanemaruje.",
+  "The signed-in user must allow each remote desktop session": "Prijavljeni korisnik mora da dozvoli svaku sesiju udaljene radne površine",
+  "This device's policy asks the user to allow remote desktop sessions; its agent must be 0.17.0 or newer. Update the agent first.": "Smernica ovog uređaja traži da korisnik dozvoli sesije udaljene radne površine; agent mora biti 0.17.0 ili noviji. Prvo ažurirajte agenta.",
+  "Trusted proxies": "Pouzdani proxy serveri",
+  "empty = no proxy": "prazno = bez proxy-ja",
+  "You reach the console through the proxy %s; without it in the trusted proxies, the proxy must be in the allowed networks, otherwise saving would lock you out.": "Konzoli pristupate preko proxy-ja %s; ako nije među pouzdanim proxy serverima, proxy mora biti u dozvoljenim mrežama, inače biste se čuvanjem zaključali.",
+  "Waiting for the user to allow the remote desktop session.": "Čeka se da korisnik dozvoli sesiju udaljene radne površine.",
+  "The user refused the remote desktop session.": "Korisnik je odbio sesiju udaljene radne površine.",
+  "The user did not answer within a minute; the remote desktop session was not started.": "Korisnik nije odgovorio u roku od minut; sesija udaljene radne površine nije pokrenuta.",
+  "This computer cannot ask its user, and its policy requires the user's consent.": "Ovaj računar ne može da pita svog korisnika, a njegova smernica traži pristanak korisnika."
 }

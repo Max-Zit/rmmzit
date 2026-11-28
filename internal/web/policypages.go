@@ -408,6 +408,9 @@ func policyForm(r *http.Request) (PolicySettings, string) {
 	if r.FormValue("bitlocker_set") == "1" {
 		ps.BitLocker = &BitLockerPolicy{Require: r.FormValue("bitlocker_require") == "1"}
 	}
+	if r.FormValue("remote_set") == "1" {
+		ps.Remote = &RemotePolicy{Consent: r.FormValue("remote_consent") == "1"}
+	}
 	if dayErr != "" {
 		return ps, dayErr
 	}
@@ -463,6 +466,7 @@ func (s *Server) handlePolicySave(w http.ResponseWriter, r *http.Request) {
 	}
 	if !u.IsAdmin() {
 		ps.BitLocker = old.BitLocker // BitLocker is for administrators
+		ps.Remote = old.Remote       // so is the remote desktop consent
 	}
 	raw, err := json.Marshal(ps)
 	if err != nil {
@@ -616,6 +620,8 @@ func (s *Server) handleDevicePolicy(w http.ResponseWriter, r *http.Request) {
 	bl, src := pr.bitlocker(d.ID)
 	dd.Parts = append(dd.Parts, policyPart{Name: "BitLocker", Source: src})
 	dd.BitLocker = bl != nil && bl.Require
+	_, src = pr.remote(d.ID)
+	dd.Parts = append(dd.Parts, policyPart{Name: "Remote desktop", Source: src})
 	au, src := pr.automations(d.ID)
 	dd.Parts = append(dd.Parts, policyPart{Name: "Automations", Source: src})
 	dd.Apps, src = pr.appUpdates(d.ID)

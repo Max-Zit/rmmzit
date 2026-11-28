@@ -57,6 +57,8 @@ type Server struct {
 	// MgmtACL guards the console listener, AgentACL the agent listener.
 	MgmtACL  *netacl.List
 	AgentACL *netacl.List
+	// Trusted are the reverse proxies whose client address is taken.
+	Trusted *netacl.Trusted
 
 	// Running are the listen addresses the server actually uses (they
 	// can differ from the saved settings until a restart).
@@ -124,6 +126,8 @@ func New(ctx context.Context, st *store.Store, log *slog.Logger) (*Server, error
 	ag, _ := netacl.Parse(n.AgentAllowed)
 	s.MgmtACL = netacl.NewManagement(mg)
 	s.AgentACL = netacl.NewOptional(ag)
+	tp, _ := netacl.Parse(n.TrustedProxies)
+	s.Trusted = netacl.NewTrusted(tp)
 	return s, nil
 }
 
@@ -151,6 +155,10 @@ type NetworkSettings struct {
 	// PublicAgentURL is how agents reach the server (put into installers),
 	// e.g. "https://rmm.example.com:8444". Empty: derived from the console address.
 	PublicAgentURL string `json:"public_agent_url,omitempty"`
+	// TrustedProxies are reverse proxies whose word on the client address
+	// is taken (PROXY protocol on both listeners, X-Forwarded-For and
+	// X-Real-IP on the console). Empty: none.
+	TrustedProxies []string `json:"trusted_proxies,omitempty"`
 }
 
 // defaultNetwork is used until the settings are saved (a fresh copy each
@@ -176,6 +184,11 @@ func (n *NetworkSettings) Validate() error {
 		return err
 	}
 	if _, err := netacl.Parse(n.AgentAllowed); err != nil {
+		return err
+	}
+	if tp, err := netacl.Parse(n.TrustedProxies); err != nil {
+		return err
+	} else if err := netacl.CheckTrusted(tp); err != nil {
 		return err
 	}
 	if n.PublicAgentURL != "" {
@@ -229,6 +242,8 @@ func (s *Server) SaveNetwork(ctx context.Context, n NetworkSettings) error {
 	ag, _ := netacl.Parse(n.AgentAllowed)
 	s.MgmtACL.Set(mg)
 	s.AgentACL.SetOptional(ag)
+	tp, _ := netacl.Parse(n.TrustedProxies)
+	s.Trusted.Set(tp)
 	return nil
 }
 
@@ -497,13 +512,34 @@ func (s *Server) Handler() http.Handler {
 	// /api/ takes only API tokens (no session cookies), so it needs no CSRF check.
 	api := s.APIHandler()
 	console := s.csrf(s.loadSession(mux))
-	return s.secure(s.aclCheck(s.MgmtACL, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return s.secure(s.forwarded(s.aclCheck(s.MgmtACL, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(r.URL.Path, "/api/") {
 			api.ServeHTTP(w, r)
 			return
 		}
 		console.ServeHTTP(w, r)
-	})))
+	}))))
+}
+
+// proxyPeerKey holds the trusted proxy a request came through.
+type proxyPeerKey struct{}
+
+// forwarded takes the client address from X-Forwarded-For or X-Real-IP
+// when the request comes from a trusted reverse proxy, so the network
+// check, the login guard, the audit log and sessions see the client. From
+// any other address the headers are ignored.
+func (s *Server) forwarded(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if s.Trusted.HasAddr(r.RemoteAddr) {
+			if a, ok := netacl.ForwardedFor(s.Trusted, r.Header.Values("X-Forwarded-For"), r.Header.Get("X-Real-IP")); ok {
+				peer, _ := netacl.AddrOf(r.RemoteAddr)
+				r2 := r.Clone(context.WithValue(r.Context(), proxyPeerKey{}, peer))
+				r2.RemoteAddr = netip.AddrPortFrom(a, 0).String()
+				r = r2
+			}
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 // AgentHandler is the agent endpoint: enrollment, the agent channel and a
