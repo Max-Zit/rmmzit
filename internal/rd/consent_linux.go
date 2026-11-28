@@ -4,14 +4,16 @@ package rd
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/jezek/xgb"
 	"github.com/jezek/xgb/xproto"
 )
 
-// AskConsent shows a small window in the middle of the X screen with the
-// question and the buttons Allow and Deny, and waits for a click.
+// AskConsent shows a card in the middle of the X screen like the Windows
+// one: a coloured header, the technician's name, what they want, a
+// countdown and the buttons Allow and Deny; it waits for a click.
 func AskConsent(ctx context.Context, technician string, viewOnly bool, timeout time.Duration) Consent {
 	c, err := xgb.NewConn()
 	if err != nil {
@@ -19,50 +21,88 @@ func AskConsent(ctx context.Context, technician string, viewOnly bool, timeout t
 	}
 	defer c.Close()
 	scr := xproto.Setup(c).DefaultScreen(c)
-	lines := wrapASCII(consentText(technician, viewOnly), 60)
-	const charW, lineH, pad, btnW, btnH = 9, 22, 16, 110, 30
-	w := 60*charW + 2*pad
-	h := pad + len(lines)*lineH + pad + btnH + pad
+	const (
+		accent, white, text, muted, denyBg, border = 0x4f46e5, 0xffffff, 0x111827, 0x6b6b80, 0xe5e7eb, 0xd1d5db
+		w, pad, headH, btnW, btnH                  = 520, 22, 40, 116, 36
+	)
+	what := "wants to connect to this computer and control it with RMMZit remote desktop."
+	if viewOnly {
+		what = "wants to view this screen with RMMZit remote desktop (no control)."
+	}
+	body := wrapASCII(what, 52)
+	name := wrapASCII(technician, 40)
+	if len(name) == 0 {
+		name = []string{"A technician"}
+	}
+	h := headH + 18 + 24 + len(body)*20 + 12 + 18 + 18 + btnH + pad
 	sw, sh := int(scr.WidthInPixels), int(scr.HeightInPixels)
-	w = min(w, sw)
 	x, y := (sw-w)/2, (sh-h)/3
 	win, _ := xproto.NewWindowId(c)
-	const bg, fg, btnBg = 0xffffff, 0x111827, 0x2563eb
-	xproto.CreateWindow(c, scr.RootDepth, win, scr.Root, int16(x), int16(y), uint16(w), uint16(h), 2, // #nosec G115 -- screen size
+	xproto.CreateWindow(c, scr.RootDepth, win, scr.Root, int16(x), int16(y), uint16(w), uint16(h), 1, // #nosec G115 -- screen size
 		xproto.WindowClassInputOutput, scr.RootVisual,
 		xproto.CwBackPixel|xproto.CwBorderPixel|xproto.CwOverrideRedirect|xproto.CwEventMask,
-		[]uint32{bg, btnBg, 1, xproto.EventMaskExposure | xproto.EventMaskButtonPress})
-	font, _ := xproto.NewFontId(c)
-	fontOK := xproto.OpenFontChecked(c, font, uint16(len("-misc-fixed-bold-r-normal--18-*-*-*-*-*-iso8859-1")), "-misc-fixed-bold-r-normal--18-*-*-*-*-*-iso8859-1").Check() == nil
-	if !fontOK {
-		fontOK = xproto.OpenFontChecked(c, font, 5, "fixed").Check() == nil
-	}
-	gc, _ := xproto.NewGcontextId(c)
-	btn, _ := xproto.NewGcontextId(c)
-	mask, vals := uint32(xproto.GcForeground|xproto.GcBackground), []uint32{fg, bg}
-	bmask, bvals := uint32(xproto.GcForeground|xproto.GcBackground), []uint32{0xffffff, btnBg}
-	if fontOK {
-		mask, vals = mask|xproto.GcFont, append(vals, uint32(font))
-		bmask, bvals = bmask|xproto.GcFont, append(bvals, uint32(font))
-	}
-	xproto.CreateGC(c, gc, xproto.Drawable(win), mask, vals)
-	xproto.CreateGC(c, btn, xproto.Drawable(win), bmask, bvals)
-	fill, _ := xproto.NewGcontextId(c)
-	xproto.CreateGC(c, fill, xproto.Drawable(win), xproto.GcForeground, []uint32{btnBg})
-	by := pad + len(lines)*lineH + pad
-	allow := xproto.Rectangle{X: int16(w/2 - btnW - 8), Y: int16(by), Width: btnW, Height: btnH} // #nosec G115 -- small sizes
-	deny := xproto.Rectangle{X: int16(w/2 + 8), Y: int16(by), Width: btnW, Height: btnH}         // #nosec G115 -- small sizes
-	draw := func() {
-		for i, l := range lines {
-			xproto.ImageText8(c, byte(len(l)), xproto.Drawable(win), gc, pad, int16(pad+(i+1)*lineH-6), l) // #nosec G115 -- at most 60
-		}
-		xproto.PolyFillRectangle(c, xproto.Drawable(win), fill, []xproto.Rectangle{allow, deny})
-		xproto.ImageText8(c, 5, xproto.Drawable(win), btn, allow.X+32, allow.Y+20, "Allow")
-		xproto.ImageText8(c, 4, xproto.Drawable(win), btn, deny.X+36, deny.Y+20, "Deny")
-		c.Sync()
-	}
+		[]uint32{white, border, 1, xproto.EventMaskExposure | xproto.EventMaskButtonPress | xproto.EventMaskKeyPress})
 	title := "RMMZit remote desktop"
 	xproto.ChangeProperty(c, xproto.PropModeReplace, win, xproto.AtomWmName, xproto.AtomString, 8, uint32(len(title)), []byte(title)) // #nosec G115 -- constant
+
+	openFont := func(names ...string) (xproto.Font, int, bool) {
+		for _, n := range names {
+			f, _ := xproto.NewFontId(c)
+			if xproto.OpenFontChecked(c, f, uint16(len(n)), n).Check() == nil { // #nosec G115 -- short names
+				return f, 0, true
+			}
+		}
+		return 0, 0, false
+	}
+	big, _, bigOK := openFont("-misc-fixed-bold-r-normal--18-*-*-*-*-*-iso8859-1", "9x18bold", "fixed")
+	small, _, smallOK := openFont("-misc-fixed-medium-r-normal--14-*-*-*-*-*-iso8859-1", "7x14", "fixed")
+	gc := func(fg, bg uint32, f xproto.Font, ok bool) xproto.Gcontext {
+		g, _ := xproto.NewGcontextId(c)
+		mask, vals := uint32(xproto.GcForeground|xproto.GcBackground), []uint32{fg, bg}
+		if ok {
+			mask, vals = mask|xproto.GcFont, append(vals, uint32(f))
+		}
+		xproto.CreateGC(c, g, xproto.Drawable(win), mask, vals)
+		return g
+	}
+	headGC := gc(white, accent, big, bigOK)
+	nameGC := gc(text, white, big, bigOK)
+	bodyGC := gc(text, white, small, smallOK)
+	mutedGC := gc(muted, white, small, smallOK)
+	allowGC := gc(white, accent, big, bigOK)
+	denyGC := gc(text, denyBg, big, bigOK)
+	fill := func(col uint32) xproto.Gcontext { return gc(col, col, 0, false) }
+	accentFill, denyFill := fill(accent), fill(denyBg)
+
+	by := h - pad - btnH
+	allow := xproto.Rectangle{X: int16(w - pad - btnW), Y: int16(by), Width: btnW, Height: btnH} // #nosec G115 -- small sizes
+	deny := xproto.Rectangle{X: allow.X - 12 - btnW, Y: int16(by), Width: btnW, Height: btnH}    // #nosec G115 -- small sizes
+	left := max(int(timeout/time.Second), 1)
+	label := func(g xproto.Gcontext, r xproto.Rectangle, s string) {
+		tx := r.X + int16((int(r.Width)-len(s)*9)/2) // #nosec G115 -- 9 px glyphs of the bold font
+		xproto.ImageText8(c, byte(len(s)), xproto.Drawable(win), g, tx, r.Y+int16(r.Height)/2+6, s) // #nosec G115 -- button labels and sizes are small
+	}
+	countdown := func() {
+		s := fmt.Sprintf("Allow only if you expect it. Closes in %d s.   ", left)
+		xproto.ImageText8(c, byte(len(s)), xproto.Drawable(win), mutedGC, pad, int16(by-14), s) // #nosec G115 -- short text
+	}
+	draw := func() {
+		xproto.PolyFillRectangle(c, xproto.Drawable(win), accentFill, []xproto.Rectangle{{X: 0, Y: 0, Width: w, Height: headH}})
+		xproto.ImageText8(c, byte(len("RMMZit  -  Remote desktop")), xproto.Drawable(win), headGC, pad, headH/2+6, "RMMZit  -  Remote desktop")
+		ty := int16(headH + 18 + 16)
+		xproto.ImageText8(c, byte(len(name[0])), xproto.Drawable(win), nameGC, pad, ty, name[0]) // #nosec G115 -- at most 40
+		ty += 26
+		for _, l := range body {
+			xproto.ImageText8(c, byte(len(l)), xproto.Drawable(win), bodyGC, pad, ty, l) // #nosec G115 -- at most 52
+			ty += 20
+		}
+		countdown()
+		xproto.PolyFillRectangle(c, xproto.Drawable(win), denyFill, []xproto.Rectangle{deny})
+		xproto.PolyFillRectangle(c, xproto.Drawable(win), accentFill, []xproto.Rectangle{allow})
+		label(denyGC, deny, "Deny")
+		label(allowGC, allow, "Allow")
+		c.Sync()
+	}
 	xproto.MapWindow(c, win)
 	draw()
 	in := func(r xproto.Rectangle, x, y int16) bool {
@@ -87,23 +127,28 @@ func AskConsent(ctx context.Context, technician string, viewOnly bool, timeout t
 					res <- ConsentNo
 					return
 				}
+			case xproto.KeyPressEvent:
+				if e.Detail == 9 || e.Detail == 36 { // Esc, Return (evdev keycodes): deny
+					res <- ConsentNo
+					return
+				}
 			}
 		}
 	}()
-	keepUp := time.NewTicker(time.Second)
-	defer keepUp.Stop()
-	deadline := time.NewTimer(timeout)
-	defer deadline.Stop()
+	tick := time.NewTicker(time.Second)
+	defer tick.Stop()
 	for {
 		select {
 		case a := <-res:
 			return a
-		case <-deadline.C:
-			return ConsentTimeout
 		case <-ctx.Done():
 			return ConsentNo
-		case <-keepUp.C:
+		case <-tick.C:
+			if left--; left <= 0 {
+				return ConsentTimeout
+			}
 			xproto.ConfigureWindow(c, win, xproto.ConfigWindowStackMode, []uint32{xproto.StackModeAbove})
+			countdown()
 			c.Sync()
 		}
 	}
